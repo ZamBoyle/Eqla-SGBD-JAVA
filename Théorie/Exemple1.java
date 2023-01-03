@@ -17,6 +17,7 @@ public class Exemple1 {
         Biblio biblio = new Biblio();
         biblio.getAuteurs().displayAuteurs();
         biblio.getThemes().displayThemes();
+        biblio.getLivres().displayLivres();
     }
 
     public static Auteur[] fillAuteurs() {
