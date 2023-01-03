@@ -6,8 +6,9 @@ public class Exemple1 {
         biblio
                 .getAuteurCollection()
                 .getAuteurs()
-                .stream().filter(auteur -> auteur.getNationalite().equals("français"))
+                .stream().filter(auteur -> auteur.getNationalite().contains("français"))
                 .forEach(auteur -> auteur.displayAuteur());
+        
         // biblio.getThemeCollection().displayThemes();
         // biblio.getLivreCollection().stream().filter() .displayLivres();
     }
