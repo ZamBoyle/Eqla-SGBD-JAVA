@@ -31,14 +31,8 @@ public class Livre {
 
     public Livre(int id, String titre, String langue, int nombre_pages, String code_isbn, int date_publication,
             int auteur_id, int theme_id) {
-        this.id = id;
-        this.titre = titre;
-        this.langue = langue;
-        this.nombre_pages = nombre_pages;
-        this.code_isbn = code_isbn;
-        this.date_publication = date_publication;
-        this.auteur = new AuteurCollection().getAuteur(auteur_id);
-        this.theme = new ThemeCollection().getTheme(theme_id);
+
+        this(id, titre, langue, nombre_pages, code_isbn, date_publication, new AuteurCollection().getAuteur(auteur_id), new ThemeCollection().getTheme(theme_id));
     }
 
     // Getters et Setters

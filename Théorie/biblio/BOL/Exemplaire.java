@@ -7,7 +7,7 @@ import biblio.collection.LivreCollection;
 public class Exemplaire {
     private int id;
     private String reference;
-    private String rayon;    
+    private String rayon;
     private Date date_acquisition;
     private String etat;
     private boolean est_perdu;
@@ -29,15 +29,8 @@ public class Exemplaire {
 
     public Exemplaire(int id, String reference, String rayon, Date date_acquisition, String etat, boolean est_perdu,
             int livre_id) {
-        this.id = id;
-        this.reference = reference;
-        this.rayon = rayon;
-        this.date_acquisition = date_acquisition;
-        this.etat = etat;
-        this.est_perdu = est_perdu;
-        this.livre = LivreCollection.getLivre(livre_id);
+        this(id, reference, rayon, date_acquisition, etat, est_perdu, new LivreCollection().getLivre(livre_id));
     }
-
 
     public int getId() {
         return id;
@@ -100,6 +93,5 @@ public class Exemplaire {
         return "Exemplaire [id=" + id + ", reference=" + reference + ", rayon=" + rayon + ", date_acquisition="
                 + date_acquisition + ", etat=" + etat + ", est_perdu=" + est_perdu + ", livre=" + livre + "]";
     }
-
 
 }
