@@ -9,7 +9,7 @@ public class Livre {
     private String langue;
     private int nombre_pages;
     private String code_isbn;
-    private int date_publication;
+    private int annee_publication;
     private Auteur auteur;
     private Theme theme;
 
@@ -17,22 +17,22 @@ public class Livre {
     public Livre() {
     }
 
-    public Livre(int id, String titre, String langue, int nombre_pages, String code_isbn, int date_publication,
+    public Livre(int id, String titre, String langue, int nombre_pages, String code_isbn, int annee_publication,
             Auteur auteur, Theme theme) {
         this.id = id;
         this.titre = titre;
         this.langue = langue;
         this.nombre_pages = nombre_pages;
         this.code_isbn = code_isbn;
-        this.date_publication = date_publication;
+        this.annee_publication = annee_publication;
         this.auteur = auteur;
         this.theme = theme;
     }
 
-    public Livre(int id, String titre, String langue, int nombre_pages, String code_isbn, int date_publication,
+    public Livre(int id, String titre, String langue, int nombre_pages, String code_isbn, int annee_publication,
             int auteur_id, int theme_id) {
 
-        this(id, titre, langue, nombre_pages, code_isbn, date_publication, new AuteurCollection().getAuteur(auteur_id), new ThemeCollection().getTheme(theme_id));
+        this(id, titre, langue, nombre_pages, code_isbn, annee_publication, new AuteurCollection().getAuteur(auteur_id), new ThemeCollection().getTheme(theme_id));
     }
 
     // Getters et Setters
@@ -76,12 +76,12 @@ public class Livre {
         this.code_isbn = code_isbn;
     }
 
-    public int getDate_publication() {
-        return date_publication;
+    public int getAnnee_publication() {
+        return annee_publication;
     }
 
-    public void setDate_publication(int date_publication) {
-        this.date_publication = date_publication;
+    public void setAnnee_publication(int annee_publication) {
+        this.annee_publication = annee_publication;
     }
 
     public Auteur getAuteur() {
@@ -103,7 +103,7 @@ public class Livre {
     // Méthodes
     @Override
     public String toString() {
-        return "Livre [auteur=" + auteur + ", code_isbn=" + code_isbn + ", date_publication=" + date_publication
+        return "Livre [auteur=" + auteur + ", code_isbn=" + code_isbn + ", date_publication=" + annee_publication
                 + ", id=" + id + ", langue=" + langue + ", nombre_pages=" + nombre_pages + ", theme=" + theme
                 + ", titre=" + titre + "]";
     }

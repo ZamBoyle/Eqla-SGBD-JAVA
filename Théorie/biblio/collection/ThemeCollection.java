@@ -3,13 +3,22 @@ package biblio.collection;
 import biblio.BOL.Theme;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ThemeCollection{
-    private List<Theme> themes = new ArrayList<Theme>();
+public class ThemeCollection {
+    private List<Theme> themes; 
 
     public ThemeCollection() {
         themes = new ArrayList<Theme>();
+    }
+
+    public ThemeCollection(List<Theme> themes) {
+        this.themes = themes;
+    }
+
+    public ThemeCollection(Theme[] themes) {
+        this(new ArrayList<Theme>(Arrays.asList(themes)));
     }
 
     public void addTheme(Theme theme) {
@@ -42,7 +51,5 @@ public class ThemeCollection{
             System.out.println(theme);
         }
     }
-
-
 
 }

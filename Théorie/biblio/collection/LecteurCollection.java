@@ -1,6 +1,7 @@
 package biblio.collection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import biblio.BOL.Lecteur;
@@ -10,6 +11,14 @@ public class LecteurCollection {
 
     public LecteurCollection() {
         lecteurs = new ArrayList<Lecteur>();
+    }
+
+    public LecteurCollection(List<Lecteur> lecteurs) {
+        this.lecteurs = lecteurs;
+    }
+
+    public LecteurCollection(Lecteur[] lecteurs){
+        this(new ArrayList<>(Arrays.asList(lecteurs)));
     }
 
     public void addLecteur(Lecteur lecteur) {

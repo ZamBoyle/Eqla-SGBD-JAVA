@@ -4,6 +4,7 @@ import biblio.BOL.Auteur;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AuteurCollection {
@@ -11,6 +12,18 @@ public class AuteurCollection {
 
     public AuteurCollection() {
         auteurs = new ArrayList<Auteur>();
+    }
+
+    public AuteurCollection(List<Auteur> auteurs) {
+        this.auteurs = auteurs;
+    }
+
+    public AuteurCollection(Auteur[] auteurs) {
+        this(new ArrayList<Auteur>(Arrays.asList(auteurs)));
+    }
+
+   public List<Auteur> getAuteurs() {
+        return auteurs;
     }
 
     public void addAuteur(Auteur auteur) {
@@ -50,7 +63,7 @@ public class AuteurCollection {
         return auteurs;
     }
 
-    public void displayAuteurs(Auteur[] auteurs) {
+    public void displayAuteurs() {
         for (Auteur auteur : auteurs) {
             System.out.println(auteur);
         }

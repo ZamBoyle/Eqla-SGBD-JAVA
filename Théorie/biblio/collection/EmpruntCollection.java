@@ -1,6 +1,7 @@
 package biblio.collection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import biblio.BOL.Emprunt;
@@ -10,6 +11,14 @@ public class EmpruntCollection {
 
     public EmpruntCollection() {
         emprunts = new ArrayList<Emprunt>();
+    }
+
+    public EmpruntCollection(List<Emprunt> emprunts) {
+        this.emprunts = emprunts;
+    }
+
+    public EmpruntCollection(Emprunt[] emprunts) {
+        this(new ArrayList<Emprunt>(Arrays.asList(emprunts)));
     }
 
     public void addEmprunt(Emprunt emprunt) {
