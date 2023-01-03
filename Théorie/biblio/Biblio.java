@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import biblio.BOL.*;
@@ -258,5 +257,4 @@ public class Biblio {
             e.printStackTrace();
         }
     }
-
 }

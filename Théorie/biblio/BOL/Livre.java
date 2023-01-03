@@ -1,7 +1,5 @@
 package biblio.BOL;
 
-import biblio.collection.*;
-
 public class Livre {
     // Attributs
     private int id;

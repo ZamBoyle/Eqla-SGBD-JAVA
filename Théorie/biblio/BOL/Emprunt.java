@@ -2,8 +2,6 @@ package biblio.BOL;
 
 import java.sql.Date;
 
-import biblio.collection.*;
-
 public class Emprunt {
     private int id;
     private Date date_emprunt;

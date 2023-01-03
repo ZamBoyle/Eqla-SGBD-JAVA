@@ -2,8 +2,6 @@ package biblio.BOL;
 
 import java.sql.Date;
 
-import biblio.collection.LivreCollection;
-
 public class Exemplaire {
     private int id;
     private String reference;

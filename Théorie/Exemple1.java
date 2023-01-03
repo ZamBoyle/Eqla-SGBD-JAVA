@@ -1,5 +1,3 @@
-package Demo1;
-
 import biblio.Biblio;
 
 public class Exemple1 {
