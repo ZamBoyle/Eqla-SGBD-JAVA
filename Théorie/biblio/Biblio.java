@@ -43,14 +43,27 @@ public class Biblio {
         return auteurs;
     }
 
-    public List<Theme> getThemeCollection() {
-        return themes.getThemes();
+    public ThemeCollection getThemeCollection() {
+        return themes;
     }
 
-    public List<Livre> getLivreCollection() {
-        return livres.getLivres();
+    public LivreCollection getLivreCollection() {
+        return livres;
     }
 
+    public ExemplaireCollection getExemplaireCollection() {
+        return exemplaires;
+    }
+
+    public EmpruntCollection getEmpruntCollection() {
+        return emprunts;
+    }
+
+    public LecteurCollection getLecteurCollection() {
+        return lecteurs;
+    }
+
+    
 
     public void fillAuteurs() {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
