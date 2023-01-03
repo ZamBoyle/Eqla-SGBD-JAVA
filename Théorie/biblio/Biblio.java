@@ -47,6 +47,10 @@ public class Biblio {
         return themes;
     }
 
+    public LivreCollection getLivres() {
+        return livres;
+    }
+
 
     public void fillAuteurs() {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
