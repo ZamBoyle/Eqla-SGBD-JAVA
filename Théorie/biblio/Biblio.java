@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import biblio.BOL.*;
 import biblio.collection.*;
@@ -28,8 +29,8 @@ public class Biblio {
         fillThemes();
         fillLivres();
         fillExemplaires();
-        fillEmprunts();
         fillLecteurs();
+        fillEmprunts();
         
         try {
             Class.forName(JDBC_DRIVER);
@@ -39,16 +40,16 @@ public class Biblio {
         }
     }
 
-    public AuteurCollection getAuteurs() {
+    public AuteurCollection getAuteurCollection() {
         return auteurs;
     }
 
-    public ThemeCollection getThemes() {
-        return themes;
+    public List<Theme> getThemeCollection() {
+        return themes.getThemes();
     }
 
-    public LivreCollection getLivres() {
-        return livres;
+    public List<Livre> getLivreCollection() {
+        return livres.getLivres();
     }
 
 
@@ -151,25 +152,111 @@ public class Biblio {
         }
     }
 
+    public void fillExemplaires() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            // Créer un objet Statement
+            Statement statement = connection.createStatement();
 
-/*     public Livre[] fillLivres() {
-        Livre[] livres = null;
-        return livres;
-    } */
+            // Exécuter une requête SQL pour lire tous les auteurs de la table exemplaire
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM exemplaire");
 
-    public Exemplaire[] fillExemplaires() {
-        Exemplaire[] exemplaires = null;
-        return exemplaires;
+            // Parcourir tous les enregistrements de la table Exemplaire
+            while (resultSet.next()) {
+                // Récupérer les valeurs de chaque colonne
+                int id = resultSet.getInt("id");
+                String reference = resultSet.getString("reference");
+                String rayon = resultSet.getString("rayon");
+                Date date_acquisition = resultSet.getDate("date_acquisition");
+                String etat = resultSet.getString("etat");
+                boolean est_perdu = resultSet.getBoolean("est_perdu");
+                int livre_id = resultSet.getInt("livre_id");
+
+                // Créer un nouvel objet exemplaire avec les valeurs lues
+                Livre livre = livres.getLivre(livre_id);
+
+                Exemplaire exemplaire = new Exemplaire(id, reference, rayon, date_acquisition, etat, est_perdu, livre);
+
+                // Ajouter l'objet Exemplaire au tableau
+                exemplaires.addExemplaire(exemplaire);
+            }
+
+            // Fermer le ResultSet et le Statement
+            resultSet.close();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public Lecteur[] fillLecteurs() {
-        Lecteur[] lecteurs = null;
-        return lecteurs;
+    public void fillLecteurs(){
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            // Créer un objet Statement
+            Statement statement = connection.createStatement();
+
+            // Exécuter une requête SQL pour lire tous les auteurs de la table lecteur
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM lecteur");
+
+            // Parcourir tous les enregistrements de la table Lecteur
+            while (resultSet.next()) {
+                // Récupérer les valeurs de chaque colonne
+                int id = resultSet.getInt("id");
+                String nom = resultSet.getString("nom");
+                String prenom = resultSet.getString("prenom");
+                Date date_naissance = resultSet.getDate("date_naissance");
+                String adresse = resultSet.getString("adresse");
+                int num_rue = resultSet.getInt("num_rue");
+                int code_postal = resultSet.getInt("code_postal");
+                String localite = resultSet.getString("localite");
+                String telephone = resultSet.getString("telephone");
+
+                // Créer un nouvel objet Lecteur avec les valeurs lues
+                Lecteur lecteur = new Lecteur(id, nom, prenom, date_naissance, adresse, num_rue, code_postal, localite, telephone);
+
+                // Ajouter l'objet Lecteur au tableau
+                lecteurs.addLecteur(lecteur);
+            }
+
+            // Fermer le ResultSet et le Statement
+            resultSet.close();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public Emprunt[] fillEmprunts() {
-        Emprunt[] emprunts = null;
-        return emprunts;
+    public void fillEmprunts() {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
+            // Créer un objet Statement
+            Statement statement = connection.createStatement();
+
+            // Exécuter une requête SQL pour lire tous les auteurs de la table emprunt
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM emprunt");
+
+            // Parcourir tous les enregistrements de la table Emprunt
+            while (resultSet.next()) {
+                // Récupérer les valeurs de chaque colonne
+                int id = resultSet.getInt("id");
+                Date date_emprunt = resultSet.getDate("date_emprunt");
+                Date date_retour = resultSet.getDate("date_retour");
+                int lecteur_id = resultSet.getInt("lecteur_id");
+                int exemplaire_id = resultSet.getInt("exemplaire_id");
+
+                // Créer un nouvel objet Emprunt avec les valeurs lues
+                Lecteur lecteur = lecteurs.getLecteur(lecteur_id);
+                Exemplaire exemplaire = exemplaires.getExemplaire(exemplaire_id);
+
+                Emprunt emprunt = new Emprunt(id, date_emprunt, date_retour, lecteur, exemplaire);
+
+                // Ajouter l'objet Emprunt au tableau
+                emprunts.addEmprunt(emprunt);
+            }
+
+            // Fermer le ResultSet et le Statement
+            resultSet.close();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

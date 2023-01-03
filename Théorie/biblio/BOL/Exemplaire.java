@@ -16,8 +16,7 @@ public class Exemplaire {
     public Exemplaire() {
     }
 
-    public Exemplaire(int id, String reference, String rayon, Date date_acquisition, String etat, boolean est_perdu,
-            Livre livre) {
+    public Exemplaire(int id, String reference, String rayon, Date date_acquisition, String etat, boolean est_perdu, Livre livre) {
         this.id = id;
         this.reference = reference;
         this.rayon = rayon;
@@ -25,11 +24,6 @@ public class Exemplaire {
         this.etat = etat;
         this.est_perdu = est_perdu;
         this.livre = livre;
-    }
-
-    public Exemplaire(int id, String reference, String rayon, Date date_acquisition, String etat, boolean est_perdu,
-            int livre_id) {
-        this(id, reference, rayon, date_acquisition, etat, est_perdu, new LivreCollection().getLivre(livre_id));
     }
 
     public int getId() {

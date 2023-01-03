@@ -2,22 +2,24 @@ package biblio.BOL;
 
 import java.sql.Date;
 
+import biblio.collection.*;
+
 public class Emprunt {
     private int id;
     private Date date_emprunt;
     private Date date_retour;
-    private int lecteur_id;
-    private int exemplaire_id;
+    private Lecteur lecteur;
+    private Exemplaire exemplaire;
 
     public Emprunt() {
     }
 
-    public Emprunt(int id, Date date_emprunt, Date date_retour, int lecteur_id, int exemplaire_id) {
+    public Emprunt(int id, Date date_emprunt, Date date_retour, Lecteur lecteur, Exemplaire exemplaire) {
         this.id = id;
         this.date_emprunt = date_emprunt;
         this.date_retour = date_retour;
-        this.lecteur_id = lecteur_id;
-        this.exemplaire_id = exemplaire_id;
+        this.lecteur = lecteur;
+        this.exemplaire = exemplaire;
     }
 
     public int getId() {
@@ -44,26 +46,27 @@ public class Emprunt {
         this.date_retour = date_retour;
     }
 
-    public int getLecteur_id() {
-        return lecteur_id;
+    public Lecteur getLecteur() {
+        return lecteur;
     }
 
-    public void setLecteur_id(int lecteur_id) {
-        this.lecteur_id = lecteur_id;
+    public void setLecteur(Lecteur lecteur) {
+        this.lecteur = lecteur;
     }
 
-    public int getExemplaire_id() {
-        return exemplaire_id;
+    public Exemplaire getExemplaire() {
+        return exemplaire;
     }
 
-    public void setExemplaire_id(int exemplaire_id) {
-        this.exemplaire_id = exemplaire_id;
+    public void setExemplaire(Exemplaire exemplaire) {
+        this.exemplaire = exemplaire;
     }
 
     @Override
     public String toString() {
-        return "Emprunt [id=" + id + ", date_emprunt=" + date_emprunt + ", date_retour=" + date_retour + ", lecteur_id="
-                + lecteur_id + ", exemplaire_id=" + exemplaire_id + "]";
+        return "Emprunt [id=" + id + ", date_emprunt=" + date_emprunt + ", date_retour=" + date_retour + ", lecteur="
+                + lecteur + ", exemplaire=" + exemplaire + "]";
     }
+
 }
 

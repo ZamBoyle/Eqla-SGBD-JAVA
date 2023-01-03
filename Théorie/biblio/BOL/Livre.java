@@ -29,12 +29,6 @@ public class Livre {
         this.theme = theme;
     }
 
-    public Livre(int id, String titre, String langue, int nombre_pages, String code_isbn, int annee_publication,
-            int auteur_id, int theme_id) {
-
-        this(id, titre, langue, nombre_pages, code_isbn, annee_publication, new AuteurCollection().getAuteur(auteur_id), new ThemeCollection().getTheme(theme_id));
-    }
-
     // Getters et Setters
     public int getId() {
         return id;

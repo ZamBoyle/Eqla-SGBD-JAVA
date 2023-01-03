@@ -57,6 +57,14 @@ public class Auteur {
         this.nationalite = pays;
     }
 
+    public void setDate_naissance(Date date_naissance) {
+        this.date_naissance = date_naissance;
+    }
+
+    public void displayAuteur() {
+        System.out.println(this.toString());
+    }
+
     @Override
     public String toString() {
         return "Auteur {" +

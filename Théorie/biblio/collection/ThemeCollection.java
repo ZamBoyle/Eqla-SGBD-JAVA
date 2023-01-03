@@ -1,10 +1,10 @@
 package biblio.collection;
 
-import biblio.BOL.Theme;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import biblio.BOL.Theme;
 
 public class ThemeCollection {
     private List<Theme> themes; 
