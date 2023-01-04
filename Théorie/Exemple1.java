@@ -12,6 +12,10 @@ public class Exemple1 {
         */
         biblio.getThemeCollection().displayThemes();
         biblio.getLecteurCollection().displayLecteurs();
+        biblio.getAuteurCollection().displayAuteurs();
+        biblio.getLivreCollection().displayLivres();
+        biblio.getEmpruntCollection().displayEmprunts();
+
         // biblio.getLivreCollection().stream().filter() .displayLivres();
     }
 }
