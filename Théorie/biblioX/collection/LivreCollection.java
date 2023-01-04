@@ -1,9 +1,9 @@
-package biblio.collection;
+package biblioX.collection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import biblio.BOL.Livre;
+import biblioX.BOL.Livre;
 
 public class LivreCollection {
     private List<Livre> livres;

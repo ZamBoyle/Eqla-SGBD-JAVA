@@ -1,4 +1,4 @@
-package biblio.BOL;
+package biblioX.BOL;
 
 import java.sql.Date;
 

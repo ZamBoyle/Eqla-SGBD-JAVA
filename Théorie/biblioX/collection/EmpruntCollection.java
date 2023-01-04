@@ -1,10 +1,10 @@
-package biblio.collection;
+package biblioX.collection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import biblio.BOL.Emprunt;
+import biblioX.BOL.Emprunt;
 
 public class EmpruntCollection {
     private List<Emprunt> emprunts;

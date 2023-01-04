@@ -1,4 +1,4 @@
-package biblio;
+package biblioX;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
-import biblio.BOL.*;
-import biblio.collection.*;
+import biblioX.BOL.*;
+import biblioX.collection.*;
 
 public class Biblio {
     private LivreCollection livres = new LivreCollection();

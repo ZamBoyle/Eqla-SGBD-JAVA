@@ -1,10 +1,10 @@
-package biblio.collection;
+package biblioX.collection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import biblio.BOL.Exemplaire;
+import biblioX.BOL.Exemplaire;
 
 public class ExemplaireCollection {
     private List<Exemplaire> exemplaires;

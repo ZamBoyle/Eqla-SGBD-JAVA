@@ -1,10 +1,10 @@
-package biblio.collection;
+package biblioX.collection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import biblio.BOL.Lecteur;
+import biblioX.BOL.Lecteur;
 
 public class LecteurCollection {
     private List<Lecteur> lecteurs;

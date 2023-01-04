@@ -1,10 +1,10 @@
-package biblio.collection;
+package biblioX.collection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import biblio.BOL.Theme;
+import biblioX.BOL.Theme;
 
 public class ThemeCollection {
     private List<Theme> themes; 
@@ -51,5 +51,4 @@ public class ThemeCollection {
             System.out.println(theme);
         }
     }
-
 }

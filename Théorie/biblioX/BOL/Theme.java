@@ -1,4 +1,4 @@
-package biblio.BOL;
+package biblioX.BOL;
 
 public class Theme {
     private int id;

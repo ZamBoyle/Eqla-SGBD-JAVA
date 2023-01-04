@@ -1,11 +1,11 @@
-package biblio.collection;
+package biblioX.collection;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import biblio.BOL.Auteur;
+import biblioX.BOL.Auteur;
 
 public class AuteurCollection {
     private List<Auteur> auteurs;
