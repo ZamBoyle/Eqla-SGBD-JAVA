@@ -1,3 +1,10 @@
+<style>
+.line-numbers {
+    position: relative;
+    padding-left: 3.8em;
+    counter-reset: linenumber;
+}
+</style>
 # Java et mySQL/MariaDB
 
 
@@ -28,8 +35,11 @@ La chaîne de caractères __"lib/**/*.jar"__ indique que tous les fichiers ayant
 
 Cette liste peut être utilisée, par exemple, pour indiquer au compilateur Java quelles bibliothèques doivent être incluses lors de la compilation du projet. Cela permet d'accéder aux classes contenues dans ces bibliothèques depuis votre code Java.
 
+
 ## 2. Première connexion
 Je vais vous coller un code Java que je vais vous expliquer.
+
+
 ```java {.line-numbers}
 import java.sql.*;
 
