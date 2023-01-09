@@ -32,8 +32,6 @@ Cette liste peut être utilisée, par exemple, pour indiquer au compilateur Java
 ## 2. Première connexion
 Je vais vous coller un code Java que je vais vous expliquer.
 
-<div style="position: relative; padding-left: 3.8em; counter-reset: linenumber;">
-
 ```java
 import java.sql.*;
 
@@ -67,4 +65,3 @@ public class Exemple1 {
     }
 }
 ```
-</div>
