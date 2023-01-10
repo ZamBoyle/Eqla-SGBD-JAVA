@@ -131,7 +131,7 @@ Il est important de noter que le curseur est avancé d'une ligne à chaque tour 
 
 Il existe plusieurs méthodes pour récupérer des valeurs à partir d'un objet ResultSet en fonction du type de données de la colonne. Voici quelques exemples :
 
-- **getInt**(int columnIndex) ou (String columnName)  : permet de récupérer la valeur d'une colonne de type INT ou BIGINT en spécifiant l'index/le nom de colonne (commençant à 1).
+- **getInt**(int columnIndex) ou (String columnName)  : permet de récupérer la valeur d'une colonne de type INT ou BIGINT en spécifiant l'index(commençant à 1)/le nom de colonne.
 
 - **getDouble**(int columnIndex) ou (String columnName)  : permet de récupérer la valeur d'une colonne de type DOUBLE ou FLOAT en spécifiant le nom de colonne/l'index de la colonne.
 
@@ -143,7 +143,7 @@ Il existe plusieurs méthodes pour récupérer des valeurs à partir d'un objet 
 
 - **getObject**(int columnIndex) ou (String columnName) : permet de récupérer la valeur d'une colonne quelque soit le type de celle-ci en spécifiant l'index/le nom de colonne.
 
-Toutes ces méthodes lèvent une SQLException si les valeur récupéré ne peuvent être converti au type voulu, par exemple si on récupère une chaine de caractère avec getInt. Il est donc important de gérer cette exception pour eviter les erreurs de runtime.
+Toutes ces méthodes lèvent une **SQLException** si les valeur récupéré ne peuvent être converti au type voulu, par exemple si on récupère une chaine de caractère avec getInt. Il est donc important de gérer cette exception pour eviter les erreurs de runtime.
 
 ### 2.6 con.close()
 ```java
