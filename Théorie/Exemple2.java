@@ -1,12 +1,10 @@
 import java.sql.*;
+import App.Menu;
 
 public class Exemple2 {
     public static void main(String[] args) {
-        menu();
-    }
-
-    private static void menu(){
-        displayLecteurs();
+        Menu menu = new Menu();
+        menu.menuGeneral();
     }
 
     private static void displayLecteurs() {

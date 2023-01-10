@@ -29,7 +29,7 @@ La chaîne de caractères __"lib/\*\*/*.jar"__ indique que tous les fichiers aya
 Cette liste peut être utilisée, par exemple, pour indiquer au compilateur Java quelles bibliothèques doivent être incluses lors de la compilation du projet. Cela permet d'accéder aux classes contenues dans ces bibliothèques depuis votre code Java.
 
 
-## 2. Première connexion
+## 2. Première connexion - simple SELECT
 Nous allons nous connecter à notre base de données locale biblio4_prof.
 
 Nous allons faire un __SELECT * from lecteur__ et afficher le résultat:
@@ -155,3 +155,5 @@ La méthode close permet de fermer la connexion de l'objet con qui est du type C
 Comme vous l'avez vu, il est possible de récupérer une valeur String, Int, Boolean, etc. en spécifiant soit le nom de colonne ou bien son index.
 
 L'utilisation du nom de colonne est plus pratique car il permet d'éviter les erreurs liées à des changements dans l'ordre des colonnes dans la requête SQL. Il est donc conseillé d'utiliser les méthodes qui prennent en paramètre columnName plutôt que les méthodes qui prennent l'index de colonne, cependant parfois pour des raisons de performances ou de simplicité il peut être préférable d'utiliser l'index.
+
+## 3. SELECT avec condition
