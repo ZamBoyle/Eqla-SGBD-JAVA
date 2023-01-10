@@ -8,7 +8,7 @@ Cependant, vous venez d'installer le connecteur java pour MySQL et pour utiliser
 C'est la plus facile mais la moins accessible...
 
 Ajouter la librairie directement avec l'interface graphique de vscode. C'est le plus simple et aussi le moins accessible. En-dessous de l'explorateur de fichiers, vous avez en bas un libellé nommé "JAVA PROJECTS" et un sous-libellé "Referenced Libraries" et à côté de celui-ci vous avez le symbole + qui permet d'ajouter une librairie java à votre projet. Vous devez indiquer où se trouve le .jar du connecteur MySQL par exemple:
-1. sous Linux, il se trouve dans le répertoire /usr/share/java/ et dans mon cas, c'est le fichier: mysql-connector-j-8.0.31.jar
+1. sous Linux, il se trouve dans le répertoire **/usr/share/java/** et dans mon cas, c'est le fichier: **mysql-connector-j-8.0.31.jar** . La version peut bien entendu être différente.
 2. sous Windows:
 3. sous Mac:
 
@@ -24,7 +24,7 @@ Dans le répertoire **.vscode** qui est généralement caché, modifier le fichi
 ```
 Evidemment modifiez cette entrée en fonction du chemin sur votre ordinateur et la version de votre connecteur.
 
-La chaîne de caractères __"lib/**/*.jar"__ indique que tous les fichiers ayant l'extension **.jar** dans le répertoire lib et ses sous-répertoires sont référencés comme bibliothèques.
+La chaîne de caractères __"lib/\*\*/*.jar"__ indique que tous les fichiers ayant l'extension **.jar** dans le répertoire **lib** et **ses sous-répertoires** sont référencés comme bibliothèques.
 
 Cette liste peut être utilisée, par exemple, pour indiquer au compilateur Java quelles bibliothèques doivent être incluses lors de la compilation du projet. Cela permet d'accéder aux classes contenues dans ces bibliothèques depuis votre code Java.
 
