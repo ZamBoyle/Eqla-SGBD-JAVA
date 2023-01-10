@@ -154,4 +154,4 @@ La méthode close permet de fermer la connexion de l'objet con qui est du type C
 ### 2.7 ColumnName ou ColumnIndex ?
 Comme vous l'avez vu, il est possible de récupérer une valeur String, Int, Boolean, etc. en spécifiant soit le nom de colonne ou bien son index.
 
-Il est a noter que l'utilisation du nom de colonne est plus pratique car il permet d'éviter les erreurs liées à des changements dans l'ordre des colonnes dans la requête SQL. Il est donc conseillé d'utiliser les méthodes qui prennent en paramètre columnName plutôt que les méthodes qui prennent l'index de colonne, cependant parfois pour des raisons de performances ou de simplicité il peut être préférable d'utiliser l'index.
+L'utilisation du nom de colonne est plus pratique car il permet d'éviter les erreurs liées à des changements dans l'ordre des colonnes dans la requête SQL. Il est donc conseillé d'utiliser les méthodes qui prennent en paramètre columnName plutôt que les méthodes qui prennent l'index de colonne, cependant parfois pour des raisons de performances ou de simplicité il peut être préférable d'utiliser l'index.
