@@ -1,5 +1,6 @@
 import java.sql.*;
-import App.Menu;
+
+import Exemples.app.Menu;
 
 public class Exemple2 {
     public static void main(String[] args) {

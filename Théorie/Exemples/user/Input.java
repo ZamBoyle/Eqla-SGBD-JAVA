@@ -1,4 +1,4 @@
-package user;
+package Exemples.user;
 
 public class Input {
     public static int getValidInt(String message) {

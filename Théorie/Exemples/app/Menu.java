@@ -1,6 +1,6 @@
-package App;
+package Exemples.app;
 
-import user.Input;
+import Exemples.user.Input;
 
 public class Menu {
     public Menu() {

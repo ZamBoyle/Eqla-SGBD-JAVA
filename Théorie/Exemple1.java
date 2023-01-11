@@ -1,6 +1,6 @@
 import java.sql.*;
 
-import user.Input;
+import Exemples.user.Input;
 
 public class Exemple1 {
     public static void main(String[] args) {
