@@ -156,4 +156,15 @@ Comme vous l'avez vu, il est possible de récupérer une valeur String, Int, Boo
 
 L'utilisation du nom de colonne est plus pratique car il permet d'éviter les erreurs liées à des changements dans l'ordre des colonnes dans la requête SQL. Il est donc conseillé d'utiliser les méthodes qui prennent en paramètre columnName plutôt que les méthodes qui prennent l'index de colonne, cependant parfois pour des raisons de performances ou de simplicité il peut être préférable d'utiliser l'index.
 
-## 3. SELECT avec condition
+## 3. SELECT avec paramètre(s)
+Notre précédent exemple nous permet d'avoir la liste de tous les Lecteurs. Ce qui peut faire vraiment beaucoup si nous avons par exemple 10000 lecteurs.
+
+On peut par exemple rechercher un lecteur en fonction de son numéro de lecteur qui sera ici le champ id.
+
+### 3.1 Méthode risquée - permettant les injections SQL
+
+Voyons comment 
+
+
+### 3.2 Méthode plus sécurisée
+

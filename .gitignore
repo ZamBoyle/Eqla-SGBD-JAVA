@@ -27,3 +27,5 @@ Théorie/Exemples/*
 #!Théorie/Exemples/Chapitre2
 !Théorie/Exemples/app
 !Théorie/Exemples/user
+#Exercices/*
+!Exercices/README.md

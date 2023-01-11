@@ -5,7 +5,7 @@ import Exemples.app.Menu;
 public class Exemple2 {
     public static void main(String[] args) {
         Menu menu = new Menu();
-        menu.menuGeneral();
+        menu.menuPrincipal();
     }
 
     private static void displayLecteurs() {
