@@ -1,11 +1,19 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import Exemples.app.Menu;
+import Exercices.app.Menu;
+import Exercices.db.Biblio;
+
+
 
 public class Exemple2 {
     public static void main(String[] args) {
-        Menu menu = new Menu();
-        menu.menuPrincipal();
+        /*Menu menu = new Menu();
+        menu.menuPrincipal();*/
+        Biblio biblio = new Biblio();
+        List<Object> objects = biblio.getResultset("SELECT * FROM lecteur");
+        int p = 0;
     }
 
     private static void displayLecteurs() {

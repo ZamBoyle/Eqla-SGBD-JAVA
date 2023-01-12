@@ -23,9 +23,6 @@
 hs_err_pid*
 
 # Les chapitres qui ne peuvent pas être vus pour le moment
-Théorie/Exemples/*
-#!Théorie/Exemples/Chapitre2
-!Théorie/Exemples/app
-!Théorie/Exemples/user
+#Théorie/Exemples/*
 #Exercices/*
-!Exercices/README.md
+#!Exercices/README.md
