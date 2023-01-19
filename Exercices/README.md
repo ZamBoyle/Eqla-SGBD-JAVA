@@ -18,11 +18,11 @@ Vous reprendrez le code précédent et maintenant vous mettrez votre code dans u
 
 Votre méthode main appelera votre méthode displayThemes();
 
-### Exercice5.java - Simple SELECT
+### Exercice5.java - Simple SELECT sans paramètre
 
 Vous utiliserez le code précédent.
 
-Faites une méthode qui s'appelera displayAuteurs(): elle affichera tous les auteurs;
+Faites une méthode qui s'appelera displayAuteurs(): elle affichera tous les auteurs. Les champs de la table à afficher seront: tous.
 
 Votre méthode main appelera seulement la méthode displayAuteurs();
 
@@ -32,19 +32,28 @@ Vous utiliserez le code précédent.
 
 Faites une méthode qui s'appellera displayAuteur: cette méthode recevra un entier qui indique l'id de l'auteur à rechercher.
 
-Votre méthode main demandera l'identifiant (id) de l'auteur et appellera ensuite la méthode displayAuteur avec l'identifiant fournit en paramètre.
+Votre méthode main demandera l'identifiant (id) de l'auteur et appellera ensuite la méthode displayAuteur avec l'identifiant fournit en paramètre. Les champs de la table à afficher seront: tous.
 
 On fera attention à utiliser une méthode sécurisée comme vu au cours.
 
-### Exercice7.java - SELECT avec 2 paramètres
+
+### Exercice7.java - Factorisation
 
 Vous utiliserez le code précédent.
 
-Faites une méthode qui s'appellera displayExemplaire: cette méthode recevra en paramètres le rayon et l'état. Elle affichera les exemplaires en fonction de ces critères.
+Comparez vos fonctions displayAuteurs() et displayAuteur. Si vous ne l'avez pas déjà fait, n'y a-t-il pas moyen de factoriser votre code ?
+
+### Exercice8.java - SELECT avec 2 paramètres
+
+Vous utiliserez le code précédent.
+
+Faites une méthode qui s'appellera displayExemplaire: cette méthode recevra en paramètres le rayon et l'état de l'exemplaire. Les champs de la table à afficher seront: id, livre_id, rayon et date_acquisition.
+
+Elle affichera les exemplaires en fonction de ces critères.
 
 Votre méthode main appellera cette méthode en fournissant les paramètres reçu de l'utilisateur.
 
-### Exercice8.java - SELECT avec 2 paramètres
+### Exercice9.java - SELECT avec 2 paramètres
 
 Vous utiliserez le code précédent.
 
