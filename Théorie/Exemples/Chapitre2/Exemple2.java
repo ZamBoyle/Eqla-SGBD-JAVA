@@ -1,7 +1,9 @@
 package Exemples.Chapitre2;
 
+import java.io.Console;
 import java.sql.*;
-public class Exemple {
+
+public class Exemple2 {
     public static void main(String[] args) {
         try {
             // Chargement du pilote JDBC pour MySQL
@@ -13,14 +15,20 @@ public class Exemple {
             // Création d'un objet Statement pour exécuter une requête de lecture
             Statement stmt = con.createStatement();
 
+            Console console = System.console();
+            String id = console.readLine("Matricule (id) du lecteur:");
+
             // Exécution d'une requête de lecture
             // et récupération du résultat dans un objet ResultSet
-            String query = "SELECT * FROM lecteur";
+            String query = "SELECT * FROM lecteur WHERE id="+id+";";
+            System.out.println(query);
             ResultSet rs = stmt.executeQuery(query);    
             
             // Parcours du résultat
             while (rs.next()) {
-                System.out.println(rs.getString("nom") + "\t\t" + rs.getString("prenom"));
+                String nom= rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                System.out.println(nom + " ("+id+") \t\t" + prenom);
             }
 
             // Fermeture de la connexion

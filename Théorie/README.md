@@ -238,6 +238,68 @@ Je vais vous montrer les réels danger des injections SQL avec des exemples.
 
 Je vais donc partir du principe que nous n'avons pas de fonctions escapeSQL et doubleQuotes.
 
+Soit le code suivant:
+```java
+package Exemples.Chapitre2;
+
+import java.io.Console;
+import java.sql.*;
+
+public class Exemple2 {
+    public static void main(String[] args) {
+        try {
+            // Chargement du pilote JDBC pour MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            
+            // Etablissement de la connexion
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+            
+            // Création d'un objet Statement pour exécuter une requête de lecture
+            Statement stmt = con.createStatement();
+
+            Console console = System.console();
+            String id = console.readLine("Matricule (id) du lecteur:");
+
+            // Exécution d'une requête de lecture
+            // et récupération du résultat dans un objet ResultSet
+            String query = "SELECT * FROM lecteur WHERE id="+id+";";
+            System.out.println(query);
+            ResultSet rs = stmt.executeQuery(query);    
+            
+            // Parcours du résultat
+            while (rs.next()) {
+                String nom= rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                System.out.println(nom + " ("+id+") \t\t" + prenom);
+            }
+
+            // Fermeture de la connexion
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+```
+Si j'exécute le code il va me demander un id et va faire une recherche SQL.
+Si on entre 2 la requête va devenir:
+```sql
+SELECT * FROM lecteur WHERE id=2;
+```
+Jusque là, c'est cool. Mais imaginons que je tape comme entrée utilisateur:2 OR 1=1;--
+Notre chaîne query va devenir:
+```sql
+SELECT * FROM lecteur WHERE id=2 OR 1=1;--;
+```
+Le but de notre requête était de chercher au maximum 1 seul lecteur et ici on a détourné notre requête.  
+
+En mettant OR 1=1 notre requête sera toujours vraie. Notre requête va alors afficher TOUS les lecteurs.
+
+Vous avez remarqué que j'ai ajouté --
+En SQL le -- est un commentaire donc ça veut dire que tout ce qui est à droite sera ignoré.
+
+Comme vous le voyez c'est très dangereux de faire des requêtes SQL sans les protéger un minimum.
+<!--
 **Apostrophe**:
 Si l'utilisateur tape comme entrée: ' OR '1'='1
 Notre requête va devenir:
@@ -273,6 +335,385 @@ Si l'utilisateur entre \ pour nom, la requête générée sera :
 SELECT * FROM lecteur WHERE nom = '\'
 ```
 Cette requête peut causer un erreur ou des résultats inattendus, car la requête ne peut pas être interprétée correctement en raison de l'utilisation de Backslash.
+-->
 
 ### 3.2 Méthode sécurisée
 Alors on pourrait utiliser notre méthode escapeSQL() mais JAVA a implémenté un méthode qui s'occupe de nettoyer nos chaînes de caractères. Le principe est qu'on va dire que tel paramètre sera de tel type: par exemple int, bool, String, etc. Et JAVA va les nettoyer pour éviter ces injections.
+
+#### 3.2.1 Premier exemple
+J'ai créé une méthode getValidInt dans une classe Input pour être certain que l'on entre un entier valide.
+```java
+import java.util.Scanner;
+
+public class Input {
+
+    public static int getValidInt(String message) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print(message);
+            if (scanner.hasNextInt()) {
+                scanner.close();
+                return scanner.nextInt();
+            } else {
+                System.out.println("Veuillez entrer un nombre valide");
+                scanner.next();
+            }
+        }
+    }
+
+    public static int getValidInt(String message, int min, int max) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print(message);
+            if (scanner.hasNextInt()) {
+                int i = scanner.nextInt();
+                if (i >= min && i <= max) {
+                    scanner.close();
+                    return i;
+                } else {
+                    System.out.println("Veuillez entrer un nombre entre " + min + " et " + max);
+                }
+            } else {
+                System.out.println("Veuillez entrer un nombre valide");
+                scanner.next();
+            }
+        }
+    }
+}
+```
+Voici maintenant le code java corrigé:
+```java
+package Exemples.Chapitre2;
+
+import java.io.Console;
+import java.sql.*;
+
+import Exemples.user.Input;
+
+public class Exemple3 {
+    public static void main(String[] args) {
+        try {
+            // Chargement du pilote JDBC pour MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            
+            // Etablissement de la connexion
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+            
+            // Création d'un objet PreparedStatement pour exécuter une requête de lecture
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
+
+            int id= Input.getValidInt("Matricule (id) du lecteur:");
+            stmt.setInt(1, id);
+
+            // Exécution d'une requête de lecture
+            // et récupération du résultat dans un objet ResultSet
+            ResultSet rs = stmt.executeQuery();    
+            
+            // Parcours du résultat
+            while (rs.next()) {
+                String nom= rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                System.out.println(nom + " ("+id+") \t\t" + prenom);
+            }
+
+            // Fermeture de la connexion
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+```
+Ce qui a changé c'est qu'on utilise maintenant un objet de type **PreparedStatement** et en plus dans on utilise un point d'interrogation dans la requête. Reprenons cette ligne de code:
+```java
+PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
+```
+En mettant un point d'interrogation on indique qu'à cet endroit on va utiliser/injecter une valeur d'un certain type.
+
+Donc l'objectif maintenant c'est de remplacer ce ? par un entier. C'est ce que l'on va faire à partir de notre objet stmt en utilisant la méthode **setInt**: 
+```java
+stmt.setInt(1, id);
+```
+Cette commande va indiquer que l'on va mettre pour le premier point d'interrogation un entier dont la valeur sera celle de notre variable **id**.
+
+Et donc, il ne sera plus possible d'essayer de faire une injection SQL. Cependant, ici nous avons eu un garde fou avec notre méthode getValidInt. Mais il existe plusieurs méthodes dans la classe PreparedStatement:
+- setInt
+- setBoolean
+- setString
+- setFloat
+- setDouble
+- setDate
+- setNull
+- setURL
+
+#### 3.2.2 Second exemple - Avec deux paramètres
+
+Imaginez que vous ayez un formulaire de recherche qui permet une recherche multi-critères.
+
+Dans notre cas, on voudrait trouver tous les lecteurs qui commencent par du et qui ont comme code postal 1000
+En SQL on ferait:
+```sql
+SELECT * FROM lecteur WHERE nom LIKE 'du%' AND code_postal=1000;
+```
+
+Voici maintenant un code JAVA qui utilisera deux paramètres:
+```java
+package Exemples.Chapitre2;
+
+import java.sql.*;
+
+import Exemples.user.Input;
+
+public class Exemple4 {
+    public static void main(String[] args) {
+        String nameStartWith = System.console().readLine("Nom commence par:");
+        int code_postal = Input.getValidInt("Code postal:",1000,9990);
+        displayLecteurs(nameStartWith, code_postal);
+    }
+
+    public static void displayLecteurs(String nameStartWith, int code_postal){
+        try {
+            // Chargement du pilote JDBC pour MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            
+            // Etablissement de la connexion
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+            
+            // Création d'un objet PreparedStatement pour exécuter une requête de lecture
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+
+            stmt.setString(1, nameStartWith+"%");
+            stmt.setInt(2, code_postal);
+
+            // Exécution d'une requête de lecture
+            // et récupération du résultat dans un objet ResultSet
+            ResultSet rs = stmt.executeQuery();    
+            
+            // Parcours du résultat
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String nom= rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                System.out.println(nom + " ("+id+") \t\t" + prenom);
+            }
+
+            // Fermeture de la connexion
+            con.close();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+```
+Notre fonction main demandera à l'utilisateur d'entrer le début du nom et le code postal:
+```java
+String nameStartWith = System.console().readLine("Nom commence par:");
+int code_postal = Input.getValidInt("Code postal:",1000,9990);
+
+displayLecteurs(nameStartWith, code_postal);
+```
+La fonction displayLecteurs sera exécutée et retournera dans le cas de 'du' comme nom et 1000 comme code postal:
+```console
+Dupont (2)              Jeanne
+Durand (3)              Philip
+Dubois (5)              Christophe
+```
+La fonction displayLecteurs va utiliser un objet du type PreparedStatement:
+```java
+PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+```
+Les deux points d'interrogations seront remplacés par:
+```java
+stmt.setString(1, nameStartWith+"%");
+stmt.setInt(2, code_postal);
+```
+
+### 4. Informations de connexion
+Comme vous l'avez-vous remarqué on doit tout le temps remettre nos informations de connexion: le nom du driver, le nom de la base de donnée, le login, le mot de passe, etc.
+
+Imaginons que demain, tout change. On change de serveur, on change le nom d'utilisateur, le port, le mot de passe, etc.
+
+On pourrait faire un "remplacer partout" bien bourin mais efficace dans tout le projet.
+
+Mais il est plus intéressant de tout centraliser. C'est que nous allons faire en créant une classe dédiée que nous nommerons DB.
+
+Ici une classe avec des constantes statiques:
+```java
+package Exemples.dal;
+
+public class DB {
+    public final static String DB_URL = "jdbc:mysql://localhost:3306/biblio4_prof";
+    public final static String USER = "new_user";
+    public final static String PASS = "password";
+}
+```
+Si on a fait le bon import, on 
+```java
+// Etablissement de la connexion
+Connection con = DriverManager.getConnection(DB.DB_URL, DB.USER, DB.PASS);
+
+// Création d'un objet PreparedStatement pour exécuter une requête de lecture
+PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+```
+Ou bien une classe avec des propriétés:
+```java
+package Exemples.dal;
+
+public class DB {
+    private  String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private  String DB_URL = "jdbc:mysql://localhost:3306/biblio4_prof";
+    private  String USER = "new_user";
+    private  String PASS = "password";
+
+    public DB() {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+        } catch (ClassNotFoundException e) {
+            throw new ClassCastException("Impossible de charger le pilote JDBC pour MySQL");
+        }
+    }
+
+    public String getJDDBC_DRIVER() {
+        return this.JDBC_DRIVER;
+    }
+
+    public String getDB_URL() {
+        return this.DB_URL;
+    }
+
+    public String getUSER() {
+        return this.USER;
+    }
+
+    public String getPASS() {
+        return this.PASS;
+    }
+}
+```
+Ici dans le constructeur j'ai directement chargé le driver mysql avec Class.forName.
+J'ai directement affecté des valeurs aux propriétés mais on aurait pu les définir dans le constructeur.
+
+Pour l'utiliser:
+```java
+DB db = new DB();
+// Etablissement de la connexion
+Connection con = DriverManager.getConnection(db.getDB_URL, db.getUSER, db.getPASS);
+
+// Création d'un objet PreparedStatement pour exécuter une requête de lecture
+PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+```
+
+Ou pourrait aussi faire en sorte que notre classe DB gère la connexion:
+```java
+package Exemples.dal;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DB implements AutoCloseable{
+    private  String DB_URL = "jdbc:mysql://localhost:3306/biblio4_prof";
+    private  String USER = "new_user";
+    private  String PASS = "password";
+
+    private Connection con;
+
+    public DB() {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Etablissement de la connexion
+            try {
+                con = DriverManager.getConnection(DB_URL, USER, PASS);
+            } catch (SQLException e) {
+                throw new RuntimeException("Impossible de se connecter à la base de données:"+e.getMessage());
+            }
+
+        } catch (ClassNotFoundException e) {
+            throw new ClassCastException("Impossible de charger le pilote JDBC pour MySQL:"+e.getMessage());
+        }
+    }
+
+    public String getDB_URL() {
+        return this.DB_URL;
+    }
+
+    public String getUSER() {
+        return this.USER;
+    }
+
+    public String getPASS() {
+        return this.PASS;
+    }
+
+    public Connection getConnection() {
+        return con;
+    }
+
+    @Override
+    public void close() throws Exception {
+        if(this.con != null) {
+            this.con.close();
+        }        
+    }
+}
+```
+Cette classe implémente une interface **AutoCloseable**: c'est une classe à laquelle on oblige l'implémentation d'une méthode et c'est à nous de définir cette implémentation.
+
+L'interface oblige de définir la méthode **close()**. Ici dans cette méthode, je fermerai la connection qui a été faite dans le constructeur par défaut.
+
+
+Et voici à quoi ressemblerait notre code final:
+```java
+package Exemples.Chapitre2;
+
+import java.sql.*;
+
+import Exemples.dal.DB;
+import Exemples.user.Input;
+
+public class Exemple5 {
+    public static void main(String[] args) {
+        String nameStartWith = System.console().readLine("Nom commence par:");
+        int code_postal = Input.getValidInt("Code postal:",1000,9990);
+        displayLecteurs(nameStartWith, code_postal);
+    }
+
+    public static void displayLecteurs(String nameStartWith, int code_postal){
+        //On crée notre objet dans le try. L'intérêt c'est qu'à la fin du try, il va tout seul
+        //Appeler la méthode close() ==> c'est beau hein ? :-)
+        try (DB db = new DB()) {
+            // Etablissement de la connexion
+            Connection con = db.getConnection();
+            
+            // Création d'un objet PreparedStatement pour exécuter une requête de lecture
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+
+            stmt.setString(1, nameStartWith+"%");
+            stmt.setInt(2, code_postal);
+
+            // Exécution d'une requête de lecture
+            // et récupération du résultat dans un objet ResultSet
+            ResultSet rs = stmt.executeQuery();    
+            
+            // Parcours du résultat
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String nom= rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                System.out.println(nom + " ("+id+") \t\t" + prenom);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+```
+
+Bref faites comme vous voulez mais essayez de centraliser vos informations de connexion. Pour la suite je travaillerai peut-être avec des champs statiques. On verra mon humeur :-)
+
+
