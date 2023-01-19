@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 public class Input {
 
-    public static int getValidInt(String message) {
-        Scanner scanner = new Scanner(System.in);
+    public static int getValidInt(String message, Scanner scanner) {
+        if (scanner == null) 
+            scanner = new Scanner(System.in);
         while (true) {
             System.out.print(message);
             if (scanner.hasNextInt()) {
-                scanner.close();
                 return scanner.nextInt();
             } else {
                 System.out.println("Veuillez entrer un nombre valide");
@@ -18,14 +18,18 @@ public class Input {
         }
     }
 
-    public static int getValidInt(String message, int min, int max) {
-        Scanner scanner = new Scanner(System.in);
+    public static int getValidInt(String message) {
+        return getValidInt(message, null);
+    }
+
+    public static int getValidInt(String message, int min, int max, Scanner scanner) {
+        if (scanner == null)
+            scanner = new Scanner(System.in);
         while (true) {
             System.out.print(message);
             if (scanner.hasNextInt()) {
                 int i = scanner.nextInt();
                 if (i >= min && i <= max) {
-                    scanner.close();
                     return i;
                 } else {
                     System.out.println("Veuillez entrer un nombre entre " + min + " et " + max);
@@ -35,5 +39,9 @@ public class Input {
                 scanner.next();
             }
         }
+    }
+
+    public static int getValidInt(String message, int min, int max) {
+        return getValidInt(message, min, max, null);
     }
 }

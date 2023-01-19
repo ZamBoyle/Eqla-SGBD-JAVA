@@ -343,16 +343,18 @@ Alors on pourrait utiliser notre méthode escapeSQL() mais JAVA a implémenté u
 #### 3.2.1 Premier exemple
 J'ai créé une méthode getValidInt dans une classe Input pour être certain que l'on entre un entier valide.
 ```java
+package Exemples.user;
+
 import java.util.Scanner;
 
 public class Input {
 
-    public static int getValidInt(String message) {
-        Scanner scanner = new Scanner(System.in);
+    public static int getValidInt(String message, Scanner scanner) {
+        if(scanner==null)
+            scanner = new Scanner(System.in);
         while (true) {
             System.out.print(message);
             if (scanner.hasNextInt()) {
-                scanner.close();
                 return scanner.nextInt();
             } else {
                 System.out.println("Veuillez entrer un nombre valide");
@@ -361,14 +363,14 @@ public class Input {
         }
     }
 
-    public static int getValidInt(String message, int min, int max) {
-        Scanner scanner = new Scanner(System.in);
+    public static int getValidInt(String message, int min, int max, Scanner scanner) {
+        if(scanner==null)
+            scanner = new Scanner(System.in);
         while (true) {
             System.out.print(message);
             if (scanner.hasNextInt()) {
                 int i = scanner.nextInt();
                 if (i >= min && i <= max) {
-                    scanner.close();
                     return i;
                 } else {
                     System.out.println("Veuillez entrer un nombre entre " + min + " et " + max);
@@ -676,8 +678,9 @@ import Exemples.user.Input;
 
 public class Exemple5 {
     public static void main(String[] args) {
-        String nameStartWith = System.console().readLine("Nom commence par:");
-        int code_postal = Input.getValidInt("Code postal:",1000,9990);
+        Scanner scanner = new Scanner(System.in);
+        String nameStartWith = System.console().readLine("Nom commence par:", scanner);
+        int code_postal = Input.getValidInt("Code postal:",1000,9990, scanner);
         displayLecteurs(nameStartWith, code_postal);
     }
 
