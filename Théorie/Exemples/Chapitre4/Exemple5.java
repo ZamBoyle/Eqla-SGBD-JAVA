@@ -1,4 +1,4 @@
-package Exemples.Chapitre2;
+package Exemples.Chapitre4;
 
 import java.sql.*;
 

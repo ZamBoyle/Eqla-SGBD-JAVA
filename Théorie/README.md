@@ -458,7 +458,7 @@ SELECT * FROM lecteur WHERE nom LIKE 'du%' AND code_postal=1000;
 
 Voici maintenant un code JAVA qui utilisera deux paramètres:
 ```java
-package Exemples.Chapitre2;
+package Exemples.Chapitre3;
 
 import java.sql.*;
 
@@ -663,12 +663,11 @@ public class DB implements AutoCloseable{
 ```
 Cette classe implémente une interface **AutoCloseable**. Une interface nous oblige l'implémentation d'une ou plusieurs méthodes et c'est à nous de définir les implémentations.
 
-L'interface oblige de définir la méthode **close()**. Ici dans cette méthode, je fermerai la connection qui a été faite dans le constructeur par défaut.
+L'interface **AutoCloseable** oblige de définir la méthode **close()**. Ici dans cette méthode, je fermerai la connection qui a été faite dans le constructeur par défaut.
 
-
-Et voici à quoi ressemblerait notre code final:
+Et voici à quoi ressemble notre code final:
 ```java
-package Exemples.Chapitre2;
+package Exemples.Chapitre4;
 
 import java.sql.*;
 
