@@ -548,7 +548,7 @@ public class DB {
     public final static String PASS = "password";
 }
 ```
-Si on a fait le bon import, on 
+Si on a fait un import Exemples.dal.DB, on peut alors utiliser notre classe et ses méthodes statiques:
 ```java
 // Etablissement de la connexion
 Connection con = DriverManager.getConnection(DB.DB_URL, DB.USER, DB.PASS);
@@ -556,7 +556,7 @@ Connection con = DriverManager.getConnection(DB.DB_URL, DB.USER, DB.PASS);
 // Création d'un objet PreparedStatement pour exécuter une requête de lecture
 PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 ```
-Ou bien une classe avec des propriétés:
+Ou bien une classe avec des propriétés en lecture seule:
 ```java
 package Exemples.dal;
 
@@ -594,7 +594,7 @@ public class DB {
 }
 ```
 Ici dans le constructeur j'ai directement chargé le driver mysql avec Class.forName.
-J'ai directement affecté des valeurs aux propriétés mais on aurait pu les définir dans le constructeur.
+J'ai directement affecté des valeurs aux attributs mais on aurait pu les définir dans le constructeur.
 
 Pour l'utiliser:
 ```java
@@ -606,7 +606,7 @@ Connection con = DriverManager.getConnection(db.getDB_URL, db.getUSER, db.getPAS
 PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 ```
 
-Ou pourrait aussi faire en sorte que notre classe DB gère la connexion:
+Ou pourrait aussi faire en sorte que notre classe DB gère la connexion et la ferme:
 ```java
 package Exemples.dal;
 
@@ -661,7 +661,7 @@ public class DB implements AutoCloseable{
     }
 }
 ```
-Cette classe implémente une interface **AutoCloseable**: c'est une classe à laquelle on oblige l'implémentation d'une méthode et c'est à nous de définir cette implémentation.
+Cette classe implémente une interface **AutoCloseable**. Une interface nous oblige l'implémentation d'une ou plusieurs méthodes et c'est à nous de définir les implémentations.
 
 L'interface oblige de définir la méthode **close()**. Ici dans cette méthode, je fermerai la connection qui a été faite dans le constructeur par défaut.
 
@@ -683,7 +683,7 @@ public class Exemple5 {
     }
 
     public static void displayLecteurs(String nameStartWith, int code_postal){
-        //On crée notre objet dans le try. L'intérêt c'est qu'à la fin du try, il va tout seul
+        //On crée notre objet db dans le try. L'intérêt c'est qu'à la fin du try, il va tout seul
         //Appeler la méthode close() ==> c'est beau hein ? :-)
         try (DB db = new DB()) {
             // Etablissement de la connexion
