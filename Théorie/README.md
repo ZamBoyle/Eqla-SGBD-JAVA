@@ -17,10 +17,12 @@ On peut avoir le même résultat en modifiant un fichier ce qui est évidemment 
 
 Dans le répertoire **.vscode** qui est généralement caché, modifier le fichier **settings.json** et ajouter une entrée dans '**java.project.referencedLibraries**':
 ```json
+{
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "/usr/share/java/mysql-connector-j-8.0.31.jar"
     ]
+}
 ```
 Evidemment modifiez cette entrée en fonction du chemin sur votre ordinateur et la version de votre connecteur.
 
