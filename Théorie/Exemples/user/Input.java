@@ -34,4 +34,15 @@ public class Input {
     public static int getValidInt(String message, int min, int max) {
         return getValidInt(message, min, max, null);
     }
+
+    public static String getValidString(String message) {
+        return getValidString(message, null);
+    }
+
+    private static String setLecteurFields(String message, Scanner scanner) {
+        if (scanner == null)
+            scanner = new Scanner(System.in);
+        System.out.print("Entrez votre nom : ");
+        return scanner.nextLine();
+    }
 }

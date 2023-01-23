@@ -14,9 +14,6 @@ public class Exemple4 {
     public static void displayLecteurs(String nameStartWith, int code_postal){
         Connection con = null;
         try {
-            // Chargement du pilote JDBC pour MariaDB
-            Class.forName("org.mariadb.jdbc.Driver");
-            
             // Etablissement de la connexion
             con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             

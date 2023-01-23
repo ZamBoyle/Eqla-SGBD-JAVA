@@ -533,7 +533,7 @@ pstmt.setString(1, nameStartWith+"%");
 pstmt.setInt(2, code_postal);
 ```
 
-### 4. Informations de connexion
+## 4. Informations de connexion
 Comme vous l'avez-vous remarqué on doit tout le temps remettre nos informations de connexion: le nom du driver, le nom de la base de donnée, le login, le mot de passe, etc.
 
 Imaginons que demain, tout change. On change de serveur, on change le nom d'utilisateur, le port, le mot de passe, etc.
@@ -711,5 +711,60 @@ public class Exemple5 {
 ```
 
 Bref faites comme vous voulez mais essayez de centraliser vos informations de connexion. Pour la suite je travaillerai peut-être avec des champs statiques. On verra mon humeur :-)
+
+
+## 5. Mises à jour
+On entend par mises à jour les opérations suivantes:
+- INSERT
+- UPDATE
+- DELETE
+
+### 5.1 UPDATE
+Pour faire un update on utilisera la méthode executeUpdate() sur notre un objet de type PreparedStatement. Cette méthode retournera le nombre d'enregistrements concernés par l'update.
+
+Si l'on veut mettre à jour le prénom et le nom du lecteur ayant l'id 2:
+```java
+package Exemples.Chapitre5;
+
+import java.sql.*;
+
+public class Exemple6 {
+    public static void main(String[] args) {
+        try (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1")) {
+            // Création d'un objet PreparedStatement pour exécuter une requête d'UPDATE
+            PreparedStatement pstmt = con.prepareStatement("UPDATE lecteur SET nom= ?, prenom = ? WHERE id = ?");
+
+            // Définition des paramètres de la requête
+            // nom = "Piette", prenom = "Johnny", id = 2
+            pstmt.setString(1, "Piette");
+            pstmt.setString(2, "Johnny");
+            pstmt.setInt(3, 2);
+
+            // Exécution d'une requête d'UPDATE
+            // et récupération du nombre d'enregistrements modifiés
+            int nbEnregistrements = pstmt.executeUpdate();
+                
+            if(nbEnregistrements > 0)
+                System.out.println(nbEnregistrements + " enregistrements modifiés.");    
+            else
+                System.out.println("Aucun enregistrement modifié.");
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+```
+Ici rien de magique on fait un UPDATE au lieu d'un SELECT dans le prepareStatement et on utilise uniquement executeUpdate() et on n'a pas besoin évidemment de ResultSet.
+
+En effet, le ResultSet renvoie un jeu de résultats. Ici on reçoit juste un entier pour avoir le nombre d'enregistrements modifiés.
+### 5.2 INSERT
+
+### 5.3 DELETE
+
+
+
+
+
 
 

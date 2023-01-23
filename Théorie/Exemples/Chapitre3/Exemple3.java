@@ -8,9 +8,6 @@ public class Exemple3 {
     public static void main(String[] args) {
         Connection con = null;
         try {
-            // Chargement du pilote JDBC pour MariaDB
-            Class.forName("org.mariadb.jdbc.Driver");
-            
             // Etablissement de la connexion
             con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             
