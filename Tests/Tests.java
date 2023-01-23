@@ -1,8 +1,9 @@
-package Exemples.Chapitre2;
+package Tests;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
-public class Exemple1 {
+public class Tests {
     public static void main(String[] args) {
         try {
             // Chargement du pilote JDBC pour MySQL
@@ -23,7 +24,10 @@ public class Exemple1 {
             
             // Parcours du résultat
             while (rs.next()) {
-                System.out.println(rs.getString("nom") + "\t\t" + rs.getString("prenom"));
+                SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+                Date date = rs.getDate("date_naissance");
+                String stringDate= DateFor.format(date);
+                System.out.println(rs.getString("nom") + "\t\t" +stringDate+ "\t\t"+ rs.getString("prenom"));
             }
 
             // Fermeture de la connexion

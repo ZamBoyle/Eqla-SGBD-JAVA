@@ -53,8 +53,8 @@ public class Exemple1 {
             Statement stmt = con.createStatement();
 
             // Exécution d'une requête de lecture
-            // et récupération du résultat dans un objet ResultSet
-            String query = "SELECT * FROM lecteur";
+            // et récupération du résultat dans un objet ResultSet 
+            String query = "SELECT * FROM lecteur;";
             ResultSet rs = stmt.executeQuery(query);    
             
             // Parcours du résultat
