@@ -10,8 +10,7 @@ public class Exemple5 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String nameStartWith = System.console().readLine("Nom commence par:");
-        int code_postal = Input.getValidInt("Code postal:",1000,9990);
-        code_postal = Input.getValidInt("Code postal:",1000,9990, scanner);
+        int code_postal = Input.getValidInt("Code postal:",1000,9990, scanner);
         displayLecteurs(nameStartWith, code_postal);
     }
 

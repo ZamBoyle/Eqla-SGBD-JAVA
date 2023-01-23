@@ -6,22 +6,23 @@ import Exemples.user.Input;
 
 public class Exemple3 {
     public static void main(String[] args) {
+        Connection con = null;
         try {
-            // Chargement du pilote JDBC pour MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Chargement du pilote JDBC pour MariaDB
+            Class.forName("org.mariadb.jdbc.Driver");
             
             // Etablissement de la connexion
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+            con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             
             // Création d'un objet PreparedStatement pour exécuter une requête de lecture
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
 
             int id= Input.getValidInt("Matricule (id) du lecteur:");
-            stmt.setInt(1, id);
+            pstmt.setInt(1, id);
 
             // Exécution d'une requête de lecture
             // et récupération du résultat dans un objet ResultSet
-            ResultSet rs = stmt.executeQuery();    
+            ResultSet rs = pstmt.executeQuery();    
             
             // Parcours du résultat
             while (rs.next()) {
@@ -34,6 +35,14 @@ public class Exemple3 {
             con.close();
         } catch (Exception e) {
             System.out.println(e);
+        }
+        finally {
+            if (con != null)
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
         }
     }
 }

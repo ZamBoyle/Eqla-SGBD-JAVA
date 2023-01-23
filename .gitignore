@@ -25,6 +25,10 @@ hs_err_pid*
 # Les chapitres qui ne peuvent pas être vus pour le moment
 #Théorie/Exemples/*
 #!Exercices/*
+<<<<<<< HEAD
 #!Exercices/README.md
 
 .fake
+=======
+#!Exercices/README.md
+>>>>>>> 3aeba16 (Updates)

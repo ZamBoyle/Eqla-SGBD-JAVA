@@ -41,12 +41,25 @@ import java.sql.*;
 public class Exemple1 {
     public static void main(String[] args) {
         try {
+<<<<<<< HEAD
             // Chargement du pilote JDBC pour MySQL
             //Class.forName("com.mysql.cj.jdbc.Driver");
             Class.forName("org.mariadb.jdbc.Driver");
             
             // Etablissement de la connexion
             //Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password1");
+=======
+            // Avant Java 7
+            // Chargement du pilote JDBC
+            // Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
+            Class.forName("org.mariadb.jdbc.Driver"); //MariaDB
+            
+            // Etablissement de la connexion
+            //Si MySQL Connector
+            //Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password1");
+            
+            //Si MariaDB Connector
+>>>>>>> 3aeba16 (Updates)
             Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             
             // Création d'un objet Statement pour exécuter une requête de lecture
@@ -70,7 +83,8 @@ public class Exemple1 {
     }
 }
 ```
-### 2.1 forName
+### 2.1 forName 
+#### 2.1.1 Avant JAVA 7
 ```java
 Class.forName("com.mysql.cj.jdbc.Driver");
 ```
@@ -80,10 +94,15 @@ La méthode **forName** appartient à la classe **Class** qui est une classe de 
 
 Cela va également appeler le bloc statique de la classe, qui permet de déclencher la régistration du pilote auprès de **DriverManager**.
 
+#### 2.1.2 Après JAVA 7
+A partir de Java 7, le driver JDBC de MariaDB est automatiquement chargé à l'exécution grâce à la spécification JDBC 4.0.
 
+Cela signifie qu'il n'est plus nécessaire d'utiliser la méthode Class.forName pour charger manuellement le pilote.
+
+Le pilote est désormais enregistré auprès de l'API JDBC lors de son installation, de sorte qu'il est automatiquement détecté et chargé par le système lorsqu'une application tente de se connecter à une base de données MariaDB.
 ### 2.2 getConnection / Connection
 ```java
-Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
 ```
 
 Cette instruction crée une nouvelle instance de la classe **Connection**, c'est à dire **con**, en utilisant la méthode statique **getConnection()** de la classe **DriverManager**. La méthode **getConnection()** prend trois paramètres :
@@ -92,9 +111,9 @@ Cette instruction crée une nouvelle instance de la classe **Connection**, c'est
 
 2. Le deuxième paramètre est une chaîne de caractères qui spécifie le nom d'utilisateur à utiliser pour se connecter à la base de données. Dans ce cas, le nom d'utilisateur est "**new_user**".
 
-3. Le troisième paramètre est une chaîne de caractères qui spécifie le mot de passe à utiliser pour se connecter à la base de données. Dans ce cas, le mot de passe est "**password**".
+3. Le troisième paramètre est une chaîne de caractères qui spécifie le mot de passe à utiliser pour se connecter à la base de données. Dans ce cas, le mot de passe est "**password1**".
 
-En résumé cette instruction crée une connection JDBC (Java DataBase Connectivity) à une base de données MySQL, en utilisant un utilisateur nommé "**new_user**" et un mot de passe "**password**" pour se connecter à la base de données **biblio4_prof** qui est hébergée **localement**.
+En résumé cette instruction crée une connection JDBC (Java DataBase Connectivity) à une base de données MySQL, en utilisant un utilisateur nommé "**new_user**" et un mot de passe "**password1**" pour se connecter à la base de données **biblio4_prof** qui est hébergée **localement**.
 
 ### 2.3 createStatement / Statement
 ```java
@@ -169,21 +188,20 @@ On peut par exemple rechercher un lecteur en fonction de son numéro de lecteur 
 
 Voyons comment en reprenant notre code mais en ajoutant une entrée à l'utilisateur le nom d'un lecteur par exemple 'Dupont': ahhh les Dupont... ;-)
 ```java
+package Exemples.Chapitre3;
+
 import java.sql.*;
 
-public class Exemple1 {
+public class Exemple2 {
     public static void main(String[] args) {
         try {
-            // Chargement du pilote JDBC pour MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
             // Etablissement de la connexion
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+            Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             
             // Création d'un objet Statement pour exécuter une requête de lecture
             Statement stmt = con.createStatement();
 
-            String who = System.console.readLin("Nom du lecteur à rechercher:");
+            String who = System.console().readLine("Nom du lecteur à rechercher:");
 
             // Exécution d'une requête de lecture
             // et récupération du résultat dans un objet ResultSet
@@ -192,7 +210,7 @@ public class Exemple1 {
             
             // Parcours du résultat
             while (rs.next()) {
-                String id = rs.getInt("id");
+                int id = rs.getInt("id");
                 String nom= rs.getString("nom");
                 String prenom = rs.getString("prenom");
                 System.out.println(nom + " ("+id+") \t\t" + prenom);
@@ -214,7 +232,7 @@ Ensuite, s'afficheront, pour tous les Dupont trouvés, les champs suivants: nom 
 Dupont (2) Jeanne
 ```
 
-#### 3.1.1 Problème de l'injection SQL
+#### 3.1.1 Problème des caractères spéciaux et de l'injection SQL
 Cette partie est très importante car elle va vous permettre des diminuer les risques d'attaque d'injection SQL.
 
 Lors du cours SQL, vous vous rappelez que je vous ai dit qu'il fallait redoubler les apostrophes car si votre chaîne contient un apostrophe SQL "pensera" que vous avez terminé la chaîne.
@@ -244,25 +262,22 @@ Je vais donc partir du principe que nous n'avons pas de fonctions escapeSQL et d
 
 Soit le code suivant:
 ```java
-package Exemples.Chapitre2;
+package Exemples.Chapitre3;
 
 import java.io.Console;
 import java.sql.*;
 
-public class Exemple2 {
+public class Exemple3 {
     public static void main(String[] args) {
         try {
-            // Chargement du pilote JDBC pour MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
             // Etablissement de la connexion
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
             
             // Création d'un objet Statement pour exécuter une requête de lecture
             Statement stmt = con.createStatement();
 
-            Console console = System.console();
-            String id = console.readLine("Matricule (id) du lecteur:");
+            int id= Input.getValidInt("Matricule (id) du lecteur:");
+            stmt.setInt(1, id);
 
             // Exécution d'une requête de lecture
             // et récupération du résultat dans un objet ResultSet
@@ -354,7 +369,7 @@ import java.util.Scanner;
 public class Input {
 
     public static int getValidInt(String message, Scanner scanner) {
-        if(scanner==null)
+        if (scanner == null) 
             scanner = new Scanner(System.in);
         while (true) {
             System.out.print(message);
@@ -367,23 +382,21 @@ public class Input {
         }
     }
 
+    public static int getValidInt(String message) {
+        return getValidInt(message, null);
+    }
+
     public static int getValidInt(String message, int min, int max, Scanner scanner) {
-        if(scanner==null)
-            scanner = new Scanner(System.in);
-        while (true) {
-            System.out.print(message);
-            if (scanner.hasNextInt()) {
-                int i = scanner.nextInt();
-                if (i >= min && i <= max) {
-                    return i;
-                } else {
-                    System.out.println("Veuillez entrer un nombre entre " + min + " et " + max);
-                }
-            } else {
-                System.out.println("Veuillez entrer un nombre valide");
-                scanner.next();
-            }
+        int input = getValidInt(message, scanner);
+        while (input < min || input > max) {
+            System.out.println("Veuillez entrer un nombre entre " + min + " et " + max);
+            input = getValidInt(message, scanner);
         }
+        return input;
+    }
+
+    public static int getValidInt(String message, int min, int max) {
+        return getValidInt(message, min, max, null);
     }
 }
 ```
@@ -399,21 +412,18 @@ import Exemples.user.Input;
 public class Exemple3 {
     public static void main(String[] args) {
         try {
-            // Chargement du pilote JDBC pour MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
             // Etablissement de la connexion
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+            Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             
             // Création d'un objet PreparedStatement pour exécuter une requête de lecture
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
 
             int id= Input.getValidInt("Matricule (id) du lecteur:");
-            stmt.setInt(1, id);
+            pstmt.setInt(1, id);
 
             // Exécution d'une requête de lecture
             // et récupération du résultat dans un objet ResultSet
-            ResultSet rs = stmt.executeQuery();    
+            ResultSet rs = pstmt.executeQuery();    
             
             // Parcours du résultat
             while (rs.next()) {
@@ -432,13 +442,13 @@ public class Exemple3 {
 ```
 Ce qui a changé c'est qu'on utilise maintenant un objet de type **PreparedStatement** et en plus dans on utilise un point d'interrogation dans la requête. Reprenons cette ligne de code:
 ```java
-PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
+PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE id=?");
 ```
 En mettant un point d'interrogation on indique qu'à cet endroit on va utiliser/injecter une valeur d'un certain type.
 
 Donc l'objectif maintenant c'est de remplacer ce ? par un entier. C'est ce que l'on va faire à partir de notre objet stmt en utilisant la méthode **setInt**: 
 ```java
-stmt.setInt(1, id);
+pstmt.setInt(1, id);
 ```
 Cette commande va indiquer que l'on va mettre pour le premier point d'interrogation un entier dont la valeur sera celle de notre variable **id**.
 
@@ -479,21 +489,18 @@ public class Exemple4 {
 
     public static void displayLecteurs(String nameStartWith, int code_postal){
         try {
-            // Chargement du pilote JDBC pour MySQL
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            
             // Etablissement de la connexion
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password");
+            Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             
             // Création d'un objet PreparedStatement pour exécuter une requête de lecture
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 
-            stmt.setString(1, nameStartWith+"%");
-            stmt.setInt(2, code_postal);
+            pstmt.setString(1, nameStartWith+"%");
+            pstmt.setInt(2, code_postal);
 
             // Exécution d'une requête de lecture
             // et récupération du résultat dans un objet ResultSet
-            ResultSet rs = stmt.executeQuery();    
+            ResultSet rs = pstmt.executeQuery();    
             
             // Parcours du résultat
             while (rs.next()) {
@@ -527,12 +534,12 @@ Dubois (5)              Christophe
 ```
 La fonction displayLecteurs va utiliser un objet du type PreparedStatement:
 ```java
-PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 ```
 Les deux points d'interrogations seront remplacés par:
 ```java
-stmt.setString(1, nameStartWith+"%");
-stmt.setInt(2, code_postal);
+pstmt.setString(1, nameStartWith+"%");
+pstmt.setInt(2, code_postal);
 ```
 
 ### 4. Informations de connexion
@@ -551,7 +558,7 @@ package Exemples.dal;
 public class DB {
     public final static String DB_URL = "jdbc:mysql://localhost:3306/biblio4_prof";
     public final static String USER = "new_user";
-    public final static String PASS = "password";
+    public final static String PASS = "password1";
 }
 ```
 Si on a fait un import Exemples.dal.DB, on peut alors utiliser notre classe et ses méthodes statiques:
@@ -560,22 +567,22 @@ Si on a fait un import Exemples.dal.DB, on peut alors utiliser notre classe et s
 Connection con = DriverManager.getConnection(DB.DB_URL, DB.USER, DB.PASS);
 
 // Création d'un objet PreparedStatement pour exécuter une requête de lecture
-PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 ```
 Ou bien une classe avec des propriétés en lecture seule:
 ```java
 package Exemples.dal;
 
 public class DB {
-    private  String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private  String DB_URL = "jdbc:mysql://localhost:3306/biblio4_prof";
+    private  String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
+    private  String DB_URL = "jdbc:mariadb://localhost:3306/biblio4_prof";
     private  String USER = "new_user";
-    private  String PASS = "password";
+    private  String PASS = "password1";
 
     public DB() {
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
 
         } catch (ClassNotFoundException e) {
             throw new ClassCastException("Impossible de charger le pilote JDBC pour MySQL");
@@ -599,8 +606,7 @@ public class DB {
     }
 }
 ```
-Ici dans le constructeur j'ai directement chargé le driver mysql avec Class.forName.
-J'ai directement affecté des valeurs aux attributs mais on aurait pu les définir dans le constructeur.
+Ici dans le constructeur j'ai directement chargé le driver mysql avec Class.forName et affecté des valeurs aux attributs mais on aurait pu les définir dans le constructeur.
 
 Pour l'utiliser:
 ```java
@@ -609,7 +615,7 @@ DB db = new DB();
 Connection con = DriverManager.getConnection(db.getDB_URL, db.getUSER, db.getPASS);
 
 // Création d'un objet PreparedStatement pour exécuter une requête de lecture
-PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 ```
 
 Ou pourrait aussi faire en sorte que notre classe DB gère la connexion et la ferme:
@@ -621,25 +627,18 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DB implements AutoCloseable{
-    private  String DB_URL = "jdbc:mysql://localhost:3306/biblio4_prof";
+    private  String DB_URL = "jdbc:mariadb://localhost:3306/biblio4_prof";
     private  String USER = "new_user";
-    private  String PASS = "password";
+    private  String PASS = "password1";
 
     private Connection con;
 
     public DB() {
-
+        // Etablissement de la connexion
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // Etablissement de la connexion
-            try {
-                con = DriverManager.getConnection(DB_URL, USER, PASS);
-            } catch (SQLException e) {
-                throw new RuntimeException("Impossible de se connecter à la base de données:"+e.getMessage());
-            }
-
-        } catch (ClassNotFoundException e) {
-            throw new ClassCastException("Impossible de charger le pilote JDBC pour MySQL:"+e.getMessage());
+            con = DriverManager.getConnection(DB_URL, USER, PASS);
+        } catch (SQLException e) {
+            throw new RuntimeException("Impossible de se connecter à la base de données:"+e.getMessage());
         }
     }
 
@@ -696,14 +695,14 @@ public class Exemple5 {
             Connection con = db.getConnection();
             
             // Création d'un objet PreparedStatement pour exécuter une requête de lecture
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 
-            stmt.setString(1, nameStartWith+"%");
-            stmt.setInt(2, code_postal);
+            pstmt.setString(1, nameStartWith+"%");
+            pstmt.setInt(2, code_postal);
 
             // Exécution d'une requête de lecture
             // et récupération du résultat dans un objet ResultSet
-            ResultSet rs = stmt.executeQuery();    
+            ResultSet rs = pstmt.executeQuery();    
             
             // Parcours du résultat
             while (rs.next()) {

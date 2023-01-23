@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class ExempleConnectionPool {
     public static void main(String[] args) throws SQLException {
-        ConnectionPool pool = new ConnectionPool("jdbc:mysql://localhost:3306/mydb", "root", "password");
+        ConnectionPool pool = new ConnectionPool("jdbc:mariadb://localhost:3306/mydb", "new_user", "password1");
         Connection connection = pool.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
