@@ -41,14 +41,6 @@ import java.sql.*;
 public class Exemple1 {
     public static void main(String[] args) {
         try {
-<<<<<<< HEAD
-            // Chargement du pilote JDBC pour MySQL
-            //Class.forName("com.mysql.cj.jdbc.Driver");
-            Class.forName("org.mariadb.jdbc.Driver");
-            
-            // Etablissement de la connexion
-            //Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password1");
-=======
             // Avant Java 7
             // Chargement du pilote JDBC
             // Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
@@ -59,7 +51,6 @@ public class Exemple1 {
             //Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/biblio4_prof", "new_user", "password1");
             
             //Si MariaDB Connector
->>>>>>> 3aeba16 (Updates)
             Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
             
             // Création d'un objet Statement pour exécuter une requête de lecture

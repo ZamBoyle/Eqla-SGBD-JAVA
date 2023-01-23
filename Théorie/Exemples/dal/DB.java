@@ -13,22 +13,24 @@ public class DB implements AutoCloseable {
 
     public DB() {
 
-/*         try {
-            Class.forName("org.mariadb.jdbc.Driver");
-            // Etablissement de la connexion */
+        /*
+         * try {
+         * Class.forName("org.mariadb.jdbc.Driver");
+         * // Etablissement de la connexion
+         */
         try {
             con = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
-            throw new RuntimeException("Impossible de se connecter à la base de données:"+e.getMessage());
+            throw new RuntimeException("Impossible de se connecter à la base de données:" + e.getMessage());
         }
-    /*
-     * } catch (ClassNotFoundException e) {
-     * throw new
-     * ClassCastException("Impossible de charger le pilote JDBC pour MySQL:"+e.
-     * getMessage());
-     * }
-     * }
-     */
+        /*
+         * } catch (ClassNotFoundException e) {
+         * throw new
+         * ClassCastException("Impossible de charger le pilote JDBC pour MySQL:"+e.
+         * getMessage());
+         * }
+         */
+    }
 
     public String getDB_URL() {
         return this.DB_URL;
