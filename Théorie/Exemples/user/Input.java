@@ -1,5 +1,8 @@
 package Exemples.user;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class Input {
@@ -13,7 +16,7 @@ public class Input {
                 return scanner.nextInt();
             } else {
                 System.out.println("Veuillez entrer un nombre valide");
-                scanner.next();
+                scanner.nextInt();
             }
         }
     }
@@ -35,14 +38,36 @@ public class Input {
         return getValidInt(message, min, max, null);
     }
 
-    public static String getValidString(String message) {
-        return getValidString(message, null);
+    public static java.util.Date getValidDate(String message, Scanner scanner) {
+        java.util.Date date = null;
+        while (date == null) {
+            System.out.print(message);
+            String input = scanner.nextLine();
+
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                date = format.parse(input);
+            } catch (ParseException e) {
+                System.out.println("Format de date invalide, veuillez réessayer.");
+            }
+        }
+        return date;
     }
 
-    private static String setLecteurFields(String message, Scanner scanner) {
-        if (scanner == null)
-            scanner = new Scanner(System.in);
-        System.out.print("Entrez votre nom : ");
-        return scanner.nextLine();
+    public static java.sql.Date getSqlDate(java.util.Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+            String strDate = sdf.format(date);
+			java.util.Date dateUtil = sdf.parse(strDate);
+			java.sql.Date dateSql = new Date(dateUtil.getTime());
+			System.out.println("Date java.util.Date : " + dateUtil);
+			System.out.println("Date java.sql.Date : " + dateSql);
+            return new java.sql.Date(date.getTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        return null;
     }
+
+
 }
