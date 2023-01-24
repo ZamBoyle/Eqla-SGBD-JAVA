@@ -856,7 +856,7 @@ public class Exemple7 {
 
 ### 5.3 DELETE
 
-
+### 6. Les transactions: Commit & Rollback
 
 
 
