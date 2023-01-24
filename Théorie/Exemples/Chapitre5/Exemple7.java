@@ -6,8 +6,13 @@ import java.util.Scanner;
 import Exemples.user.Input;
 
 public class Exemple7 {
+    private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        addLecteur();
+    }
+
+    public static void addLecteur(){
+        scanner = new Scanner(System.in);
         System.out.println("Ajout d'un lecteur");
         System.out.println("==================");
         try (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
