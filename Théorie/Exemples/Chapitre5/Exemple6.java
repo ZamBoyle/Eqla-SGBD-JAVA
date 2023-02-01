@@ -1,11 +1,12 @@
 package Exemples.Chapitre5;
 
 import java.sql.*;
+import Exemples.dal.DB;
 
 public class Exemple6 {
     public static void main(String[] args) {
-        try (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1")) {
-            // Création d'un objet PreparedStatement pour exécuter une requête d'UPDATE
+        try (DB db = new DB()) {
+            Connection con = db.getConnection();
             PreparedStatement pstmt = con.prepareStatement("UPDATE lecteur SET nom= ?, prenom = ? WHERE id = ?");
 
             System.out.println("Mise à jour du lecteur 2");

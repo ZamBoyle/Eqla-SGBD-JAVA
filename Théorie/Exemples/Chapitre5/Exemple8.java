@@ -1,15 +1,13 @@
 package Exemples.Chapitre5;
 
 import java.sql.*;
-import java.util.Scanner;
 
-import Exemples.user.Input;
+import Exemples.dal.DB;
 
 public class Exemple8 {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("DELETE d'un lecteur");
-        System.out.println("==================");
+        System.out.println("DELETE du dernier lecteur");
+        System.out.println("=========================");
         Integer lastId = getLastId("lecteur");
         
         if(lastId != null){
@@ -20,7 +18,8 @@ public class Exemple8 {
     }
 
     private static void deleteLecteur(Integer id) {
-        try (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1")) {
+        try (DB db = new DB()) {
+            Connection con = db.getConnection();
             // Création d'un objet PreparedStatement pour exécuter une requête d'INSERT
             PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM lecteur WHERE id = ?");
 
@@ -42,10 +41,8 @@ public class Exemple8 {
         }
     }
 
-
     private static Integer getLastId(String table) {
         try (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1")) {
-
             PreparedStatement pstmt = con.prepareStatement("SELECT MAX(id) FROM " + table);
 
             ResultSet rs = pstmt.executeQuery();

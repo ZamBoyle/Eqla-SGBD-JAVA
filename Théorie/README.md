@@ -791,6 +791,7 @@ package Exemples.Chapitre5;
 import java.sql.*;
 import java.util.Scanner;
 
+import Exemples.dal.DB;
 import Exemples.user.Input;
 
 public class Exemple7 {
@@ -803,9 +804,8 @@ public class Exemple7 {
         scanner = new Scanner(System.in);
         System.out.println("Ajout d'un lecteur");
         System.out.println("==================");
-        try (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                "password1")) {
-            // Création d'un objet PreparedStatement pour exécuter une requête d'INSERT
+        try (DB db = new DB()) {
+            Connection con = db.getConnection();
             PreparedStatement pstmt = con.prepareStatement(
                     "INSERT INTO lecteur (nom,prenom,date_naissance,adresse,code_postal,num_rue, localite,telephone) VALUES (?,?,?,?,?,?,?,?)");
 
@@ -858,6 +858,14 @@ public class Exemple7 {
 
 ### 5.3 DELETE
 Pour l'exemple on va supprimer le dernier lecteur inscrit. Ca n'a pas de sens de le supprimer comme ça arbitrairement. C'est juste pour l'exemple: on supprime le dernier lecteur inscrit.
+
+En effet, si le lecteur que nous essayons de supprimer est lié à un emprunt la base de données refusera de le supprimer. Et vous retournera cette erreur:
+```
+[ WARN] (main) Error: 1451-23000: Cannot delete or update a parent row: a foreign key constraint fails (`biblio4_prof`.`emprunt`, CONSTRAINT `emprunt_ibfk_1` FOREIGN KEY (`lecteur_id`) REFERENCES `lecteur` (`id`))
+(conn=41) Cannot delete or update a parent row: a foreign key constraint fails (`biblio4_prof`.`emprunt`, CONSTRAINT `emprunt_ibfk_1` FOREIGN KEY (`lecteur_id`) REFERENCES `lecteur` (`id`))
+```
+
+Voici le code java qui supprime le dernier lecteur inscrit. Donc exécutez l'exemple précédent (qui ajout un lecteur), vous pourrez ainsi utiliser ce code sans qu'il ne génère une erreur.
 ```java
 package Exemples.Chapitre5;
 
@@ -920,6 +928,7 @@ public class Exemple8 {
 }
 ```
 ### 6. Les transactions: Commit & Rollback
+
 
 
 

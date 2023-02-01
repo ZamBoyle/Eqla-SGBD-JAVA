@@ -3,6 +3,7 @@ package Exemples.Chapitre5;
 import java.sql.*;
 import java.util.Scanner;
 
+import Exemples.dal.DB;
 import Exemples.user.Input;
 
 public class Exemple7 {
@@ -15,9 +16,8 @@ public class Exemple7 {
         scanner = new Scanner(System.in);
         System.out.println("Ajout d'un lecteur");
         System.out.println("==================");
-        try (Connection con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                "password1")) {
-            // Création d'un objet PreparedStatement pour exécuter une requête d'INSERT
+        try (DB db = new DB()) {
+            Connection con = db.getConnection();
             PreparedStatement pstmt = con.prepareStatement(
                     "INSERT INTO lecteur (nom,prenom,date_naissance,adresse,code_postal,num_rue, localite,telephone) VALUES (?,?,?,?,?,?,?,?)");
 

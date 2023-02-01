@@ -4,12 +4,12 @@ import java.sql.*;
 import java.util.Scanner;
 
 import Exemples.user.Input;
+import Exemples.dal.DB;
 
 public class Exercices {
 
     public static void main(String[] args) {
         Exercices exercices = new Exercices();
-
         
         /* System.out.println("Exercice 3");
         System.out.println("==========");
@@ -66,16 +66,12 @@ public class Exercices {
         Exercice11 exercice11 = exercices.new Exercice11();
         exercice11.Run();
         System.console().readLine("< Appuyez sur ENTER pour continuer >");
-
     }
 
     public class Exercice3 {
         public void Run() {
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -91,13 +87,6 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
             }
         }
     }
@@ -108,11 +97,8 @@ public class Exercices {
         }
 
         private void displayThemes() {
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -128,14 +114,7 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-            }
+            } 
         }
     }
 
@@ -145,11 +124,8 @@ public class Exercices {
         }
 
         private void displayAuteurs() {
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -165,14 +141,7 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-            }
+            } 
         }
     }
 
@@ -185,11 +154,8 @@ public class Exercices {
         }
 
         private void displayAuteur(Integer id) {
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -205,22 +171,12 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
             }
         }
 
         private void displayAuteurs() {
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -236,13 +192,6 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
             }
         }
     }
@@ -264,11 +213,8 @@ public class Exercices {
         }
 
         private void displayAuteursCommon(String statement){
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -284,14 +230,7 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-            }
+            } 
         }
     }
 
@@ -307,11 +246,8 @@ public class Exercices {
         }
 
         private void displayExemplaires(String rayon, String etat) {
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -330,13 +266,6 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
             }
         }
     }
@@ -353,11 +282,8 @@ public class Exercices {
         }
 
         private void displayExemplaires(String rayon, String etat) {
-            Connection con = null;
-            try {
-                // Si MariaDB Connector
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user",
-                        "password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
@@ -377,13 +303,6 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
             }
         }
     }
@@ -400,9 +319,8 @@ public class Exercices {
         }
 
         private void displayExemplaires(String rayon, String etat) {
-            Connection con = null;
-            try {
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user","password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 String query = 
                 "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom "+
@@ -425,13 +343,6 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
             }
         }
     }
@@ -448,9 +359,8 @@ public class Exercices {
         }
 
         private void displayExemplaires(String rayon, String etat) {
-            Connection con = null;
-            try {
-                con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user","password1");
+            try (DB db = new DB()) {
+                Connection con = db.getConnection();
 
                 String query = 
                     "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom "+
@@ -473,16 +383,7 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } finally {
-                if (con != null)
-                    try {
-                        con.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
             }
         }
     }
-
-
 }
