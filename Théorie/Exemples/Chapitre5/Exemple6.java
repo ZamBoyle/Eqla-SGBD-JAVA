@@ -8,6 +8,8 @@ public class Exemple6 {
             // Création d'un objet PreparedStatement pour exécuter une requête d'UPDATE
             PreparedStatement pstmt = con.prepareStatement("UPDATE lecteur SET nom= ?, prenom = ? WHERE id = ?");
 
+            System.out.println("Mise à jour du lecteur 2");
+            System.out.println("========================");
             // Définition des paramètres de la requête
             // nom = "Piette", prenom = "Johnny", id = 2
             pstmt.setString(1, "Piette");

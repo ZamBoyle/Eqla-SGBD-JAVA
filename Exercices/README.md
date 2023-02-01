@@ -14,7 +14,7 @@ Comme pour l'exemple vu au cours, veuillez affichez la liste des thèmes présen
 
 ### Exercice4.java - Simple SELECT
 
-Vous reprendrez le code précédent et maintenant vous mettrez votre code dans une fonction qui s'appelera displayTheme();
+Vous reprendrez le code précédent et maintenant vous mettrez votre code dans une fonction qui s'appelera displayThemes();
 
 Votre méthode main appelera votre méthode displayThemes();
 
@@ -33,9 +33,6 @@ Vous utiliserez le code précédent.
 Faites une méthode qui s'appellera displayAuteur: cette méthode recevra un entier qui indique l'id de l'auteur à rechercher.
 
 Votre méthode main demandera l'identifiant (id) de l'auteur et appellera ensuite la méthode displayAuteur avec l'identifiant fournit en paramètre. Les champs de la table à afficher seront: tous.
-
-On fera attention à utiliser une méthode sécurisée comme vu au cours.
-
 
 ### Exercice7.java - Factorisation
 
@@ -58,6 +55,20 @@ Votre méthode main appellera cette méthode en fournissant les paramètres reç
 Vous utiliserez le code précédent.
 
 Ici, vous allez modifier la requêtre pour pouvoir afficher le titre du livre au lieu de livre_id.
+
+### Exercice10.java - SELECT avec 2 paramètres
+
+Vous utiliserez le code précédent.
+
+Ajoutez en plus le nom et prénom de l'auteur.
+
+### Exercice11.java - Prepared Statement
+
+Vous utiliserez le code précédent.
+
+Vous allez modifier le code pour qu'il utilise maintenant les requêtes préparées (Prepared Statement).
+
+
 
 
 

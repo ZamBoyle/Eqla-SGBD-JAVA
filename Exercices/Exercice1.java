@@ -30,5 +30,10 @@ public class Exercice1 {
         menu.menuPrincipal();
 
 
-    }   
+    }
+    
+    public static void displayAuteur(Integer id) {
+        Auteur auteur = AuteurDAO.getAuteurById(id);
+        System.out.println(auteur);
+    }
 }
