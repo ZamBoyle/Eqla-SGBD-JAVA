@@ -2,6 +2,8 @@ package Exemples.dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DB implements AutoCloseable {
@@ -12,24 +14,11 @@ public class DB implements AutoCloseable {
     private Connection con;
 
     public DB() {
-
-        /*
-         * try {
-         * Class.forName("org.mariadb.jdbc.Driver");
-         * // Etablissement de la connexion
-         */
         try {
             con = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
             throw new RuntimeException("Impossible de se connecter à la base de données:" + e.getMessage());
         }
-        /*
-         * } catch (ClassNotFoundException e) {
-         * throw new
-         * ClassCastException("Impossible de charger le pilote JDBC pour MySQL:"+e.
-         * getMessage());
-         * }
-         */
     }
 
     public String getDB_URL() {
@@ -52,6 +41,21 @@ public class DB implements AutoCloseable {
     public void close() throws Exception {
         if (this.con != null) {
             this.con.close();
+        }
+    }
+
+    public static Integer getLastId(String table, String... id) {
+        try (DB db = new DB()) {
+            if (id.length == 0)
+                id = new String[] { "id" };
+            Connection con = db.getConnection();                
+            PreparedStatement pstmt = con.prepareStatement("SELECT MAX(" + id[0] + ") FROM " + table);
+            ResultSet rs = pstmt.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 }

@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 import Exemples.user.Input;
-import Exemples.dal.DB;
+import Exercices.dal.DB;
 
 public class Exercices {
 
@@ -212,19 +212,12 @@ public class Exercices {
             displayAuteursCommon("SELECT * FROM auteur");
         }
 
-        private void displayAuteursCommon(String statement){
+        private void displayAuteursCommon(String query){
             try (DB db = new DB()) {
                 Connection con = db.getConnection();
-
-                // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
-
-                // Exécution d'une requête de lecture
-                // et récupération du résultat dans un objet ResultSet
-                String query = statement;
                 ResultSet rs = stmt.executeQuery(query);
 
-                // Parcours du résultat
                 while (rs.next()) {
                     System.out.println(rs.getString("nom") + "\t\t" + rs.getString("prenom"));
                 }
