@@ -1027,15 +1027,15 @@ On va ajouter une fonction getLastId(String table) dans notre classe DB:
 
 ### 6. Types primitifs vs Classes objets
 
-En Java, vous avez étudié l'utilisation de différents types primitifs, tels que **int**, **float**, **double**, **long**, **boolean**, etc.
+En Java, vous avez étudié l'utilisation de différents types primitifs, tels que `int`, `float`, `double`, `long`, `boolean`, etc.
 
-Cependant, lors du traitement de données provenant d'une base de données, il peut arriver que certains champs retournent la valeur **null**. Or, il n'est pas possible de stocker la valeur **null** dans des types primitifs.
+Cependant, lors du traitement de données provenant d'une base de données, il peut arriver que certains champs retournent la valeur `null`. Or, il n'est pas possible de stocker la valeur `null` dans des types primitifs.
 
-Pour gérer correctement ces situations, nous pouvons utiliser les classes objets correspondantes (par exemple **Integer**, **Float**, **Double**, **Long**, **Boolean**, etc.) pour représenter une valeur ou une valeur **null**. Cela nous permet de traiter les données de la base de données de manière plus flexible et de gérer les valeurs **null** avec plus de souplesse dans notre code Java.
+Pour gérer correctement ces situations, nous pouvons utiliser les classes objets correspondantes (par exemple `Integer`, `Float`, `Double`, `Long`, `Boolean`, etc.) pour représenter une valeur ou une valeur `null`. Cela nous permet de traiter les données de la base de données de manière plus flexible et de gérer les valeurs `null` avec plus de souplesse dans notre code Java.
 
 Les types primitifs sont représentés par les classes objets correspondantes `Integer`, `Float`, `Double`, `Long`, etc. avec une première lettre en majuscule alors que les types primitifs ont leur première lettre en minuscule.
 
-En utilisant les classes objets, nous avons accès à une variété de méthodes utiles telles que **compareTo()**, **equals()**, etc., qui ne sont pas disponibles avec les types primitifs. C'est pourquoi il est souvent préférable d'utiliser les classes objets plutôt que les types primitifs pour la manipulation de données en JAVA.
+En utilisant les classes objets, nous avons accès à une variété de méthodes utiles telles que `compareTo()`, `equals()`, etc., qui ne sont pas disponibles avec les types primitifs. C'est pourquoi il est souvent préférable d'utiliser les classes objets plutôt que les types primitifs pour la manipulation de données en JAVA.
 
 ```java
 //Entier non null
@@ -1053,17 +1053,89 @@ On pourrait se poser la question:"Mais pourquoi ne pas utiliser tout le temps le
 
 <u>Les types primitifs sont utilisés pour les raisons suivantes</u>:
 
-- **Performances** : Les types primitifs sont plus rapides et consomment moins de mémoire que les classes objets correspondantes.
+- `Performances` : Les types primitifs sont plus rapides et consomment moins de mémoire que les classes objets correspondantes.
 
-- **Espace de stockage** : Les types primitifs utilisent moins d'espace de stockage que les classes objets correspondantes, ce qui peut être important pour les applications nécessitant une grande quantité de données.
+- `Espace de stockage` : Les types primitifs utilisent moins d'espace de stockage que les classes objets correspondantes, ce qui peut être important pour les applications nécessitant une grande quantité de données.
 
-- **Simplicité** : Les types primitifs sont plus simples à utiliser que les classes objets. Par exemple, vous pouvez utiliser un int directement dans une expression mathématique sans avoir à créer un objet Integer pour le faire.
+- `Simplicité` : Les types primitifs sont plus simples à utiliser que les classes objets. Par exemple, vous pouvez utiliser un int directement dans une expression mathématique sans avoir à créer un objet Integer pour le faire.
 
-- **Préférence de programmation** : Certains développeurs préfèrent utiliser les types primitifs pour une question de style de programmation et pour une meilleure lisibilité du code.
+- `Préférence de programmation` : Certains développeurs préfèrent utiliser les types primitifs pour une question de style de programmation et pour une meilleure lisibilité du code.
 
-### 6. Les transactions: Commit & Rollback
 
-#### 6.1 Introduction
+### 7. setNull vs setObject vs setXxx
+
+En Java, la méthode setNull de la classe PreparedStatement est utilisée pour définir un paramètre spécifié sur NULL. La méthode setObject est utilisée pour définir un paramètre spécifié sur l'objet Java donné. Les deux méthodes sont utilisées pour lier des valeurs à des paramètres dans une instruction préparée.
+
+Les méthodes setXxx (telles que setInt, setString, setDouble, etc.) sont utilisées pour lier des valeurs à des types de données spécifiques. La méthode utilisée dépend du type de données à lier. Par exemple, setInt est utilisé pour lier une valeur entière, et setString est utilisé pour lier une valeur de chaîne.
+
+Il est généralement recommandé d'utiliser la méthode setObject si le type du paramètre est inconnu ou varie de manière dynamique. Si le type du paramètre est connu, il peut être plus efficace d'utiliser la méthode setXxx pour ce type de données.
+
+Voici un exemple d'utilisation de setNull, setObject et setXxx en Java pour une table de lecteurs d'une bibliothèque :
+
+```java
+String sql = "INSERT INTO auteur (nom, prenom, date_naissance, nationalite) VALUES (?, ?, ?, ?)";
+
+try (
+        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    ) {
+    preparedStatement.setString(1, "Doe");
+    preparedStatement.setString(2, "John");
+    preparedStatement.setObject(3, null);
+    preparedStatement.setNull(4, Types.VARCHAR);
+
+    preparedStatement.executeUpdate();
+    } catch (SQLException e) {
+    e.printStackTrace();
+}
+```
+Notre table auteur autorise les nulls pour les champs date_naissance et nationalite: On peut tant utiliser setNull ou setObject. Et bien entendu notre code pourrait n'utiliser que des setObject. Mais il faut se dire que Java va devoir faire du casting pour avoir le bon type.
+
+### 8. Les dates
+Alors il aurait été super cool de pouvoir utiliser le type `Date` du package `java.util` pour les bases de données: `java.util.Date`.
+
+Cependant le type utilisé dans les bases de données est le type `Date` du package java.sql: `java.sql.Date`.
+
+On utilise aussi la classe `LocalDate` du package `java.util` pour définir une simple date année, jour mois sans la notion d'heure et de fuseau horaire. Mais il faudra aussi la convertir en Date sql.
+
+Au lieu de cela, il est nécessaire d'utiliser le type `java.sql.Date` pour représenter les valeurs de date dans les bases de données, ce qui nécessite une conversion si vous avez une valeur `java.util.Date` ou `java.time.LocalDate`.
+
+En conclusion, il faut être conscient de ces différences de types pour éviter les erreurs liées aux conversions.
+#### 8.1 java.util.Date to java.sql.Date
+Pour convertir une valeur de type `java.util.Date` en une valeur de type `java.sql.Date`, vous pouvez utiliser la méthode getTime de la classe `java.util.Date` pour extraire le nombre de millisecondes écoulées depuis le 1er janvier 1970, puis utiliser ce nombre pour initialiser une instance de `java.sql.Date`.
+
+Par exemple, considérons une table Lecteur avec un champ date_naissance de type `java.sql.Date` :
+
+```java
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
+
+    public java.sql.Date getSqlDate(String dateStr){
+        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        java.util.Date dateUtil = null;
+        try {
+            dateUtil = format.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return;
+        }
+        java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
+        return dateSql;
+    }
+```
+Dans ce code, **dateUtil** représente une valeur de type `java.util.Date`, et **dateSql** représente une valeur de type `java.sql.Date` qui a été initialisée à partir de la valeur dateNaissanceUtil.
+
+Il est important de noter que la conversion implique l'ignorance des informations d'heure et de fuseau horaire présentes dans la valeur `java.util.Date`. Seules les informations de date (année, mois, jour) sont conservées.
+
+En utilisant cette conversion, vous pouvez ensuite utiliser la valeur **dateSql**. 
+
+Vous noterez que j'ai défini **DATE_FORMAT** comme constante. Si vous utilisez souvent ce format lors de manipulation de dates, vous pourrez directement appeler la constante. Une constante, on l'écrit en lettres majuscules.
+
+####
+
+
+### 9. Les transactions: Commit & Rollback
+
+#### 8.1 Introduction
 
 Pour le moment, nous avons mis à jour généralement une seule table à la fois.
 Il peut arriver que l'on doit écrive dans plusieurs tables en même temps. Et que toutes les écritures doivent être faites sinon on pourrait avoir une incohérence dans la base de données.
@@ -1074,7 +1146,7 @@ Le "rollback" en Java, quant à lui, permet d'annuler les modifications effectu�
 
 En utilisant ces deux opérations ensemble, les développeurs peuvent garantir l'intégrité des données dans une base de données en annulant les opérations en cas de problème.
 
-#### 6.2 Auto Commit
+#### 8.2 Auto Commit
 
 En Java, les opérations effectuées sur une base de données sont toujours effectuées dans le cadre d'une transaction. Cependant, lorsqu'un autocommit est défini à true, les transactions sont automatiquement commises après chaque opération, ce qui rend le processus transparent pour l'utilisateur. Cela signifie que les modifications effectuées dans la base de données sont immédiatement enregistrées et rendues permanentes, sans la nécessité d'une action supplémentaire de la part de l'utilisateur pour effectuer un commit explicitement.
 
@@ -1082,11 +1154,11 @@ Cette approche est souvent utilisée pour des applications simples ou pour des e
 
 En Java, l'autocommit se définit sur un objet de connexion à la base de données, plutôt qu'au niveau de la base de données elle-même. Par défaut, l'autocommit est généralement défini à true, ce qui signifie que les transactions sont automatiquement commises après chaque opération effectuée sur cet objet de connexion.
 
-Si vous souhaitez contrôler manuellement les transactions, vous pouvez définir l'autocommit à false en utilisant la méthode **setAutoCommit()** de l'objet de connexion. Cela vous permettra de contrôler explicitement les opérations de commit et de rollback pour les transactions effectuées sur cet objet de connexion.
+Si vous souhaitez contrôler manuellement les transactions, vous pouvez définir l'autocommit à false en utilisant la méthode `setAutoCommit()` de l'objet de connexion. Cela vous permettra de contrôler explicitement les opérations de commit et de rollback pour les transactions effectuées sur cet objet de connexion.
 
 Il est important de noter que les différents objets de connexion peuvent avoir des paramètres d'autocommit différents, ce qui permet de contrôler les transactions de manière fine sur une base de données complexe.
 
-#### 6.3 Premier exemple / Ajout d'un couple de lecteurs
+#### 8.3 Premier exemple / Ajout d'un couple de lecteurs
 
 Imaginons pour l'exemple que notre bibliothèque est réservée pour les lecteurs en couple. Et que l'inscription d'un lecteur se fait en même de l'inscription de son conjoint.
 
@@ -1098,7 +1170,7 @@ Le code pourrait se présenter de la sorte (je n'utilise plus notre classe DB po
 
 ```
 
-#### 6.4 Second exemple / Ajout d'un livre
+#### 8.4 Second exemple / Ajout d'un livre
 
 Nous venons de recevoir un nouveau livre pour notre bibliothèque. Le design de notre bibliothèque indique que nous empruntons non pas un livre mais un exemplaire d'un livre. Donc si nous venons de recevoir une livre non existant dans notre base de données, nous devrons créer le livre ET l'exemplaire ET le thème (informatique). Sinon on ne fera pas la création.
 
@@ -1137,33 +1209,4 @@ public class Exemple9 {
 }
 ```
 
-### 7. setNull vs setObject vs setXxx
 
-En Java, la méthode setNull de la classe PreparedStatement est utilisée pour définir un paramètre spécifié sur NULL. La méthode setObject est utilisée pour définir un paramètre spécifié sur l'objet Java donné. Les deux méthodes sont utilisées pour lier des valeurs à des paramètres dans une instruction préparée.
-
-Les méthodes setXxx (telles que setInt, setString, setDouble, etc.) sont utilisées pour lier des valeurs à des types de données spécifiques. La méthode utilisée dépend du type de données à lier. Par exemple, setInt est utilisé pour lier une valeur entière, et setString est utilisé pour lier une valeur de chaîne.
-
-Il est généralement recommandé d'utiliser la méthode setObject si le type du paramètre est inconnu ou varie de manière dynamique. Si le type du paramètre est connu, il peut être plus efficace d'utiliser la méthode setXxx pour ce type de données.
-
-Voici un exemple d'utilisation de setNull, setObject et setXxx en Java pour une table de lecteurs d'une bibliothèque :
-
-```java
-String sql = "INSERT INTO auteur (nom, prenom, date_naissance, nationalite) VALUES (?, ?, ?, ?)";
-
-try (
-        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-    ) {
-    preparedStatement.setString(1, "Doe");
-    preparedStatement.setString(2, "John");
-    preparedStatement.setObject(3, null);
-    preparedStatement.setNull(3, null);
-
-    
-
-    preparedStatement.executeUpdate();
-    } catch (SQLException e) {
-    e.printStackTrace();
-}
-
-```
