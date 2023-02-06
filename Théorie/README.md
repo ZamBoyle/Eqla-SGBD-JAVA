@@ -1097,7 +1097,7 @@ L'utilisation de la méthode `setObject` pour insérer une valeur nulle dans une
 
 Alors il aurait été super cool de pouvoir utiliser le type `Date` du package `java.util` pour les bases de données: `java.util.Date`.
 
-La classe Date du package java.util a plusieurs méthodes et le constructeur new Date(String) qui sont dépréciés car:
+La classe `Date` du package `java.util` a plusieurs méthodes et le constructeur `new Date(String)` qui sont dépréciés car:
 
 1. Problèmes de fiabilité : La classe `Date` a des problèmes de fiabilité avec la gestion des fuseaux horaires et des décalages de temps.
 
@@ -1105,12 +1105,12 @@ La classe Date du package java.util a plusieurs méthodes et le constructeur new
 
 3. Incomplète : La classe `Date` ne fournit pas suffisamment de fonctionnalités pour gérer les dates et les heures correctement, ce qui rend nécessaire l'utilisation de bibliothèques tierces.
 
-> Au lieu de la classe `Date`, il est recommandé d'utiliser la classe `LocalDate` ou `Instant` de la bibliothèque Java 8 java.time pour les opérations de date et d'heure. Ces classes sont plus fiables, plus pratiques à utiliser et plus complètes que la classe `Date`.
+> Au lieu de la classe `Date`, il est recommandé d'utiliser la classe `LocalDate` ou `Instant` de la bibliothèque Java 8 `java.time` pour les opérations de date et d'heure. Ces classes sont plus fiables, plus pratiques à utiliser et plus complètes que la classe `Date`.
 
 De plus si on essaie de faire un objet Date avec le constructeur: **new Date(String)**. Java indique que ce constructeur est déprécié:"*The constructor Date(String) is deprecatedJava(134217861)*"
 
 
-On utilise aussi la classe `LocalDate` du package `java.util` pour définir une simple date année, jour mois sans la notion d'heure et de fuseau horaire. Mais il faudra aussi la convertir en Date sql.
+On utilise aussi la classe `LocalDate` du package `java.time` pour définir une simple date année, jour mois sans la notion d'heure et de fuseau horaire. Mais il faudra aussi la convertir en Date sql.
 
 Au lieu de cela, il est nécessaire d'utiliser le type `java.sql.Date` pour représenter les valeurs de date dans les bases de données, ce qui nécessite une conversion si vous avez une valeur `java.util.Date` ou `java.time.LocalDate`.
 
