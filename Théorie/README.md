@@ -1147,7 +1147,7 @@ Si le **format.parse(dateStr)** échoue, je retourne une exception/erreur c'est 
 
 Vous noterez que j'ai défini **DATE_FORMAT** comme constante. Si vous utilisez souvent ce format lors de manipulation de dates, vous pourrez directement appeler la constante. Une constante, on l'écrit en lettres majuscules.
 
-#### 8.2 java.util.LocalDate to java.sql.Date
+#### 8.2 java.time.LocalDate to java.sql.Date
 Le code précédent est converti pour utiliser un LocalDate au lieu d'un Date.
 ```java
 private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -1175,9 +1175,28 @@ En fait, ce code revient au même que d'écrire ceci:
 LocalDate date = LocalDate.parse("2022-01-01", DateTimeFormatter.ISO_LOCAL_DATE);
 ```
 
-#### 8.3 java.sql.Date to java.util.LocalDate 
+#### 8.3 java.sql.Date to java.time.LocalDate 
 
 #### 8.4 java.sql.Date to java.util.Date 
+
+#### 8.5 La date du jour et affichage
+Pour avoir la date du jour et l'afficher, on peut le faire de deux manières:
+
+Avec `java.util.Date`:
+```java
+Date date = new Date(); //Par défaut la date du jour et l'heure sont stockées
+SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+String dateStr = format.format(date);
+System.out.println(dateStr);
+```
+
+Avec `java.time.Date`:
+```java
+LocalDate localDate = LocalDate.now(); //On prend la date du jour sans l'heure
+DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+String dateStr = localDate.format(format);
+System.out.println(dateStr);
+```
 
 ### 9. Les transactions: Commit & Rollback
 
