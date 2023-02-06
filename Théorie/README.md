@@ -1089,9 +1089,12 @@ try (
     e.printStackTrace();
 }
 ```
-Notre table auteur autorise les nulls pour les champs date_naissance et nationalite: On peut tant utiliser setNull ou setObject. Et bien entendu notre code pourrait n'utiliser que des setObject. Mais il faut se dire que Java va devoir faire du casting pour avoir le bon type.
+Notre table auteur autorise les nulls pour les champs date_naissance et nationalite: On peut tant utiliser `setNull` ou `setObject`.
+
+L'utilisation de la méthode `setObject` pour insérer une valeur nulle dans une base de données est plus simple que l'utilisation de la méthode `setNull` car la méthode setObject peut prendre n'importe quel objet en argument, y compris un objet null, tandis que `setNull` nécessite de spécifier le type de données SQL qui sera défini comme nul. Cela peut entraîner des erreurs si le type de données SQL n'est pas correctement spécifié. De plus, en utilisant `setObject`, vous pouvez simplement passer null comme argument sans avoir à spécifier le type de données SQL, ce qui est plus facile et plus concis.
 
 ### 8. Les dates
+
 Alors il aurait été super cool de pouvoir utiliser le type `Date` du package `java.util` pour les bases de données: `java.util.Date`.
 
 Cependant le type utilisé dans les bases de données est le type `Date` du package java.sql: `java.sql.Date`.
@@ -1101,7 +1104,9 @@ On utilise aussi la classe `LocalDate` du package `java.util` pour définir une 
 Au lieu de cela, il est nécessaire d'utiliser le type `java.sql.Date` pour représenter les valeurs de date dans les bases de données, ce qui nécessite une conversion si vous avez une valeur `java.util.Date` ou `java.time.LocalDate`.
 
 En conclusion, il faut être conscient de ces différences de types pour éviter les erreurs liées aux conversions.
+
 #### 8.1 java.util.Date to java.sql.Date
+
 Pour convertir une valeur de type `java.util.Date` en une valeur de type `java.sql.Date`, vous pouvez utiliser la méthode getTime de la classe `java.util.Date` pour extraire le nombre de millisecondes écoulées depuis le 1er janvier 1970, puis utiliser ce nombre pour initialiser une instance de `java.sql.Date`.
 
 Par exemple, considérons une table Lecteur avec un champ date_naissance de type `java.sql.Date` :
@@ -1140,9 +1145,9 @@ Vous noterez que j'ai défini **DATE_FORMAT** comme constante. Si vous utilisez 
 Pour le moment, nous avons mis à jour généralement une seule table à la fois.
 Il peut arriver que l'on doit écrive dans plusieurs tables en même temps. Et que toutes les écritures doivent être faites sinon on pourrait avoir une incohérence dans la base de données.
 
-Le "commit" en Java est utilisé pour enregistrer définitivement les modifications effectuées dans une transaction de la base de données. C'est une opération qui permet de valider les opérations effectuées dans la transaction.
+Le "**commit**" en Java est utilisé pour enregistrer définitivement les modifications effectuées dans une transaction de la base de données. C'est une opération qui permet de valider les opérations effectuées dans la transaction.
 
-Le "rollback" en Java, quant à lui, permet d'annuler les modifications effectuées dans une transaction en cas d'erreur ou de problème. Cela permet de retourner à l'état initial de la base de données avant les modifications.
+Le "**rollback**" en Java, quant à lui, permet d'annuler les modifications effectuées dans une transaction en cas d'erreur ou de problème. Cela permet de retourner à l'état initial de la base de données avant les modifications.
 
 En utilisant ces deux opérations ensemble, les développeurs peuvent garantir l'intégrité des données dans une base de données en annulant les opérations en cas de problème.
 
@@ -1160,7 +1165,7 @@ Il est important de noter que les différents objets de connexion peuvent avoir 
 
 #### 8.3 Premier exemple / Ajout d'un couple de lecteurs
 
-Imaginons pour l'exemple que notre bibliothèque est réservée pour les lecteurs en couple. Et que l'inscription d'un lecteur se fait en même de l'inscription de son conjoint.
+Imaginons pour l'exemple que notre bibliothèque est réservée pour les lecteurs en couple. Et que l'inscription d'un lecteur se fait en même que l'inscription de son conjoint.
 
 Pas frapper ! C'est juste un exemple hein ! ;-)
 
@@ -1172,7 +1177,7 @@ Le code pourrait se présenter de la sorte (je n'utilise plus notre classe DB po
 
 #### 8.4 Second exemple / Ajout d'un livre
 
-Nous venons de recevoir un nouveau livre pour notre bibliothèque. Le design de notre bibliothèque indique que nous empruntons non pas un livre mais un exemplaire d'un livre. Donc si nous venons de recevoir une livre non existant dans notre base de données, nous devrons créer le livre ET l'exemplaire ET le thème (informatique). Sinon on ne fera pas la création.
+Nous venons de recevoir un nouveau livre pour notre bibliothèque. Le design de notre bibliothèque indique que nous empruntons non pas un livre mais un exemplaire d'un livre. Donc si nous venons de recevoir un livre non existant dans notre base de données, nous devrons créer le livre ET l'exemplaire ET le thème (informatique). Sinon on ne fera pas la création.
 
 ```java
 package Exemples.Chapitre6;
