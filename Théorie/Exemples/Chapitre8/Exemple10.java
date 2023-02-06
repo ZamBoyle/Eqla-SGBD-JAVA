@@ -1,7 +1,10 @@
-package Exemples.Chapitre6;
+package Exemples.Chapitre8;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Date;
+
+import org.mariadb.jdbc.plugin.codec.LocalDateCodec;
 
 import Exemples.dal.DB;
 
@@ -15,6 +18,8 @@ public class Exemple10 {
             //Premier lecteur - On suppoera que l'utilisateur a déjà rentré les données suivantes
             String nom = "Piette";
             String prenom = "Johnny";
+            java.util.Date utilDateNaissance = new Date();
+            LocalDate date_naissance = LocalDate.parse("1974/12/31");
             LocalDate date_naissance = LocalDate.of(1974,12,31);
             String adresse = "Rue des écoles";
             int num_rue = 45;

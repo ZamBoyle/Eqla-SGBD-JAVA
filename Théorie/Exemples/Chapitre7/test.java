@@ -3,24 +3,24 @@ package Exemples.Chapitre7;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import Exemples.biblioXX.BOL.Lecteur;
 
 public class test {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         try (Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof",
                 "new_user", "password1");
                 ) {
-            
+            java.util.Date utilDateNaissance = new Date();
             String dateNaissanceString = "03/02/1998";
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            java.util.Date utilDateNaissance = null;
             try {
                 utilDateNaissance = format.parse(dateNaissanceString);
             } catch (ParseException e) {
                 e.printStackTrace();
-                return;
+                throw new Exception("Erreur lors du parse de la chaîne reçue:"+dateNaissanceString, e);
             }
             java.sql.Date sqlDateNaissance = new java.sql.Date(utilDateNaissance.getTime());
 
@@ -36,7 +36,7 @@ public class test {
             }
             System.out.println("Insertion réussie");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new Exception(e);
         }
     }
 }
