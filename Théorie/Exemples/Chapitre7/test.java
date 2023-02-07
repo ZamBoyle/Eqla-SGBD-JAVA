@@ -3,6 +3,8 @@ package Exemples.Chapitre7;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import Exemples.biblioXX.BOL.Lecteur;
@@ -13,6 +15,8 @@ public class test {
         try (Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof",
                 "new_user", "password1");
                 ) {
+            LocalDate date = LocalDate.parse("2022-01-01", DateTimeFormatter.ISO_LOCAL_DATE);
+
             java.util.Date utilDateNaissance = new Date();
             String dateNaissanceString = "03/02/1998";
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");

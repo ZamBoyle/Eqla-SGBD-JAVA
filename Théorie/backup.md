@@ -1123,71 +1123,43 @@ Pour convertir une valeur de type `java.util.Date` en une valeur de type `java.s
 Par exemple, considérons une table Lecteur avec un champ date_naissance de type `java.sql.Date` :
 
 ```java
-package Exemples.Chapitre8;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Scanner;
-
-public class ExempleX {
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
-    public static void main(String[] args) {
+    public java.sql.Date getSqlDate(String dateStr) throws Exception{
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
-        
-        try (Scanner sc = new Scanner(System.in)) {
-            System.out.println("Veuillez saisir une date au format "+DATE_FORMAT);
-            String dateStr = sc.nextLine();
-            try {
-                java.util.Date dateUtil = format.parse(dateStr);
-                java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
-                System.out.println("Date reçue: "+dateSql);
-            } catch (ParseException e) {
-                System.out.println("Erreur lors du parse de la chaîne reçue:"+dateStr);
-            }
+        java.util.Date dateUtil = null;
+        try {
+            dateUtil = format.parse(dateStr);
+        } catch (ParseException e) {
+            throw new Exception("Erreur lors du parse de la chaîne reçue:"+dateStr, e);
         }
+        java.sql.Date dateSql = new java.sql.Date(dateUtil.getTime());
+        return dateSql;
     }
-}
 ```
-Dans ce code, **dateUtil** représente une valeur de type `java.util.Date`, et **dateSql** représente une valeur de type `java.sql.Date`.
+Dans ce code, **dateUtil** représente une valeur de type `java.util.Date`, et **dateSql** représente une valeur de type `java.sql.Date` qui a été initialisée à partir de la valeur **dateNaissanceUtil**.
 
 Il est important de noter que la conversion implique l'ignorance des informations d'heure et de fuseau horaire présentes dans la valeur `java.util.Date`. Seules les informations de date (année, mois, jour) sont conservées.
 
-En utilisant cette conversion, vous pouvez ensuite utiliser la valeur **dateSql** pour sql.
+En utilisant cette conversion, vous pouvez ensuite utiliser la valeur **dateSql**.
 
-Vous noterez que j'ai défini **DATE_FORMAT** comme constante. Si vous utilisez souvent ce format lors de manipulation de dates, vous pourrez directement appeler la constante. Une constante, on l'écrit en lettres majuscules. Le mieux serait encore de l'avoir peut-être dans une de vos classes utilitaires.
+Si le **format.parse(dateStr)** échoue, je retourne une exception/erreur c'est pourquoi dans la définition de la méthode **getSqlDate** j'ai ajouté `thows Exception`. Donc le code appelant la méthode doit être préparé à gérer cette exception. Le code appelant devra donc utiliser un bloc `try-catch`.
+
+Vous noterez que j'ai défini **DATE_FORMAT** comme constante. Si vous utilisez souvent ce format lors de manipulation de dates, vous pourrez directement appeler la constante. Une constante, on l'écrit en lettres majuscules.
 
 #### 8.2 java.time.LocalDate to java.sql.Date
 Le code précédent est converti pour utiliser un LocalDate au lieu d'un Date.
 ```java
-package Exemples.Chapitre8;
+private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
-import java.util.Scanner;
-
-public class ExempleY {
-    private static final String DATE_PATTERN = "dd/MM/yyyy";
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(DATE_PATTERN);
-
-    public static void main(String[] args) {
-        try (Scanner sc = new Scanner(System.in)) {
-            System.out.print("Veuillez saisir une date au format "+DATE_PATTERN+":");
-            String dateStr = sc.nextLine();
-            try {
-                java.time.LocalDate localDate = LocalDate.parse(dateSLocalDate date = LocalDate.parse("2022-01-01", DateTimeFormatter.ISO_LOCAL_DATE);
-tr, DATE_FORMAT);
-                java.sql.Date dateSql =Date.valueOf(localDate);
-                System.out.println("Date reçue: "+dateSql);
-            } catch (Exception e) {
-                System.out.println("Erreur lors du parse de la chaîne reçue:"+dateStr);
-            }
-        } 
+public LocalDate getLocalDate(String dateStr) throws Exception {
+    LocalDate date = null;
+    try {
+        date = LocalDate.parse(dateStr, FORMAT);
+    } catch (DateTimeParseException e) {
+        throw new Exception("Erreur lors du parse de la chaîne reçue: " + dateStr, e);
     }
+    return date;
 }
 ```
 Concernant ce code, on remarquera:
@@ -1202,20 +1174,11 @@ En fait, ce code revient au même que d'écrire ceci:
 ```java
 LocalDate date = LocalDate.parse("2022-01-01", DateTimeFormatter.ISO_LOCAL_DATE);
 ```
-Mais autant prendre le plus simple. ;-)
 
 #### 8.3 java.sql.Date to java.time.LocalDate 
-```java
-java.sql.Date sqlDate = java.sql.Date.valueOf("2022-06-18");
-LocalDate localDate = sqlDate.toLocalDate();
 
-
-```
 #### 8.4 java.sql.Date to java.util.Date 
-```java
-    java.sql.Date sqlDate = java.sql.Date.valueOf("2022-06-18");
-    java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
-```
+
 #### 8.5 La date du jour et affichage
 Pour avoir la date du jour et l'afficher, on peut le faire de deux manières:
 

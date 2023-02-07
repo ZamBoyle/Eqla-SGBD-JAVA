@@ -1,4 +1,4 @@
-package Exemples.Chapitre8;
+package Exemples.Chapitre7;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -18,9 +18,7 @@ public class Exemple10 {
             //Premier lecteur - On suppoera que l'utilisateur a déjà rentré les données suivantes
             String nom = "Piette";
             String prenom = "Johnny";
-            java.util.Date utilDateNaissance = new Date();
             LocalDate date_naissance = LocalDate.parse("1974/12/31");
-            LocalDate date_naissance = LocalDate.of(1974,12,31);
             String adresse = "Rue des écoles";
             int num_rue = 45;
             String code_postal = "75000";
