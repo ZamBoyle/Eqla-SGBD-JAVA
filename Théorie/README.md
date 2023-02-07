@@ -1136,7 +1136,7 @@ public class ExempleX {
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
         
         try (Scanner sc = new Scanner(System.in)) {
-            System.out.println("Veuillez saisir une date au format "+DATE_FORMAT);
+            System.out.print("Veuillez saisir une date au format "+DATE_FORMAT+":");
             String dateStr = sc.nextLine();
             try {
                 java.util.Date dateUtil = format.parse(dateStr);
@@ -1151,7 +1151,7 @@ public class ExempleX {
 ```
 Dans ce code, **dateUtil** représente une valeur de type `java.util.Date`, et **dateSql** représente une valeur de type `java.sql.Date`.
 
-Il est important de noter que la conversion implique l'ignorance des informations d'heure et de fuseau horaire présentes dans la valeur `java.util.Date`. Seules les informations de date (année, mois, jour) sont conservées.
+Il est important de noter que la conversion ignore les informations d'heure et de fuseau horaire présentes dans la valeur `java.util.Date`. Seules les informations de date (année, mois, jour) sont conservées.
 
 En utilisant cette conversion, vous pouvez ensuite utiliser la valeur **dateSql** pour sql.
 
@@ -1208,8 +1208,6 @@ Mais autant prendre le plus simple. ;-)
 ```java
 java.sql.Date sqlDate = java.sql.Date.valueOf("2022-06-18");
 LocalDate localDate = sqlDate.toLocalDate();
-
-
 ```
 #### 8.4 java.sql.Date to java.util.Date 
 ```java
@@ -1227,7 +1225,7 @@ String dateStr = format.format(date);
 System.out.println(dateStr);
 ```
 
-Avec `java.time.Date`:
+Avec `java.time.LocalDate`:
 ```java
 LocalDate localDate = LocalDate.now(); //On prend la date du jour sans l'heure
 DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -1237,7 +1235,7 @@ System.out.println(dateStr);
 
 ### 9. Les transactions: Commit & Rollback
 
-#### 8.1 Introduction
+#### 9.1 Introduction
 
 Pour le moment, nous avons mis à jour généralement une seule table à la fois.
 Il peut arriver que l'on doit écrive dans plusieurs tables en même temps. Et que toutes les écritures doivent être faites sinon on pourrait avoir une incohérence dans la base de données.
@@ -1248,7 +1246,7 @@ Le "**rollback**" en Java, quant à lui, permet d'annuler les modifications effe
 
 En utilisant ces deux opérations ensemble, les développeurs peuvent garantir l'intégrité des données dans une base de données en annulant les opérations en cas de problème.
 
-#### 8.2 Auto Commit
+#### 9.2 Auto Commit
 
 En Java, les opérations effectuées sur une base de données sont toujours effectuées dans le cadre d'une transaction. Cependant, lorsqu'un autocommit est défini à true, les transactions sont automatiquement commises après chaque opération, ce qui rend le processus transparent pour l'utilisateur. Cela signifie que les modifications effectuées dans la base de données sont immédiatement enregistrées et rendues permanentes, sans la nécessité d'une action supplémentaire de la part de l'utilisateur pour effectuer un commit explicitement.
 
@@ -1260,7 +1258,7 @@ Si vous souhaitez contrôler manuellement les transactions, vous pouvez définir
 
 Il est important de noter que les différents objets de connexion peuvent avoir des paramètres d'autocommit différents, ce qui permet de contrôler les transactions de manière fine sur une base de données complexe.
 
-#### 8.3 Premier exemple / Ajout d'un couple de lecteurs
+#### 9.3 Premier exemple / Ajout d'un couple de lecteurs
 
 Imaginons pour l'exemple que notre bibliothèque est réservée pour les lecteurs en couple. Et que l'inscription d'un lecteur se fait en même que l'inscription de son conjoint.
 
@@ -1272,7 +1270,7 @@ Le code pourrait se présenter de la sorte (je n'utilise plus notre classe DB po
 
 ```
 
-#### 8.4 Second exemple / Ajout d'un livre
+#### 9.4 Second exemple / Ajout d'un livre
 
 Nous venons de recevoir un nouveau livre pour notre bibliothèque. Le design de notre bibliothèque indique que nous empruntons non pas un livre mais un exemplaire d'un livre. Donc si nous venons de recevoir un livre non existant dans notre base de données, nous devrons créer le livre ET l'exemplaire ET le thème (informatique). Sinon on ne fera pas la création.
 
@@ -1310,5 +1308,59 @@ public class Exemple9 {
     }
 }
 ```
+#### 9.5 Troisième exemple: transfert bancaire
+Imaginons que vous voulez transférer une somme d'argent de votre compte à un compte tiers.
+Il y aura deux opérations:
+- Une opération de débit sur votre compte.
+- Une opération de crédit sur le compte tiers.
+
+Dans ce cas-ci les deux opérations doivent impérativement être faites dans une transaction. Si une des opération n'est pas exécutée alors toutes les opérations sont annulées (Rollback).
+Mais si tout s'est bien passé alors on validera celles-ci (Commit).
+
+Notre base de données pourrait ressemble à ceci:
+```sql
+CREATE DATABASE bank;
+
+USE bank;
+
+CREATE TABLE client (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  prenom VARCHAR(50) NOT NULL,
+  nom VARCHAR(50) NOT NULL,
+  date_naissance DATE NOT NULL,
+  sexe ENUM('Homme', 'Femme') NOT NULL,
+  numero_national_belge VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE compte (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  client_id INT NOT NULL,
+  solde DECIMAL(10, 2) NOT NULL,
+  FOREIGN KEY (client_id) REFERENCES client(id)
+);
+
+INSERT INTO client (prenom, nom, date_naissance, sexe, numero_national_belge) VALUES 
+("John", "Doe", '1980-01-01', 'Homme', '123456789'),
+("Jane", "Doe", '1985-02-01', 'Femme', '234567890'),
+("Bob", "Smith", '1990-03-01', 'Homme', '345678901'),
+("Alice", "Johnson", '1995-04-01', 'Femme', '456789012'),
+("Michael", "Brown", '2000-05-01', 'Homme', '567890123'),
+("Emily", "Davis", '2005-06-01', 'Femme', '678901234'),
+("William", "Thompson", '2010-07-01', 'Homme', '789012345'),
+("Ashley", "Wilson", '2015-08-01', 'Femme', '890123456'),
+("James", "Anderson", '2020-09-01', 'Homme', '901234567'),
+("Elizabeth", "Martinez", '2025-10-01', 'Femme', '012345678');
+
+INSERT INTO compte (client_id, solde)
+SELECT id, 1000
+FROM client;
+```
+Cette base de données est téléchargeable à [cette adresse]() si vous voulez tester l'exemple.
+
+Nous allons faire une fonction qui va débiter un compte et créditer un autre compte.
+
+
+
+
 
 

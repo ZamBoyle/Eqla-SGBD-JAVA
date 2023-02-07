@@ -14,8 +14,8 @@ public class Input {
             if (scanner.hasNextInt()) {
                 return scanner.nextInt();
             } else {
-                System.out.println("Veuillez entrer un nombre valide");
-                scanner.nextInt();
+                System.out.println("Votre saisie n'est pas un nombre, veuillez réessayer.");
+                scanner.next();
             }
         }
     }
