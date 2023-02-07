@@ -2,10 +2,6 @@ package Exemples.Chapitre7;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Date;
-
-import org.mariadb.jdbc.plugin.codec.LocalDateCodec;
-
 import Exemples.dal.DB;
 
 public class Exemple10 {

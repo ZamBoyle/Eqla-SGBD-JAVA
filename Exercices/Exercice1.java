@@ -4,16 +4,14 @@ import java.util.List;
 
 import Exercices.app.Menu;
 import Exercices.bol.Auteur;
-import Exercices.bol.Lecteur;
 import Exercices.dal.*;
 
 public class Exercice1 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
@@ -28,11 +26,9 @@ public class Exercice1 {
 
         Menu menu = new Menu();
         menu.menuPrincipal();
-
-
     }
     
-    public static void displayAuteur(Integer id) {
+    public static void displayAuteur(Integer id) throws Exception {
         Auteur auteur = AuteurDAO.getAuteurById(id);
         System.out.println(auteur);
     }

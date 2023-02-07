@@ -1,11 +1,8 @@
 package Exemples.Chapitre8;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 import java.util.Scanner;
 
 public class ExempleY {
