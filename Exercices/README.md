@@ -89,11 +89,15 @@ Faites une méthode qui s'appellera updateAuteur: cette méthode recevra en para
 #### 3. Méthode displayAuteurs(String nom)
 Faites une méthode qui s'appellera displayAuteurs: cette méthode recevra en paramètres un nom d'auteur.
 
-Elle affichera tous les auteurs correspondant à ce nom.
+Elle affichera tous les auteurs correspondant à ce nom: id, nom, prénom, date_naissance, nationalité.
 
 #### 4. Méthode displayAuteur(int id)
-Vous utiliserez la méthode de l'exercice 6 pour afficher un auteur.
-#### 5. Méthode main
+Vous utiliserez la méthode de l'exercice 6 pour afficher un auteur en fonction de son id.
+
+#### 5. Méthode displayAuteur(Auteur auteur)
+Vous appellerez la méthode displayAuteur(int id) en lui passant l'id de l'auteur.
+
+#### 6. Méthode main
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à modifier.
 - Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs).
