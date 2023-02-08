@@ -678,6 +678,7 @@ Connection con = DriverManager.getConnection(db.getDB_URL, db.getUSER, db.getPAS
 PreparedStatement pstmt = con.prepareStatement("SELECT * FROM lecteur WHERE nom LIKE ? AND code_postal=?");
 ```
 
+Je vais ajouter un constructeur qui permettra d'appeler n'importe base de données. Le constructeur par défaut appelera biblio4_prof, l'autre permettra d'utiliser une autre base de données.
 Ou pourrait aussi faire en sorte que notre classe DB gère la connexion et la ferme dans un try avec ressource:
 
 ```java
