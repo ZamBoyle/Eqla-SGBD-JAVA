@@ -68,16 +68,72 @@ Vous utiliserez le code précédent.
 
 Vous allez modifier le code pour qu'il utilise maintenant les requêtes préparées (Prepared Statement).
 
-### Exercice12.java - 
+### Exercice12.java - UPDATE Auteur 
 
+#### 1. Classe Auteur
+Vous allez créer une classe qui s'appellera Auteur.
+- Elle sera dans un fichier nommé Auteur.java
+- Cette classe aura les mêmes attributs que la table auteur.
+- Ces attributs seront privés et peuvent être null: voir dans mysql la description de la table auteur.
+- Elle autorisera l'accès aux attributs (getters et setters).
+- Elle aura un constructeur par défaut.
+- Elle aura un constructeur qui prendra en paramètres tous les attributs de la classe.
+- Elle aura une méthode toString() qui affichera le nom et prénom de l'auteur.
+- Elle aura une méthode static equals(Auteur) qui permettra de comparer deux objets de type Auteur: deux auteurs seront considérés comme égaux si leurs id sont égaux. 
+- La méthode equals() retournera un booléen.
+- La méthode equals() aura l'anotation @Override.
 
+#### 2. Méthode updateAuteur
+Faites une méthode qui s'appellera updateAuteur: cette méthode recevra en paramètres un objet de type Auteur. Elle mettra à jour l'auteur dans la table auteur.
 
+#### 3. Méthode displayAuteurs(String nom)
+Faites une méthode qui s'appellera displayAuteurs: cette méthode recevra en paramètres un nom d'auteur.
 
+Elle affichera tous les auteurs correspondant à ce nom.
 
+#### 4. Méthode displayAuteur(int id)
+Vous utiliserez la méthode de l'exercice 6 pour afficher un auteur.
+#### 5. Méthode main
+Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
+- Vous demanderez à l'utilisateur de saisir le nom de l'auteur à modifier.
+- Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs).
+- Vous demanderez ensuite à l'utilisateur de saisir l'id de l'auteur à modifier.
+- Vous afficherez ensuite les informations de l'auteur (méthode displayAuteur).
+- Vous demanderez ensuite à l'utilisateur de saisir les nouvelles informations de l'auteur.
+- Vous appellerez ensuite la méthode updateAuteur avec l'objet Auteur créé à partir des informations saisies par l'utilisateur.
+- Vous afficherez enfin les informations de l'auteur (méthode displayAuteur) pour vérifier que l'auteur a bien été modifié.
+### Exercice13.java - INSERT Auteur
+Vous utiliserez le code précédent.
+#### 1. méthode insertAuteur(Auteur auteur)
+Faites une méthode qui s'appellera insertAuteur:
+- Elle recevra en paramètres un objet de type Auteur.
+- Elle insérera l'auteur dans la table auteur.
+- Attention, l'id de l'auteur ne doit pas être renseigné: donc l'id sera null dans l'objet de type Auteur.
 
+#### 2. méthode main
+Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
+- Vous demanderez à l'utilisateur de saisir les informations de l'auteur à insérer.
+- vous créerez un objet de type Auteur avec ces informations.
+- Vous appellerez ensuite la méthode insertAuteur avec l'objet Auteur créé à partir des informations saisies par l'utilisateur.
+- Vous afficherez enfin les informations de l'auteur (méthode displayAuteur) pour vérifier que l'auteur a bien été inséré.
 
+### Exercice14.java - DELETE Auteur
 
+Vous utiliserez le code précédent.
 
+#### 1. méthode deleteAuteur(Auteur auteur)
+Faites une méthode qui s'appellera deleteAuteur:
+- Elle recevra en paramètres un objet de type Auteur.
+- Elle supprimera l'auteur dans la table auteur.
+- Attention, l'id de l'auteur doit être renseigné: donc l'id ne sera pas null dans l'objet de type Auteur.
 
+#### 2. méthode main
+Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
+- Vous demanderez à l'utilisateur de saisir le nom de l'auteur à supprimer.
+- Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs).
+- Vous demanderez ensuite à l'utilisateur de saisir l'id de l'auteur à supprimer.
+- Vous afficherez ensuite les informations de l'auteur (méthode displayAuteur).
+- Vous appellerez ensuite la méthode deleteAuteur avec l'objet Auteur créé à partir des informations saisies par l'utilisateur.
+- Vous afficherez enfin les informations de l'auteur (méthode displayAuteur) pour vérifier que l'auteur a bien été supprimé.
 
 

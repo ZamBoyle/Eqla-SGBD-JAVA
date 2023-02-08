@@ -1013,17 +1013,19 @@ public class Exemple8 {
 }
 ```
 
-On va ajouter une fonction getLastId(String table) dans notre classe DB:
+On va ajouter une fonction **getLastId(String table)** dans notre classe DB:
 
 ```java
-    public Integer getLastId(String table) {
-        try  {
-            PreparedStatement pstmt = con.prepareStatement("SELECT MAX(id) FROM " + table);
+    public static Integer getLastId(String table, String... id) {
+        try (DB db = new DB()) {
+            if (id.length == 0)
+                id = new String[] { "id" };
+            Connection con = db.getConnection();                
+            PreparedStatement pstmt = con.prepareStatement("SELECT MAX(" + id[0] + ") FROM " + table);
             ResultSet rs = pstmt.executeQuery();
             rs.next();
             return rs.getInt(1);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -1082,8 +1084,8 @@ String sql = "INSERT INTO auteur (nom, prenom, date_naissance, nationalite) VALU
 
 try (
         Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/biblio4_prof", "new_user", "password1");
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
     ) {
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
     preparedStatement.setString(1, "Doe");
     preparedStatement.setString(2, "John");
     preparedStatement.setObject(3, null);
