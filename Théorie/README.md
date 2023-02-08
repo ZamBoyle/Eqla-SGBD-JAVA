@@ -602,7 +602,7 @@ pstmt.setInt(2, code_postal);
 
 ## 4. Informations de connexion
 
-Comme vous l'avez-vous déjà remarqué on doit tout le temps remettre nos informations de connexion: le nom du driver, le nom de la base de donnée, le login, le mot de passe, etc.
+Comme vous l'avez déjà remarqué on doit tout le temps remettre nos informations de connexion: le nom du driver, le nom de la base de donnée, le login, le mot de passe, etc.
 
 Imaginons que demain, tout change. On change de serveur, on change le nom d'utilisateur, le port, le mot de passe, etc.
 
