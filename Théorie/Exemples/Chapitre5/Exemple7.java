@@ -39,11 +39,9 @@ public class Exemple7 {
 
             // num_rue
             pstmt.setInt(5, Input.getValidInt("Numéro d'habitation : ", scanner));
-            scanner.nextLine(); // pour vider le buffer: on a lu un int
 
             // code_postal
             pstmt.setInt(6, Input.getValidInt("Code postal : ", scanner));
-            scanner.nextLine(); // pour vider le buffer: on a lu un int
 
             // localite
             System.out.print("Localité : ");
