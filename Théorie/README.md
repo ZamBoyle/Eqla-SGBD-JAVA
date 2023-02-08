@@ -689,7 +689,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DB implements AutoCloseable{
-    private  String DB_URL = "jdbc:mariadb://localhost:3306/biblio4_prof";
+    private  String DB_URL = "jdbc:mariadb://localhost:3306/";
     private  String USER = "new_user";
     private  String PASS = "password1";
 
@@ -703,7 +703,7 @@ public class DB implements AutoCloseable{
     // Constructeur pour une base de données quelconque
     public DB(String db_name) {
         try {
-            this.DB_URL = "jdbc:mariadb://localhost:3306/" + db_name;
+            this.DB_URL += db_name;
             con = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
             throw new RuntimeException("Impossible de se connecter à la base de données:" + e.getMessage());
