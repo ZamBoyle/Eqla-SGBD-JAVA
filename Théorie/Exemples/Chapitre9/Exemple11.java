@@ -1,9 +1,9 @@
-package Exemples.Chapitre7;
+package Exemples.Chapitre9;
 
 import java.sql.*;
 import Exemples.dal.DB;
 
-public class Exemple9 {
+public class Exemple11 {
     public static void main(String[] args) throws Exception{
         Connection con = null;
         try (DB db = new DB()) {

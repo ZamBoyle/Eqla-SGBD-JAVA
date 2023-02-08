@@ -1134,7 +1134,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-public class ExempleX {
+public class Exemple9 {
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
     public static void main(String[] args) {
@@ -1173,9 +1173,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.Scanner;
 
-public class ExempleY {
+public class Exemple10 {
     private static final String DATE_PATTERN = "dd/MM/yyyy";
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(DATE_PATTERN);
 

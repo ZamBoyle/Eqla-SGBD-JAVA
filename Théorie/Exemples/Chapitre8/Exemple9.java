@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-public class ExempleX {
+public class Exemple9 {
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
     public static void main(String[] args) {

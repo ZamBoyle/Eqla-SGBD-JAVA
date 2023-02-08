@@ -9,7 +9,7 @@ import java.util.Scanner;
 import Exemples.dal.DB;
 import Exemples.user.Input;
 
-public class ExempleZ {
+public class Exemple13 {
     private static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         while (true) {

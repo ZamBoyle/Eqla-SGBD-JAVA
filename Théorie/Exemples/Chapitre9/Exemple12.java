@@ -1,10 +1,10 @@
-package Exemples.Chapitre7;
+package Exemples.Chapitre9;
 
 import java.sql.*;
 import java.time.LocalDate;
 import Exemples.dal.DB;
 
-public class Exemple10 {
+public class Exemple12 {
     public static void main(String[] args) throws Exception{
         Connection con = null;
         try (DB db = new DB()) {
