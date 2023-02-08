@@ -33,7 +33,6 @@ public class test {
                 preparedStatement.setString(1, "Doe");
                 preparedStatement.setString(2, "John");
                 preparedStatement.setObject(3, sqlDateNaissance);
-                //preparedStatement.setDate(3, sqlDateNaissance);
                 preparedStatement.setNull(4, Types.VARCHAR);
 
                 preparedStatement.executeUpdate();
