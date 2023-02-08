@@ -11,8 +11,11 @@ public class Input {
     // Elle utilise la réflexion pour appeler la méthode parseXxx de la classe Number (parseByte, parseShort, parseInt, parseLong, parseFloat, parseDouble, parseBigDecimal)
     // Elle utilise aussi la réflexion pour récupérer le type de retour de la méthode parseXxx (Byte, Short, Integer, Long, Float, Double, BigDecimal)
     // Elle utilise enfin la réflexion pour caster le résultat de la méthode parseXxx vers le type de retour de la méthode parseXxx
-    // C'est un peu compliqué, mais ça permet d'écrire une seule fonction qui peut être utilisée pour récupérer n'importe quel nombre
+    // C'est un peu compliqué, mais ça permet d'écrire une seule fonction qui peut être utilisée pour récupérer n'importe quel nombre: entier, décimal, etc.
     // Vous pouvez aussi utiliser la fonction getValidInt pour récupérer un nombre entier valide mais pas de nombre décimal, etc.
+    //
+    // Elle est dite générique car elle peut être utilisée avec n'importe quel type de nombre (entier, décimal, etc.)
+
     public static <T extends Number> T getValidNumber(String message, Scanner scanner, Class<T> clazz) {
         if (scanner == null)
             scanner = new Scanner(System.in);
@@ -20,7 +23,7 @@ public class Input {
             System.out.print(message);
             if (scanner.hasNext()) {
                 try {
-                    String input = scanner.next();
+                    String input = scanner.nextLine();
                     Method method = clazz.getMethod("parse" + clazz.getSimpleName(), String.class);
                     return clazz.cast(method.invoke(null, input));
                 } catch (Exception e) {
@@ -48,14 +51,14 @@ public class Input {
         }
     }
 
-
     public static int getValidInt(String message, Scanner scanner) {
         if (scanner == null)
             scanner = new Scanner(System.in);
         while (true) {
             System.out.print(message);
             if (scanner.hasNextInt()) {
-                return scanner.nextInt();
+                //return scanner.nextInt();
+                return Integer.parseInt(scanner.nextLine());
             } else {
                 System.out.println("Votre saisie n'est pas un nombre, veuillez réessayer.");
                 scanner.next();

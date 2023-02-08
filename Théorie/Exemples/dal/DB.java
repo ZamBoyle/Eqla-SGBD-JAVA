@@ -13,7 +13,7 @@ public class DB implements AutoCloseable {
 
     private Connection con;
 
-    // Constructeur par défaut pour la base de données biblio4_prof
+    // Constructeur par défaut: on se connecte à la base de données biblio4_prof
     public DB() {
         this("biblio4_prof");
     }

@@ -10,6 +10,7 @@ import Exemples.dal.DB;
 import Exemples.user.Input;
 
 public class ExempleZ {
+    private static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         while (true) {
             displayMenu();
@@ -27,7 +28,7 @@ public class ExempleZ {
         System.out.println("6. Quitter");
         System.out.println("----------------------------");
 
-        int choix = Input.getValidInt("Veuillez saisir votre choix:", 1, 6);
+        int choix = Input.getValidInt("Veuillez saisir votre choix:", 1, 6, sc);
         switch (choix) {
             case 1:
                 displayClients();
@@ -56,11 +57,11 @@ public class ExempleZ {
     public static void displayClients() {
         try (DB db = new DB("bank");
                 Connection con = db.getConnection();
-                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM client");
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT client.*, SUM(compte.solde) AS total_solde FROM client JOIN compte ON client.id = compte.client_id GROUP BY nom, prenom");
                 ResultSet rs = preparedStatement.executeQuery();) {
             System.out.println();
             System.out.println("Liste des clients:");
-            System.out.println("Nom - Prénom - Date de naissance");
+            System.out.println("Nom - Prénom - Date de naissance - Total des soldes");
             System.out.println("----------------------------");
             while (rs.next()) {
                 String nom = rs.getString("nom");
@@ -70,7 +71,9 @@ public class ExempleZ {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String dateNaissanceFormatee = dateFormat.format(dateNaissance);
 
-                System.out.println(nom + " - " + prenom + " - " + dateNaissanceFormatee);
+                double totalSolde = rs.getDouble("total_solde");
+
+                System.out.println(nom + " - " + prenom + " - " + dateNaissanceFormatee + " - " + totalSolde + " €");
             }
 
         } catch (Exception e) {
@@ -94,7 +97,7 @@ public class ExempleZ {
         System.out.println("4. Retour au menu principal");
         System.out.println("----------------------------");
 
-        int choix = Input.getValidInt("Veuillez saisir votre choix:", 1, 4);
+        int choix = Input.getValidInt("Veuillez saisir votre choix:", 1, 4, sc);
         switch (choix) {
             case 1:
                 transferMoneyMenu();
@@ -115,12 +118,12 @@ public class ExempleZ {
         System.out.println();
         System.out.println("Transfert d'argent entre deux comptes");
         System.out.println("-------------------------------------");
-        int compteSource = Input.getValidInt("Compte source:");
-        int compteDestination = Input.getValidInt("Compte destination:");
-        double montant = Input.getValidNumber("Montant:", null, Double.class);
+        int compteSource = Input.getValidInt("Compte source:", sc);
+        int compteDestination = Input.getValidInt("Compte destination:",sc);
+        double montant = Input.getValidNumber("Montant:", sc, Double.class);
         String question = "Voulez-vous confirmer le transfert de " + montant + " euros du compte " + compteSource
                 + " vers le compte " + compteDestination + "? (O/N)";
-        String confirmation = Input.getValidString(question, null, "O", "N");
+        String confirmation = Input.getValidString(question, sc, "O", "N");
         if (confirmation.equals("O")) {
             transferMoney(compteSource, compteDestination, montant);
         } else {
