@@ -1271,7 +1271,88 @@ Pas frapper ! C'est juste un exemple hein ! ;-)
 Le code pourrait se présenter de la sorte (je n'utilise plus notre classe DB pour vous remontrer un code complet).
 
 ```java
+package Exemples.Chapitre9;
 
+import java.sql.*;
+import java.time.LocalDate;
+import Exemples.dal.DB;
+
+public class Exemple11 {
+    public static void main(String[] args) throws Exception{
+        Connection con = null;
+        try (DB db = new DB()) {
+            con = db.getConnection();
+            con.setAutoCommit(false);
+
+            //Premier lecteur - On suppoera que l'utilisateur a déjà rentré les données suivantes
+            String nom = "Piette";
+            String prenom = "Johnny";
+            LocalDate date_naissance = LocalDate.parse("1974-12-31");
+            String adresse = "Rue des écoles";
+            int num_rue = 45;
+            String code_postal = "75000";
+            String localite = "Paris";
+            String telephone = "01 23 45 67 89";
+
+            PreparedStatement preparedStatement = con.prepareStatement(
+                "INSERT INTO lecteur (nom, prenom, date_naissance, adresse, num_rue, code_postal, localite, telephone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+                );
+
+            preparedStatement.setString(1, nom);
+            preparedStatement.setString(2, prenom);
+            preparedStatement.setDate(3, java.sql.Date.valueOf(date_naissance));
+            preparedStatement.setString(4, adresse);
+            preparedStatement.setInt(5, num_rue);
+            preparedStatement.setString(6, code_postal);
+            preparedStatement.setString(7, localite);
+            preparedStatement.setString(8, telephone);
+            
+            int nbEnregistrements= preparedStatement.executeUpdate();
+            if (nbEnregistrements > 0)
+                System.out.println("Le premier lecteur a été ajouté.");
+            else
+                throw new Exception("Aucun lecteur n'a été ajouté.");
+
+            //Deuxième lecteur - On suppoera que l'utilisateur a déjà rentré les données suivantes
+            nom = "Jacques";
+            prenom = "Véronique";
+            date_naissance = LocalDate.of(1986,01,18);
+            adresse = "Rue des écoles";
+            num_rue = 45;            
+            code_postal = "75000";
+            localite = "Paris";
+            telephone = "01 23 33 48 91";
+
+            preparedStatement.setString(1, nom);
+            preparedStatement.setString(2, prenom);
+            preparedStatement.setDate(3, java.sql.Date.valueOf(date_naissance));
+            preparedStatement.setString(4, adresse);
+            preparedStatement.setInt(5, num_rue);
+            preparedStatement.setString(6, code_postal);
+            preparedStatement.setString(7, localite);
+            preparedStatement.setString(8, telephone);
+
+            nbEnregistrements = preparedStatement.executeUpdate();
+            if (nbEnregistrements > 0)
+                System.out.println("Le deuxième lecteur a été ajouté.");
+            else
+                throw new Exception("Aucun lecteur n'a été ajouté.");
+
+            System.out.println("Les 2 lecteurs ont été ajoutés avec succès.");
+            con.commit();
+        }
+        catch (SQLException e) {
+            try {
+                System.out.println("Erreur SQL : " + e.getMessage());
+                System.out.println("Rollback de la transaction");
+                con.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+}
 ```
 
 #### 9.4 Second exemple / Ajout d'un livre
@@ -1279,12 +1360,12 @@ Le code pourrait se présenter de la sorte (je n'utilise plus notre classe DB po
 Nous venons de recevoir un nouveau livre pour notre bibliothèque. Le design de notre bibliothèque indique que nous empruntons non pas un livre mais un exemplaire d'un livre. Donc si nous venons de recevoir un livre non existant dans notre base de données, nous devrons créer le livre ET l'exemplaire. Sinon on ne fera pas la création.
 
 ```java
-package Exemples.Chapitre7;
+package Exemples.Chapitre9;
 
 import java.sql.*;
 import Exemples.dal.DB;
 
-public class Exemple9 {
+public class Exemple12 {
     public static void main(String[] args) throws Exception{
         Connection con = null;
         try (DB db = new DB()) {
@@ -1332,7 +1413,7 @@ public class Exemple9 {
             String etat = "neuf";
             String reference ="I-782";
             java.util.Date today = new java.util.Date();
-            java.sql.Date date_acquisition = new java.sql.Date(today.getTime());//new java.sql.Date(new java.util.Date().getTime());
+            java.sql.Date date_acquisition = new java.sql.Date(today.getTime());
             String rayon = "RAYON-19";
             boolean est_perdu = false;
 
@@ -1382,8 +1463,6 @@ if(generatedKeys.next()) {
     throw new SQLException("Creation du livre a échoué, aucun ID n'a été retourné.");
 }
 ```
-
-
 #### 9.5 Troisième exemple: transfert bancaire
 Imaginons que vous voulez transférer une somme d'argent de votre compte à un compte tiers.
 Il y aura deux opérations:
@@ -1465,6 +1544,7 @@ private static void transferMoney(int compteSource, int compteDestination, doubl
 ```
 Il manque dans ces opérations la notion de traçabilité. En effet, il n'y a aucune trace de nos opérations sur nos comptes.
 Ce qui n'est pas autorisé dans une banque. Mais c'est juste pour l'exemple. ;-)
+Un code plus abouti peut être trouvé à cette adresse [Exemple13.java](Exemples/Chapitre9/Exemple13.java).
 
 
 

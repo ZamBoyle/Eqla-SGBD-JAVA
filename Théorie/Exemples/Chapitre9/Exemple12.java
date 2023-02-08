@@ -1,7 +1,6 @@
 package Exemples.Chapitre9;
 
 import java.sql.*;
-import java.time.LocalDate;
 import Exemples.dal.DB;
 
 public class Exemple12 {
@@ -11,73 +10,72 @@ public class Exemple12 {
             con = db.getConnection();
             con.setAutoCommit(false);
 
-            //Premier lecteur - On suppoera que l'utilisateur a déjà rentré les données suivantes
-            String nom = "Piette";
-            String prenom = "Johnny";
-            LocalDate date_naissance = LocalDate.parse("1974/12/31");
-            String adresse = "Rue des écoles";
-            int num_rue = 45;
-            String code_postal = "75000";
-            String localite = "Paris";
-            String telephone = "01 23 45 67 89";
+            //Livre - On suppoera que l'utilisateur a déjà rentré les données suivantes
+            int auteur_id = 461;//Adie Travers
+            String titre = "Le Java c'est sympa les gars !";
+            String langue = "français";
+            int annee_publication = 2023;
+            int nombre_pages = 450;
+            String code_isbn = "0-9485-6768-6";
+            int theme_id = 5;//J'ai mis roman pour ne pas créer un nouveau theme ;-)
 
             PreparedStatement preparedStatement = con.prepareStatement(
-                "INSERT INTO lecteur (nom, prenom, date_naissance, adresse, num_rue, code_postal, localite, telephone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO livre (auteur_id, titre, langue, annee_publication, nombre_pages, code_isbn, theme_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
                 );
-
-            preparedStatement.setString(1, nom);
-            preparedStatement.setString(2, prenom);
-            preparedStatement.setDate(3, java.sql.Date.valueOf(date_naissance));
-            preparedStatement.setString(4, adresse);
-            preparedStatement.setInt(5, num_rue);
-            preparedStatement.setString(6, code_postal);
-            preparedStatement.setString(7, localite);
-            preparedStatement.setString(8, telephone);
-            
-            preparedStatement.executeUpdate();
-
-            //Deuxième lecteur - On suppoera que l'utilisateur a déjà rentré les données suivantes
-            nom = "Jacques";
-            prenom = "Véronique";
-            date_naissance = LocalDate.of(1986,01,18);
-            adresse = "Rue des écoles";
-            num_rue = 45;            
-            code_postal = "75000";
-            localite = "Paris";
-            telephone = "01 23 33 48 91";
-
-            preparedStatement.setString(1, nom);
-            preparedStatement.setString(2, prenom);
-            preparedStatement.setDate(3, java.sql.Date.valueOf(date_naissance));
-            preparedStatement.setString(4, adresse);
-            preparedStatement.setNull(5, Types.INTEGER);
-            preparedStatement.setString(6, code_postal);
-            preparedStatement.setString(7, localite);
-            preparedStatement.setString(8, telephone);
-
-            preparedStatement.executeUpdate();
-/*
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            int lecteur_id = 0;
-            if (rs.next()) {
-                lecteur_id = rs.getInt(1);
-            }
-*/
-
-/* 
+            preparedStatement.setInt(1, auteur_id);
+            preparedStatement.setString(2, titre);
+            preparedStatement.setString(3, langue);
+            preparedStatement.setInt(4, annee_publication);
+            preparedStatement.setInt(5, nombre_pages);
+            preparedStatement.setString(6, code_isbn);
+            preparedStatement.setInt(7, theme_id);
+            int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Le livre a été ajouté avec succès.");
             } else {
                 System.out.println("Le livre n'a pas été ajouté !");
+                throw new Exception("Erreur");
             }
-*/
 
-            System.out.println("Les lecteurs ont été ajoutés avec succès.");
+            //On récupère l'id du livre ajouté
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            int livre_id = -1;
+            if(generatedKeys.next()) {
+                livre_id = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Creation du livre a échoué, aucun ID n'a été retourné.");
+            }
+
+            //Exemplaire - On suppoera que l'utilisateur a déjà rentré les données suivantes
+            String etat = "neuf";
+            String reference ="I-782";
+            java.util.Date today = new java.util.Date();
+            java.sql.Date date_acquisition = new java.sql.Date(today.getTime());
+            String rayon = "RAYON-19";
+            boolean est_perdu = false;
+
+            preparedStatement = con.prepareStatement(
+                "INSERT INTO exemplaire (livre_id, etat, reference, date_acquisition, rayon, est_perdu) VALUES (?, ?, ?, ?, ?, ?)");
+            preparedStatement.setInt(1, livre_id);
+            preparedStatement.setString(2, etat);
+            preparedStatement.setString(3, reference);
+            preparedStatement.setDate(4, date_acquisition);
+            preparedStatement.setString(5, rayon);
+            preparedStatement.setBoolean(6, est_perdu);
+            rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("L'exemplaire a été ajouté avec succès.");
+            } else {
+                System.out.println("L'exemplaire n'a pas été ajouté !");
+                throw new Exception("Erreur");
+            }
             con.commit();
         }
         catch (SQLException e) {
             try {
+                System.out.println("Erreur SQL : " + e.getMessage());
+                System.out.println("Rollback de la transaction");
                 con.rollback();
             } catch (SQLException e1) {
                 e1.printStackTrace();
