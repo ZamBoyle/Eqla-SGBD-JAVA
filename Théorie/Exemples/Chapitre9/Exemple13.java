@@ -198,7 +198,7 @@ public class Exemple13 {
     }
 
     private static void createDatabase() {
-        String sql = getFileContent("bank.sql");
+        String sql = getFileContent("/home/zam/repos/Eqla-SGBD-JAVA/Théorie/Exemples/Chapitre9/bank.sql");
 
     }
 
@@ -206,7 +206,7 @@ public class Exemple13 {
         String sql = "";
         try {
             // Le fichier d'entrée
-            FileInputStream file = new FileInputStream("bank.sql");
+            FileInputStream file = new FileInputStream(filename);
             try (Scanner scanner = new Scanner(file)) {
                 // renvoie true s'il y a une autre ligne à lire
                 while (scanner.hasNextLine()) {

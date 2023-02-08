@@ -68,6 +68,7 @@ Vous utiliserez le code précédent.
 
 Vous allez modifier le code pour qu'il utilise maintenant les requêtes préparées (Prepared Statement).
 
+### Exercice12.java - 
 
 
 
