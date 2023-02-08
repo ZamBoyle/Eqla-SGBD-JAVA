@@ -125,10 +125,15 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 
 Vous utiliserez le code précédent.
 
+#### 1. méthode deleteAuteur(int id)
+Faites une méthode qui s'appellera deleteAuteur:
+- Elle recevra en paramètres un id d'auteur.
+- Elle supprimera l'auteur dans la table auteur.
+
 #### 1. méthode deleteAuteur(Auteur auteur)
 Faites une méthode qui s'appellera deleteAuteur:
 - Elle recevra en paramètres un objet de type Auteur.
-- Elle supprimera l'auteur dans la table auteur.
+- Elle appellera la méthode deleteAuteur(int id) en lui passant l'id de l'auteur. 
 - Attention, l'id de l'auteur doit être renseigné: donc l'id ne sera pas null dans l'objet de type Auteur.
 
 #### 2. méthode main
