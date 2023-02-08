@@ -13,8 +13,15 @@ public class DB implements AutoCloseable {
 
     private Connection con;
 
+    // Constructeur par défaut pour la base de données biblio4_prof
     public DB() {
+        this("biblio4_prof");
+    }
+
+    // Constructeur pour une base de données quelconque
+    public DB(String db_name) {
         try {
+            this.DB_URL = "jdbc:mariadb://localhost:3306/" + db_name;
             con = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
             throw new RuntimeException("Impossible de se connecter à la base de données:" + e.getMessage());

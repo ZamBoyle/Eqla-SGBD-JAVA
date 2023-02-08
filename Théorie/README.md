@@ -1355,9 +1355,40 @@ INSERT INTO compte (client_id, solde)
 SELECT id, 1000
 FROM client;
 ```
-Cette base de données est téléchargeable à [cette adresse]() si vous voulez tester l'exemple.
+Cette base de données est téléchargeable à [cette adresse](Exemples/Chapitre9/bank.sql) si vous voulez tester l'exemple.
 
 Nous allons faire une fonction qui va débiter un compte et créditer un autre compte.
+```java
+private static void transferMoney(int compteSource, int compteDestination, double montant) {
+    try (DB db = new DB("bank");) {
+        Connection con = db.getConnection();
+        con.setAutoCommit(false);
+        try {
+            // Débit du compte source
+            PreparedStatement preparedStatementDebit = con.prepareStatement("UPDATE compte SET solde = solde - ? WHERE id = ?");
+            preparedStatementDebit.setDouble(1, montant);
+            preparedStatementDebit.setInt(2, compteSource);
+            preparedStatementDebit.executeUpdate();
+
+            // Crédit du compte destination
+            PreparedStatement preparedStatementCredit = con.prepareStatement("UPDATE compte SET solde = solde + ? WHERE id = ?");
+            preparedStatementCredit.setDouble(1, montant);
+            preparedStatementCredit.setInt(2, compteDestination);
+            preparedStatementCredit.executeUpdate();
+
+            // Validation de la transaction
+            con.commit();
+        } catch (Exception e) {
+            // Annulation de la transaction
+            con.rollback();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+```
+Il manque dans ces opérations la notion de traçabilité. En effet, il n'y a aucune trace de nos opérations sur nos comptes.
+Ce qui n'est pas autorisé dans une banque. Mais c'est juste pour l'exemple. ;-)
 
 
 
