@@ -106,7 +106,7 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous afficherez ensuite les informations de l'auteur (méthode displayAuteur).
 - Vous demanderez ensuite à l'utilisateur de saisir les nouvelles informations de l'auteur.
 - Vous appellerez ensuite la méthode updateAuteur avec l'objet Auteur créé à partir des informations saisies par l'utilisateur.
-- Vous afficherez enfin les informations de l'auteur (méthode displayAuteur) pour vérifier que l'auteur a bien été modifié.
+- Vous afficherez enfin les informations de l'auteur (méthode displayAuteur(int id)) pour vérifier que l'auteur a bien été modifié.
 ### Exercice13.java - INSERT Auteur
 Vous utiliserez le code précédent.
 #### 1. méthode insertAuteur(Auteur auteur)
