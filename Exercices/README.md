@@ -101,7 +101,7 @@ Vous afficherez les informations de l'auteur.
 #### 6. Méthode main
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à modifier.
-- Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs).
+- Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs(String nom)).
 - Vous demanderez ensuite à l'utilisateur de saisir l'id de l'auteur à modifier.
 - Vous afficherez ensuite les informations de l'auteur (méthode displayAuteur).
 - Vous demanderez ensuite à l'utilisateur de saisir les nouvelles informations de l'auteur.
