@@ -978,7 +978,7 @@ public class Exemple8 {
             Connection con = db.getConnection();
             // Création d'un objet PreparedStatement pour exécuter une requête d'INSERT
             PreparedStatement preparedStatement = con.prepareStatement("DELETE FROM lecteur WHERE id = ?");
-
+            
             // Définir les paramètres de la requête
             preparedStatement.setInt(1, id);
 
@@ -1098,7 +1098,7 @@ try (
 ```
 Notre table auteur autorise les nulls pour les champs date_naissance et nationalite: On peut tant utiliser `setNull` ou `setObject`.
 
-L'utilisation de la méthode `setObject` pour insérer une valeur nulle dans une base de données est plus simple que l'utilisation de la méthode `setNull` car la méthode setObject peut prendre n'importe quel objet en argument, y compris un objet null, tandis que `setNull` nécessite de spécifier le type de données SQL qui sera défini comme nul. Cela peut entraîner des erreurs si le type de données SQL n'est pas correctement spécifié. De plus, en utilisant `setObject`, vous pouvez simplement passer null comme argument sans avoir à spécifier le type de données SQL, ce qui est plus facile et plus concis.
+L'utilisation de la méthode `setObject` pour insérer une valeur nulle dans une base de données est plus simple que l'utilisation de la méthode `setNull` car la méthode setObject peut prendre n'importe quel objet en argument, y compris un null, tandis que `setNull` nécessite de spécifier le type de données SQL qui sera défini comme nul. Cela peut entraîner des erreurs si le type de données SQL n'est pas correctement spécifié. De plus, en utilisant `setObject`, vous pouvez simplement passer null comme argument sans avoir à spécifier le type de données SQL, ce qui est plus facile et plus concis.
 
 ### 8. Les dates
 
