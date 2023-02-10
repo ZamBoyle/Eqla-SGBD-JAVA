@@ -79,9 +79,6 @@ Vous allez créer une classe qui s'appellera Auteur.
 - Elle aura un constructeur par défaut.
 - Elle aura un constructeur qui prendra en paramètres tous les attributs de la classe.
 - Elle aura une méthode toString() qui affichera le nom et prénom de l'auteur.
-<!-- - Elle aura une méthode static equals(Auteur) qui permettra de comparer deux objets de type Auteur: deux auteurs seront considérés comme égaux si leurs id sont égaux. 
-- La méthode equals() retournera un booléen.
-- La méthode equals() aura l'anotation @Override.-->
 
 #### 2. Méthode updateAuteur (Auteur auteur)
 Faites une méthode qui s'appellera updateAuteur: cette méthode recevra en paramètres un objet de type Auteur. Elle mettra à jour l'auteur dans la table auteur.
@@ -146,4 +143,39 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous appellerez ensuite la méthode deleteAuteur avec l'objet Auteur créé à partir des informations saisies par l'utilisateur.
 - Vous afficherez enfin les informations de l'auteur (méthode displayAuteur) pour vérifier que l'auteur a bien été supprimé.
 
+
+### Exercice15.java
+
+
+
+
+#### 2. Méthode equals
+
+
+
+
+- Elle aura une méthode static equals(Auteur) qui permettra de comparer deux objets de type Auteur: deux auteurs seront considérés comme égaux si tous leurs attributs sont égaux. On verra ensemble comment faire.  
+- La méthode equals() retournera un booléen.
+- La méthode equals() aura l'anotation @Override.
+- Elle ressemblera donc à ceci:
+```java
+    @Override
+    public boolean equals(Object o) {
+        // Si l'objet passé en paramètre est null, on retourne false
+        // Si l'objet passé en paramètre est l'objet courant, on retourne true
+        // Si l'objet passé en paramètre n'est pas de type Auteur, on retourne false
+        // On caste l'objet passé en paramètre en Auteur
+        // On compare les attributs de l'objet courant avec ceux de l'objet passé en paramètre
+        // Si tous les attributs sont égaux, on retourne true
+        // Sinon, on retourne false
+    }
+```
+Exemple d'utilisation de la méthode equals():
+```java
+Auteur auteur1 = new Auteur(1, "Dumas", "Alexandre", "1802-07-24", "France");
+Auteur auteur2 = new Auteur(1, "Dumas", "Alexandre", "1802-07-24", "France");
+Auteur auteur3 = new Auteur(2, "Dumas", "Alexandre", "1802-07-24", "France");
+System.out.println(auteur1.equals(auteur2)); // Affichera true
+System.out.println(auteur1.equals(auteur3)); // Affichera false
+```
 
