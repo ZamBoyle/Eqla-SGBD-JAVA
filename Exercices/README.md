@@ -128,13 +128,13 @@ Faites une méthode qui s'appellera deleteAuteur:
 - Elle recevra en paramètres un id d'auteur.
 - Elle supprimera l'auteur dans la table auteur.
 
-#### 1. méthode deleteAuteur(Auteur auteur)
+#### 2. méthode deleteAuteur(Auteur auteur)
 Faites une méthode qui s'appellera deleteAuteur:
 - Elle recevra en paramètres un objet de type Auteur.
 - Elle appellera la méthode deleteAuteur(int id) en lui passant l'id de l'auteur. 
 - Attention, l'id de l'auteur doit être renseigné: donc l'id ne sera pas null dans l'objet de type Auteur.
 
-#### 2. méthode main
+#### 3. méthode main
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à supprimer.
 - Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs).
@@ -146,13 +146,7 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 
 ### Exercice15.java
 
-
-
-
-#### 2. Méthode equals
-
-
-
+#### 1. Méthode equals
 
 - Elle aura une méthode static equals(Auteur) qui permettra de comparer deux objets de type Auteur: deux auteurs seront considérés comme égaux si tous leurs attributs sont égaux. On verra ensemble comment faire.  
 - La méthode equals() retournera un booléen.
@@ -177,5 +171,19 @@ Auteur auteur2 = new Auteur(1, "Dumas", "Alexandre", "1802-07-24", "France");
 Auteur auteur3 = new Auteur(2, "Dumas", "Alexandre", "1802-07-24", "France");
 System.out.println(auteur1.equals(auteur2)); // Affichera true
 System.out.println(auteur1.equals(auteur3)); // Affichera false
+System.out.println(auteur1.equals(auteur1)); // Affichera true
 ```
 
+#### 2. Méthode hashCode
+
+- Elle aura une méthode static hashCode(Auteur) qui permettra de générer un hashCode pour un objet de type Auteur. On verra ensemble comment faire.
+- La méthode hashCode() retournera un int.
+- La méthode hashCode() aura l'anotation @Override.
+- Elle ressemblera donc à ceci:
+```java
+    @Override
+    public int hashCode() {
+        // On génère un hashCode pour chaque attribut de l'objet courant
+        // On retourne le hashCode        
+    }
+```
