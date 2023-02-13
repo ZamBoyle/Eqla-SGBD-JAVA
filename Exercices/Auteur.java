@@ -78,18 +78,9 @@ public class Auteur {
                 '}';
     }
 
-    public static Auteur fillAuteur(ResultSet rs){
-        Auteur auteur = new Auteur();
-        try {
-            auteur.setId(rs.getInt("id"));
-            auteur.setNom(rs.getString("nom"));
-            auteur.setPrenom(rs.getString("prenom"));
-            auteur.setDate_naissance(rs.getDate("date_naissance"));
-            auteur.setNationalite(rs.getString("nationalite"));
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-        return auteur;
-    }
+    //Fais une méthode donnera tous les auteurs de tous les exemplaires même si ils sont en double
+    
+
+
+
 }

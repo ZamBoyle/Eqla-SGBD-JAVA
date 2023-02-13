@@ -95,7 +95,7 @@ Vous utiliserez la méthode de l'exercice 6 pour afficher un auteur en fonction 
 <!-- Vous appellerez la méthode displayAuteur(int id) en lui passant l'id de l'auteur. -->
 Vous afficherez les informations de l'auteur.
 
-#### 6. Méthode main
+#### 6. Méthode main(String[] args)
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à modifier.
 - Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs(String nom)).
@@ -112,7 +112,7 @@ Faites une méthode qui s'appellera insertAuteur:
 - Elle insérera l'auteur dans la table auteur.
 - Attention, l'id de l'auteur ne doit pas être renseigné: donc l'id sera null dans l'objet de type Auteur.
 
-#### 2. méthode main
+#### 2. Méthode main(String[] args)
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir les informations de l'auteur à insérer.
 - vous créerez un objet de type Auteur avec ces informations.
@@ -134,7 +134,7 @@ Faites une méthode qui s'appellera deleteAuteur:
 - Elle appellera la méthode deleteAuteur(int id) en lui passant l'id de l'auteur. 
 - Attention, l'id de l'auteur doit être renseigné: donc l'id ne sera pas null dans l'objet de type Auteur.
 
-#### 3. méthode main
+#### 3. Méthode main(String[] args)
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à supprimer.
 - Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs).
@@ -177,44 +177,29 @@ System.out.println(auteur1.equals(auteur3)); // Affichera false
 System.out.println(auteur1.equals(auteur1)); // Affichera true
 ```
 
-#### 2. Méthode hashCode
+#### 3. Méthode getAuteursFromAllExemplaires()
+Votre méthode getAuteursFromAllExemplaires() devra retourner une liste d'auteurs de tous les exemplaires de la table exemplaire.
 
-- Elle aura une méthode static hashCode() qui permettra de générer un hashCode pour un objet de type Auteur. On verra ensemble comment faire.
-- La méthode hashCode() retournera un int.
-- La méthode hashCode() aura l'anotation @Override.
-- Elle ressemblera donc à ceci:
-```java
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 31 * result + id.hashCode();
-        result = 31 * result + nom.hashCode();
-        result = 31 * result + prenom.hashCode();
-        result = 31 * result + dateNaissance.hashCode();
-        result = 31 * result + nationalite.hashCode();
-        return result;
-    }
+Vous utiliserez la requête suivante:
+```sql
+SELECT auteur.* FROM exemplaire INNER JOIN livre ON livre.id = exemplaire.livre_id INNER JOIN auteur ON livre.auteur_id = auteur.id
 ```
-#### 3. A quoi servent equals(Auteur) et hashCode() ?
-Je vais raccourcir au maximum le pourquoi car ce n'est pas le but du cours de bade de données.
+La précédente requête n'est pas optimale (on aurait dû utiliser DISTINCT) car elle retourne des doublons d'auteurs. En Java, vous devrez donc faire en sorte que la liste retournée ne contienne pas de doublons d'auteurs.
 
-Quand on compare deux objets pour savoir s'ils sont égaux, on utilise la méthode equals(). Mais avant, la méthode hashCode est appelée pour vérifier leur hashcode. Si leurs hashcodes sont égaux, alors on appelle la méthode equals() pour vérifier si les objets sont égaux. Si leurs hashcodes sont différents, alors on sait que les objets sont différents.
+Pour cela, vous utiliserez la contains(Auteur) de votre liste d'auteurs. Si l'auteur n'est pas dans la liste, vous l'ajouterez. Sinon, vous ne l'ajouterez pas.
 
-Cela permet d'optimiser les performances de l'application. Si on ne met pas de méthode hashCode, alors la méthode equals() sera appelée pour tous les objets. Cela peut être très long si on a beaucoup d'objets à comparer. C'est pourquoi on utilise la méthode hashCode() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals().
+La méthode contains appellera votre méthode equals() pour comparer les auteurs.
 
-Par défaut, la classe Object a une méthode equals() qui compare les références des objets. C'est à dire que si on compare deux objets de type Object, alors on compare les références des objets. Si les références sont les mêmes, alors les objets sont égaux. Si les références sont différentes, alors les objets sont différents.
+#### 4. Méthode displayAuteurs()
+Votre méthode displayAuteurs() devra afficher la liste des auteurs passée en paramètre.
 
-De plus, comparer uniquement les références des objets n'est pas très utile. C'est pour cela que l'on redéfinit hashCode() et equals() pour les objets de type Auteur.
+#### 2. Méthode main(String[] args)
+La méthode main devra faire ce qui suit:
+- Vous recevrez la liste des auteurs de tous les exemplaires sans doublons (méthode getAuteursFromAllExemplaires).
+- Vous afficherez ensuite la liste des auteurs (méthode displayAuteurs).
+- Vous afficherez ensuite le nombre d'auteurs retournés.
 
-#### 4. Pourquoi 17 et 31 ?
-Ce sont des valeurs arbitraires. On peut mettre n'importe quelle valeur. C'est juste pour éviter les collisions. C'est à dire que si on a deux objets qui ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals().
 
-C'est pour éviter les collisions. C'est à dire que si on a deux objets qui ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals().
-
-17 et 31 sont des valeurs arbitraires. On peut mettre n'importe quelle valeur. C'est juste pour éviter les collisions. C'est à dire que si on a deux objets qui ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals(). 
-
-définition hashCode()
-Un hashcode est un nombre entier qui permet d'identifier un objet. Il est généré automatiquement par Java. Il est utilisé pour comparer deux objets. Si deux objets ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals(). Cela permet d'optimiser les performances de l'application. 
 
 
 
