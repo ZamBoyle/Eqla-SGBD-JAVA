@@ -148,7 +148,7 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 
 #### 1. Méthode equals
 
-- Elle aura une méthode static equals(Auteur) qui permettra de comparer deux objets de type Auteur: deux auteurs seront considérés comme égaux si tous leurs attributs sont égaux. On verra ensemble comment faire.  
+- Elle aura une méthode static equals(Auteur) qui permettra de comparer deux objets de type Auteur: deux auteurs seront considérés comme égaux si tous leurs attributs sont égaux. 
 - La méthode equals() retournera un booléen.
 - La méthode equals() aura l'anotation @Override.
 - Elle ressemblera donc à ceci:
@@ -167,6 +167,8 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
         // 8. Sinon, on retourne false
     }
 ```
+==> On verra ensemble comment faire si vous avez des difficultés.
+
 Exemple d'utilisation de la méthode equals():
 ```java
 Auteur auteur1 = new Auteur(1, "Dumas", "Alexandre", "1802-07-24", "France");
