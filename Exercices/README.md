@@ -193,7 +193,7 @@ La méthode contains appellera votre méthode equals() pour comparer les auteurs
 #### 4. Méthode displayAuteurs()
 Votre méthode displayAuteurs() devra afficher la liste des auteurs passée en paramètre.
 
-#### 2. Méthode main(String[] args)
+#### 5. Méthode main(String[] args)
 La méthode main devra faire ce qui suit:
 - Vous recevrez la liste des auteurs de tous les exemplaires sans doublons (méthode getAuteursFromAllExemplaires).
 - Vous afficherez ensuite la liste des auteurs (méthode displayAuteurs).
