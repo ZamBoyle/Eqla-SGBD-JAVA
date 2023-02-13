@@ -155,13 +155,16 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 ```java
     @Override
     public boolean equals(Object o) {
-        // Si l'objet passé en paramètre est null, on retourne false
-        // Si l'objet passé en paramètre est l'objet courant, on retourne true
-        // Si l'objet passé en paramètre n'est pas de type Auteur, on retourne false
-        // On caste l'objet passé en paramètre en Auteur
-        // On compare les attributs de l'objet courant avec ceux de l'objet passé en paramètre
-        // Si tous les attributs sont égaux, on retourne true
-        // Sinon, on retourne false
+        // 1. Si l'objet passé en paramètre est null, on retourne false
+        // 2. Si l'objet passé en paramètre est l'objet courant, on retourne true
+        // 3. Si l'objet passé en paramètre n'est pas de type Auteur, on retourne false
+        // 4. Si la classe de l'objet passé en paramètre est différente de la classe de l'objet courant, on retourne false
+        // On le fait pour éviter les problèmes de cast et de cette manière:
+        // if(getClass() != o.getClass()) return false; // On vérifie que les classes sont les mêmes pour éviter les problèmes de cast 
+        // 5. On caste l'objet passé en paramètre en Auteur
+        // 6. On compare les attributs de l'objet courant avec ceux de l'objet passé en paramètre
+        // 7. Si tous les attributs sont égaux, on retourne true: if(this.nom.equals(auteur.nom) && .....) return true;
+        // 8. Sinon, on retourne false
     }
 ```
 Exemple d'utilisation de la méthode equals():
@@ -176,14 +179,43 @@ System.out.println(auteur1.equals(auteur1)); // Affichera true
 
 #### 2. Méthode hashCode
 
-- Elle aura une méthode static hashCode(Auteur) qui permettra de générer un hashCode pour un objet de type Auteur. On verra ensemble comment faire.
+- Elle aura une méthode static hashCode() qui permettra de générer un hashCode pour un objet de type Auteur. On verra ensemble comment faire.
 - La méthode hashCode() retournera un int.
 - La méthode hashCode() aura l'anotation @Override.
 - Elle ressemblera donc à ceci:
 ```java
     @Override
     public int hashCode() {
-        // On génère un hashCode pour chaque attribut de l'objet courant
-        // On retourne le hashCode        
+        int result = 17;
+        result = 31 * result + id.hashCode();
+        result = 31 * result + nom.hashCode();
+        result = 31 * result + prenom.hashCode();
+        result = 31 * result + dateNaissance.hashCode();
+        result = 31 * result + nationalite.hashCode();
+        return result;
     }
 ```
+#### 3. A quoi servent equals(Auteur) et hashCode() ?
+Je vais raccourcir au maximum le pourquoi car ce n'est pas le but du cours de bade de données.
+
+Quand on compare deux objets pour savoir s'ils sont égaux, on utilise la méthode equals(). Mais avant, la méthode hashCode est appelée pour vérifier leur hashcode. Si leurs hashcodes sont égaux, alors on appelle la méthode equals() pour vérifier si les objets sont égaux. Si leurs hashcodes sont différents, alors on sait que les objets sont différents.
+
+Cela permet d'optimiser les performances de l'application. Si on ne met pas de méthode hashCode, alors la méthode equals() sera appelée pour tous les objets. Cela peut être très long si on a beaucoup d'objets à comparer. C'est pourquoi on utilise la méthode hashCode() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals().
+
+Par défaut, la classe Object a une méthode equals() qui compare les références des objets. C'est à dire que si on compare deux objets de type Object, alors on compare les références des objets. Si les références sont les mêmes, alors les objets sont égaux. Si les références sont différentes, alors les objets sont différents.
+
+De plus, comparer uniquement les références des objets n'est pas très utile. C'est pour cela que l'on redéfinit hashCode() et equals() pour les objets de type Auteur.
+
+#### 4. Pourquoi 17 et 31 ?
+Ce sont des valeurs arbitraires. On peut mettre n'importe quelle valeur. C'est juste pour éviter les collisions. C'est à dire que si on a deux objets qui ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals().
+
+C'est pour éviter les collisions. C'est à dire que si on a deux objets qui ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals().
+
+17 et 31 sont des valeurs arbitraires. On peut mettre n'importe quelle valeur. C'est juste pour éviter les collisions. C'est à dire que si on a deux objets qui ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals(). 
+
+définition hashCode()
+Un hashcode est un nombre entier qui permet d'identifier un objet. Il est généré automatiquement par Java. Il est utilisé pour comparer deux objets. Si deux objets ont le même hashcode, alors on appelle la méthode equals() pour vérifier si les objets sont égaux ou non. Si les hashcodes sont différents, alors on sait que les objets sont différents et on n'a pas besoin d'appeler la méthode equals(). Cela permet d'optimiser les performances de l'application. 
+
+
+
+
