@@ -83,19 +83,24 @@ Vous allez créer une classe qui s'appellera Auteur.
 #### 2. Méthode updateAuteur (Auteur auteur)
 Faites une méthode qui s'appellera updateAuteur: cette méthode recevra en paramètres un objet de type Auteur. Elle mettra à jour l'auteur dans la table auteur.
 
-#### 3. Méthode displayAuteurs(String nom)
+#### 3. Méthodes display pour Auteur
+Ici, vous allez créer des méthodes qui permettront d'afficher les informations d'un auteur.
+Attention d'éviter la duplication de code car pour afficher un auteur, vous allez l'utiliser dans plusieurs méthodes.
+
+Il faut donc que vous factorisiez votre code avec par exemple une méthode privée nommée displayCommon(Auteur auteur). A vous de voir.
+
+##### 3.1 Méthode displayAuteurs(String nom)
 Faites une méthode qui s'appellera displayAuteurs: cette méthode recevra en paramètres un nom d'auteur.
 
 Elle affichera tous les auteurs correspondant à ce nom: id, nom, prénom, date_naissance, nationalité.
 
-#### 4. Méthode displayAuteur(int id)
-Vous utiliserez la méthode de l'exercice 6 pour afficher un auteur en fonction de son id.
+##### 3.2 Méthode displayAuteur(int id)
+Afficher un auteur en fonction de son id.
 
-#### 5. Méthode displayAuteur(Auteur auteur)
-<!-- Vous appellerez la méthode displayAuteur(int id) en lui passant l'id de l'auteur. -->
+##### 3.3 Méthode displayAuteur(Auteur auteur)
 Vous afficherez les informations de l'auteur.
 
-#### 6. Méthode main(String[] args)
+#### 4. Méthode main(String[] args)
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à modifier.
 - Vous afficherez ensuite la liste des auteurs correspondant à ce nom (méthode displayAuteurs(String nom)).
@@ -179,8 +184,8 @@ System.out.println(auteur1.equals(auteur3)); // Affichera false
 System.out.println(auteur1.equals(auteur1)); // Affichera true
 ```
 
-#### 2. Méthode getAuteursFromAllExemplaires()
-Votre méthode getAuteursFromAllExemplaires() devra retourner une liste d'auteurs de tous les exemplaires de la table exemplaire.
+#### 2. Méthode getAuteursFromExemplaires()
+Votre méthode getAuteursFromExemplaires() devra retourner une liste d'auteurs de tous les exemplaires de la table exemplaire.
 
 Vous utiliserez la requête suivante:
 ```sql
@@ -194,10 +199,11 @@ La méthode contains appellera votre méthode equals() pour comparer les auteurs
 
 #### 3. Méthode displayAuteurs()
 Votre méthode displayAuteurs() devra afficher la liste des auteurs passée en paramètre.
+N'oubliez pas que vous avez refactorisé votre code pour afficher un auteur à l'exercice 12. Il serait intéressant de réutiliser cette méthode pour afficher la liste des auteurs.
 
 #### 4. Méthode main(String[] args)
 La méthode main devra faire ce qui suit:
-- Vous recevrez la liste des auteurs de tous les exemplaires sans doublons (méthode getAuteursFromAllExemplaires).
+- Vous recevrez la liste des auteurs de tous les exemplaires sans doublons (méthode getAuteursFromExemplaires).
 - Vous afficherez ensuite la liste des auteurs (méthode displayAuteurs).
 - Vous afficherez ensuite le nombre d'auteurs retournés.
 
