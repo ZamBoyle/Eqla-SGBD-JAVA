@@ -144,7 +144,7 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous afficherez enfin les informations de l'auteur (méthode displayAuteur) pour vérifier que l'auteur a bien été supprimé.
 
 
-### Exercice15.java
+### Exercice15.java - SELECT
 
 #### 1. Méthode equals
 
@@ -200,8 +200,6 @@ La méthode main devra faire ce qui suit:
 - Vous recevrez la liste des auteurs de tous les exemplaires sans doublons (méthode getAuteursFromAllExemplaires).
 - Vous afficherez ensuite la liste des auteurs (méthode displayAuteurs).
 - Vous afficherez ensuite le nombre d'auteurs retournés.
-
-
 
 
 
