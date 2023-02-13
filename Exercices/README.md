@@ -177,7 +177,7 @@ System.out.println(auteur1.equals(auteur3)); // Affichera false
 System.out.println(auteur1.equals(auteur1)); // Affichera true
 ```
 
-#### 3. Méthode getAuteursFromAllExemplaires()
+#### 2. Méthode getAuteursFromAllExemplaires()
 Votre méthode getAuteursFromAllExemplaires() devra retourner une liste d'auteurs de tous les exemplaires de la table exemplaire.
 
 Vous utiliserez la requête suivante:
@@ -190,10 +190,10 @@ Pour cela, vous utiliserez la contains(Auteur) de votre liste d'auteurs. Si l'au
 
 La méthode contains appellera votre méthode equals() pour comparer les auteurs.
 
-#### 4. Méthode displayAuteurs()
+#### 3. Méthode displayAuteurs()
 Votre méthode displayAuteurs() devra afficher la liste des auteurs passée en paramètre.
 
-#### 5. Méthode main(String[] args)
+#### 4. Méthode main(String[] args)
 La méthode main devra faire ce qui suit:
 - Vous recevrez la liste des auteurs de tous les exemplaires sans doublons (méthode getAuteursFromAllExemplaires).
 - Vous afficherez ensuite la liste des auteurs (méthode displayAuteurs).
