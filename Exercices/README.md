@@ -87,7 +87,7 @@ Faites une méthode qui s'appellera updateAuteur: cette méthode recevra en para
 Ici, vous allez créer des méthodes qui permettront d'afficher les informations d'un auteur.
 Attention d'éviter la duplication de code car pour afficher un auteur, vous allez l'utiliser dans plusieurs méthodes.
 
-Il faut donc que vous factorisiez votre code avec par exemple une méthode privée nommée displayCommon(Auteur auteur). A vous de voir.
+Il faut donc que vous factorisiez votre code avec par exemple une méthode privée nommée displayAuteurCommon(Auteur auteur). A vous de voir.
 
 ##### 3.1 Méthode displayAuteurs(String nom)
 Faites une méthode qui s'appellera displayAuteurs: cette méthode recevra en paramètres un nom d'auteur.
