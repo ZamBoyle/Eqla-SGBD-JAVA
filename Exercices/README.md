@@ -98,8 +98,8 @@ Elle affichera tous les auteurs correspondant à ce nom: id, nom, prénom, date_
 Afficher un auteur en fonction de son id.
 
 ##### 3.3 Méthode displayAuteur(Auteur auteur)
-Vous afficherez les informations de l'auteur.
-<span style="font-weight: bold;color:red;">Rappelez-moi d'en parler en classe</span>: Nous en discuterons en classe. Il y a plusieurs façons de faire.
+Vous afficherez les informations de l'auteur.  
+**Rappelez-moi d'en parler en classe**: Nous en discuterons en classe. Il y a plusieurs façons de faire.
 #### 4. Méthode main(String[] args)
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à modifier.
