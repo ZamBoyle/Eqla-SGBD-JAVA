@@ -1,6 +1,7 @@
 package Exercices;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import Exemples.user.Input;
@@ -10,62 +11,71 @@ public class Exercices {
 
     public static void main(String[] args) {
         Exercices exercices = new Exercices();
-        
-        /* System.out.println("Exercice 3");
+
+        /*
+         * System.out.println("Exercice 3");
+         * System.out.println("==========");
+         * Exercice3 exercice3 = exercices.new Exercice3();
+         * exercice3.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 4");
+         * System.out.println("==========");
+         * Exercice4 exercice4 = exercices.new Exercice4();
+         * exercice4.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 5");
+         * System.out.println("==========");
+         * Exercice5 exercice5 = exercices.new Exercice5();
+         * exercice5.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 6");
+         * System.out.println("==========");
+         * Exercice6 exercice6 = exercices.new Exercice6();
+         * exercice6.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 7");
+         * System.out.println("==========");
+         * Exercice7 exercice7 = exercices.new Exercice7();
+         * exercice7.Run();
+         * System.out.println("displayAuteurs()");
+         * exercice7.displayAuteurs();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 8");
+         * System.out.println("==========");
+         * Exercice8 exercice8 = exercices.new Exercice8();
+         * exercice8.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 9");
+         * System.out.println("==========");
+         * Exercice9 exercice9 = exercices.new Exercice9();
+         * exercice9.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 10");
+         * System.out.println("==========");
+         * Exercice10 exercice10 = exercices.new Exercice10();
+         * exercice10.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         * 
+         * System.out.println("Exercice 11");
+         * System.out.println("==========");
+         * Exercice11 exercice11 = exercices.new Exercice11();
+         * exercice11.Run();
+         * System.console().readLine("< Appuyez sur ENTER pour continuer >");
+         */
+
+        System.out.println("Exercice 12");
         System.out.println("==========");
-        Exercice3 exercice3 = exercices.new Exercice3();
-        exercice3.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");
-         
-        System.out.println("Exercice 4");
-        System.out.println("==========");
-        Exercice4 exercice4 = exercices.new Exercice4();
-        exercice4.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");
-         
-        System.out.println("Exercice 5");
-        System.out.println("==========");
-        Exercice5 exercice5 = exercices.new Exercice5();
-        exercice5.Run();
+        Exercice12 exercice12 = exercices.new Exercice12();
+        exercice12.Run();
         System.console().readLine("< Appuyez sur ENTER pour continuer >");
 
-        System.out.println("Exercice 6");
-        System.out.println("==========");
-        Exercice6 exercice6 = exercices.new Exercice6();
-        exercice6.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >"); 
-
-        System.out.println("Exercice 7");
-        System.out.println("==========");
-        Exercice7 exercice7 = exercices.new Exercice7();
-        exercice7.Run();
-        System.out.println("displayAuteurs()");
-        exercice7.displayAuteurs();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");
-
-        System.out.println("Exercice 8");
-        System.out.println("==========");
-        Exercice8 exercice8 = exercices.new Exercice8();
-        exercice8.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");
-
-        System.out.println("Exercice 9");
-        System.out.println("==========");
-        Exercice9 exercice9 = exercices.new Exercice9();
-        exercice9.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");
-
-        System.out.println("Exercice 10");
-        System.out.println("==========");
-        Exercice10 exercice10 = exercices.new Exercice10();
-        exercice10.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");*/
-
-        System.out.println("Exercice 11");
-        System.out.println("==========");
-        Exercice11 exercice11 = exercices.new Exercice11();
-        exercice11.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");
     }
 
     public class Exercice3 {
@@ -114,7 +124,7 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } 
+            }
         }
     }
 
@@ -141,7 +151,7 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } 
+            }
         }
     }
 
@@ -196,8 +206,8 @@ public class Exercices {
         }
     }
 
-    public class Exercice7{
-        public void Run(){
+    public class Exercice7 {
+        public void Run() {
             System.out.print(" ");
             Scanner sc = new Scanner(System.in);
             Integer id = Input.getValidInt("Identifiant de l'auteur à afficher :", sc);
@@ -212,7 +222,7 @@ public class Exercices {
             displayAuteursCommon("SELECT * FROM auteur");
         }
 
-        private void displayAuteursCommon(String query){
+        private void displayAuteursCommon(String query) {
             try (DB db = new DB()) {
                 Connection con = db.getConnection();
                 Statement stmt = con.createStatement();
@@ -223,19 +233,19 @@ public class Exercices {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-            } 
+            }
         }
     }
 
-    public class Exercice8{
-        public void Run(){
+    public class Exercice8 {
+        public void Run() {
             System.out.print(" ");
             Scanner sc = new Scanner(System.in);
             System.out.print("Rayon de l'exemplaire à afficher :");
             String rayon = sc.next();
             System.out.print("Etat de l'exemplaire à afficher :");
-            String etat =  sc.next();
-            displayExemplaires(rayon,etat);
+            String etat = sc.next();
+            displayExemplaires(rayon, etat);
         }
 
         private void displayExemplaires(String rayon, String etat) {
@@ -247,15 +257,18 @@ public class Exercices {
 
                 // Exécution d'une requête de lecture
                 // et récupération du résultat dans un objet ResultSet
-                String query = 
-                    "SELECT * "+
-                    "FROM exemplaire "+
-                    "WHERE rayon = '" + rayon + "' AND etat = '" + etat + "'";
+                String query = "SELECT * " +
+                        "FROM exemplaire " +
+                        "WHERE rayon = '" + rayon + "' AND etat = '" + etat + "'";
                 ResultSet rs = stmt.executeQuery(query);
 
+                System.out.println("id\t\tlivre_id\t\trayon\t\tetat");
                 // Parcours du résultat
                 while (rs.next()) {
-                    System.out.println("id:"+rs.getString("id")+"\t\tlivre_id:"+rs.getString("livre_id")+"\t\trayon:"+ rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    // System.out.println("id:"+rs.getString("id")+"\t\tlivre_id:"+rs.getString("livre_id")+"\t\trayon:"+
+                    // rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    System.out.println(rs.getString("id") + "\t\t" + rs.getString("livre_id") + "\t\t"
+                            + rs.getString("rayon") + "\t\t" + rs.getString("etat"));
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -263,15 +276,15 @@ public class Exercices {
         }
     }
 
-    public class Exercice9{
-        public void Run(){
+    public class Exercice9 {
+        public void Run() {
             System.out.print(" ");
             Scanner sc = new Scanner(System.in);
             System.out.print("Rayon de l'exemplaire à afficher :");
             String rayon = sc.next();
             System.out.print("Etat de l'exemplaire à afficher :");
-            String etat =  sc.next();
-            displayExemplaires(rayon,etat);
+            String etat = sc.next();
+            displayExemplaires(rayon, etat);
         }
 
         private void displayExemplaires(String rayon, String etat) {
@@ -283,16 +296,19 @@ public class Exercices {
 
                 // Exécution d'une requête de lecture
                 // et récupération du résultat dans un objet ResultSet
-                String query = 
-                    "SELECT livre.titre, exemplaire.id, rayon, etat "+
-                    "FROM exemplaire "+
-                    "INNER JOIN livre ON exemplaire.livre_id = livre.id "+                    
-                    "WHERE rayon = '" + rayon + "' AND etat = '" + etat + "'";
+                String query = "SELECT livre.titre, exemplaire.id, rayon, etat " +
+                        "FROM exemplaire " +
+                        "INNER JOIN livre ON exemplaire.livre_id = livre.id " +
+                        "WHERE rayon = '" + rayon + "' AND etat = '" + etat + "'";
                 ResultSet rs = stmt.executeQuery(query);
 
+                System.out.println("id\t\ttitre\t\trayon\t\tetat");
                 // Parcours du résultat
                 while (rs.next()) {
-                    System.out.println("id:"+rs.getString("id")+"\t\ttitre:"+rs.getString("livre.titre")+"\t\trayon:"+ rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    // System.out.println("id:"+rs.getString("id")+"\t\ttitre:"+rs.getString("livre.titre")+"\t\trayon:"+
+                    // rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    System.out.println(rs.getString("id") + "\t\t" + rs.getString("titre") + "\t\t"
+                            + rs.getString("rayon") + "\t\t" + rs.getString("etat"));
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -300,39 +316,39 @@ public class Exercices {
         }
     }
 
-    public class Exercice10{
-        public void Run(){
+    public class Exercice10 {
+        public void Run() {
             System.out.print(" ");
             Scanner sc = new Scanner(System.in);
             System.out.print("Rayon de l'exemplaire à afficher :");
             String rayon = sc.next();
             System.out.print("Etat de l'exemplaire à afficher :");
-            String etat =  sc.next();
-            displayExemplaires(rayon,etat);
+            String etat = sc.next();
+            displayExemplaires(rayon, etat);
         }
 
         private void displayExemplaires(String rayon, String etat) {
             try (DB db = new DB()) {
                 Connection con = db.getConnection();
 
-                String query = 
-                "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom "+
-                "FROM exemplaire "+
-                "INNER JOIN livre ON exemplaire.livre_id = livre.id "+
-                "INNER JOIN auteur ON livre.auteur_id = auteur.id "+                    
-                "WHERE rayon = '" + rayon + "' AND etat = '" + etat + "'";
-                
-                PreparedStatement preparedStatement = con.prepareStatement(query);
+                String query = "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom " +
+                        "FROM exemplaire " +
+                        "INNER JOIN livre ON exemplaire.livre_id = livre.id " +
+                        "INNER JOIN auteur ON livre.auteur_id = auteur.id " +
+                        "WHERE rayon = '" + rayon + "' AND etat = '" + etat + "'";
 
-                // Remplacement des paramètres
-                preparedStatement.setString(1, rayon);
-                preparedStatement.setString(2, etat);
+                Statement statement = con.createStatement();
 
-                ResultSet rs = preparedStatement.executeQuery();
+                ResultSet rs = statement.executeQuery(query);
 
+                System.out.println("exemplaire_id\t\ttitre\t\tauteur.nom\t\tauteur.prenom\t\trayon\t\tetat");
                 // Parcours du résultat
                 while (rs.next()) {
-                    System.out.println("exemplaire_id:"+rs.getString("id")+"\t\ttitre:"+rs.getString("livre.titre")+"\t\tauteur_nom:"+rs.getString("auteur.nom")+"\t\tauteur_prenom:"+rs.getString("auteur.prenom")+"\t\trayon:"+ rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    // System.out.println("exemplaire_id:"+rs.getString("id")+"\t\ttitre:"+rs.getString("livre.titre")+"\t\tauteur_nom:"+rs.getString("auteur.nom")+"\t\tauteur_prenom:"+rs.getString("auteur.prenom")+"\t\trayon:"+
+                    // rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    System.out.println(rs.getString("id") + "\t\t" + rs.getString("titre") + "\t\t"
+                            + rs.getString("auteur.nom") + "\t\t" + rs.getString("auteur.prenom") + "\t\t"
+                            + rs.getString("rayon") + "\t\t" + rs.getString("etat"));
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -340,39 +356,41 @@ public class Exercices {
         }
     }
 
-    public class Exercice11{
-        public void Run(){
+    public class Exercice11 {
+        public void Run() {
             System.out.print(" ");
             Scanner sc = new Scanner(System.in);
             System.out.print("Rayon de l'exemplaire à afficher :");
             String rayon = sc.next();
             System.out.print("Etat de l'exemplaire à afficher :");
-            String etat =  sc.next();
-            displayExemplaires(rayon,etat);
+            String etat = sc.next();
+            displayExemplaires(rayon, etat);
         }
 
         private void displayExemplaires(String rayon, String etat) {
+            rayon = rayon.startsWith("rayon-") ? rayon.substring(6) : "rayon-" + rayon;
             try (DB db = new DB()) {
                 Connection con = db.getConnection();
+                String query = "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom " +
+                        "FROM exemplaire " +
+                        "INNER JOIN livre ON exemplaire.livre_id = livre.id " +
+                        "INNER JOIN auteur ON livre.auteur_id = auteur.id " +
+                        "WHERE rayon = ? AND etat = ?";
 
-                String query = 
-                    "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom "+
-                    "FROM exemplaire "+
-                    "INNER JOIN livre ON exemplaire.livre_id = livre.id "+
-                    "INNER JOIN auteur ON livre.auteur_id = auteur.id "+                         
-                    "WHERE rayon = ? AND etat = ?";
-                
                 PreparedStatement preparedStatement = con.prepareStatement(query);
-
-                // Remplacement des paramètres
                 preparedStatement.setString(1, rayon);
                 preparedStatement.setString(2, etat);
 
                 ResultSet rs = preparedStatement.executeQuery();
 
+                System.out.println("exemplaire_id\t\ttitre\t\tauteur.nom\t\tauteur.prenom\t\trayon\t\tetat");
                 // Parcours du résultat
                 while (rs.next()) {
-                    System.out.println("exemplaire_id:"+rs.getString("id")+"\t\ttitre:"+rs.getString("livre.titre")+"\t\tauteur_nom:"+rs.getString("auteur.nom")+"\t\tauteur_prenom:"+rs.getString("auteur.prenom")+"\t\trayon:"+ rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    // System.out.println("exemplaire_id:"+rs.getString("id")+"\t\ttitre:"+rs.getString("livre.titre")+"\t\tauteur_nom:"+rs.getString("auteur.nom")+"\t\tauteur_prenom:"+rs.getString("auteur.prenom")+"\t\trayon:"+
+                    // rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    System.out.println(rs.getString("id") + "\t\t" + rs.getString("titre") + "\t\t"
+                            + rs.getString("auteur.nom") + "\t\t" + rs.getString("auteur.prenom") + "\t\t"
+                            + rs.getString("rayon") + "\t\t" + rs.getString("etat"));
                 }
             } catch (Exception e) {
                 System.out.println(e);
@@ -380,39 +398,68 @@ public class Exercices {
         }
     }
 
-    public class Exercice12{
-        public void Run(){
-            System.out.print(" ");
+    public class Exercice12 {
+        public void Run() {
             Scanner sc = new Scanner(System.in);
-            System.out.print("Rayon de l'exemplaire à afficher :");
-            String rayon = sc.next();
-            System.out.print("Etat de l'exemplaire à afficher :");
-            String etat =  sc.next();
-            displayExemplaires(rayon,etat);
+            System.out.println("AUTEUR A MODIFIER");
+            System.out.println("=================");
+            //System.out.print("Nom de l'auteur à modifier:");
+            Auteur auteur = new Auteur(1, "Piette", "Jean", LocalDate.parse("1974-03-07"), "France");
+            displayAuteur(auteur);
+            //String nom = sc.next();
+            //displayAuteurs(nom);
         }
 
-        private void displayExemplaires(String rayon, String etat) {
-            try (DB db = new DB()) {
-                Connection con = db.getConnection();
+        private void displayAuteurs(String nom) {
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE nom LIKE ?");
+                preparedStatement.setString(1, nom + "%");
 
-                String query = 
-                    "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom "+
-                    "FROM exemplaire "+
-                    "INNER JOIN livre ON exemplaire.livre_id = livre.id "+
-                    "INNER JOIN auteur ON livre.auteur_id = auteur.id "+                         
-                    "WHERE rayon = ? AND etat = ?";
-                
-                PreparedStatement preparedStatement = con.prepareStatement(query);
+                displayAuteurCommon(preparedStatement);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
 
-                // Remplacement des paramètres
-                preparedStatement.setString(1, rayon);
-                preparedStatement.setString(2, etat);
+        private void displayAuteur(int id) {
+            try (Connection con = new DB().getConnection()
+            ) {
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
+                preparedStatement.setInt(1, id);
 
-                ResultSet rs = preparedStatement.executeQuery();
+                displayAuteurCommon(preparedStatement);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
 
+        // On pourrait aussi faire une méthode displayAuteur(Auteur auteur) qui appelle
+        // displayAuteur(int id)
+        // Mais ça ne serait pas très utile car ça ne sert à rien de récupèrer l'auteur
+        // dans la base de données car on l'a déjà
+        /*
+         * private void displayAuteur(Auteur auteur) {
+         * displayAuteur(auteur.getId());
+         * }
+         */
+
+        // On va plutôt afficher les propriétés de l'auteur ça nous évite de faire une
+        // requête en plus
+        private void displayAuteur(Auteur auteur) {
+            auteur.setId(null);
+            System.out.println("id\t\tnom\t\tprenom\t\tdate_naissance\t\tnationalite");
+            System.out.println(auteur.getId() + "\t\t" + auteur.getNom() + "\t\t" + auteur.getPrenom() + "\t\t"
+                    + auteur.getDate_naissance() + "\t\t" + auteur.getNationalite());
+        }
+
+        private void displayAuteurCommon(PreparedStatement preparedStatement) throws SQLException {
+            try (ResultSet rs = preparedStatement.executeQuery();) {
+                System.out.println("id\t\tnom\t\tprenom\\t\tdate_naissance\t\tnationalite");
                 // Parcours du résultat
                 while (rs.next()) {
-                    System.out.println("exemplaire_id:"+rs.getString("id")+"\t\ttitre:"+rs.getString("livre.titre")+"\t\tauteur_nom:"+rs.getString("auteur.nom")+"\t\tauteur_prenom:"+rs.getString("auteur.prenom")+"\t\trayon:"+ rs.getString("rayon") + "\t\tetat:" + rs.getString("etat"));
+                    System.out
+                            .println(rs.getString("id") + "\t\t" + rs.getString("nom") + "\t\t" + rs.getString("prenom")
+                                    + "\t\t" + rs.getString("date_naissance") + "\t\t" + rs.getString("nationalite"));
                 }
             } catch (Exception e) {
                 System.out.println(e);

@@ -78,7 +78,7 @@ Vous allez créer une classe qui s'appellera Auteur.
 - Elle autorisera l'accès aux attributs (getters et setters).
 - Elle aura un constructeur par défaut.
 - Elle aura un constructeur qui prendra en paramètres tous les attributs de la classe.
-- Elle aura une méthode toString() qui affichera le nom et prénom de l'auteur.
+- Elle aura une méthode toString() qui affichera les informations de l'auteur.
 
 #### 2. Méthode updateAuteur (Auteur auteur)
 Faites une méthode qui s'appellera updateAuteur: cette méthode recevra en paramètres un objet de type Auteur. Elle mettra à jour l'auteur dans la table auteur.
@@ -99,7 +99,7 @@ Afficher un auteur en fonction de son id.
 
 ##### 3.3 Méthode displayAuteur(Auteur auteur)
 Vous afficherez les informations de l'auteur.
-
+<span style="font-weight: bold;color:red;">Rappelez-moi d'en parler en classe</span>: Nous en discuterons en classe. Il y a plusieurs façons de faire.
 #### 4. Méthode main(String[] args)
 Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez à l'utilisateur de saisir le nom de l'auteur à modifier.
@@ -109,6 +109,7 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous demanderez ensuite à l'utilisateur de saisir les nouvelles informations de l'auteur.
 - Vous appellerez ensuite la méthode updateAuteur avec l'objet Auteur créé à partir des informations saisies par l'utilisateur.
 - Vous afficherez enfin les informations de l'auteur (méthode displayAuteur(int id)) pour vérifier que l'auteur a bien été modifié.
+
 ### Exercice13.java - INSERT Auteur
 Vous utiliserez le code précédent.
 #### 1. méthode insertAuteur(Auteur auteur)
@@ -147,7 +148,6 @@ Vous allez modifier la méthode main pour qu'elle fasse ce qui suit:
 - Vous afficherez ensuite les informations de l'auteur (méthode displayAuteur).
 - Vous appellerez ensuite la méthode deleteAuteur avec l'objet Auteur créé à partir des informations saisies par l'utilisateur.
 - Vous afficherez enfin les informations de l'auteur (méthode displayAuteur) pour vérifier que l'auteur a bien été supprimé.
-
 
 ### Exercice15.java - SELECT
 

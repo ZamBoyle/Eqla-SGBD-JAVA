@@ -1,21 +1,19 @@
 package Exercices;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class Auteur {
-    private int id;
+    private Integer id;
     private String nom;
     private String prenom;
-    private Date date_naissance;
+    private LocalDate date_naissance;
 
     private String nationalite;
 
     public Auteur() {
     }
 
-    public Auteur(int id, String nom, String prenom, Date date_naissance, String nationalite) {
+    public Auteur(Integer id, String nom, String prenom, LocalDate date_naissance, String nationalite) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -23,11 +21,11 @@ public class Auteur {
         this.nationalite = nationalite;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,7 +45,7 @@ public class Auteur {
         this.prenom = prenom;
     }
 
-    public Date getDate_naissance() {
+    public LocalDate getDate_naissance() {
         return date_naissance;
     }
 
@@ -59,7 +57,7 @@ public class Auteur {
         this.nationalite = pays;
     }
 
-    public void setDate_naissance(Date date_naissance) {
+    public void setDate_naissance(LocalDate date_naissance) {
         this.date_naissance = date_naissance;
     }
 
@@ -69,18 +67,14 @@ public class Auteur {
 
     @Override
     public String toString() {
-        return "Auteur {" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", date_naissance='" + date_naissance + '\'' +
-                ", pays='" + nationalite + '\'' +
-                '}';
+
+        String  output= "id\t\tnom\t\tprenom\t\tdate_naissance\t\tnationalite\n";
+output += this.getId() + "\t\t" + this.getNom() + "\t\t" + this.getPrenom() + "\t\t"
++ this.getDate_naissance() + "\t\t" + this.getNationalite()+"\n";
+        return output;
     }
 
-    //Fais une méthode donnera tous les auteurs de tous les exemplaires même si ils sont en double
-    
-
-
-
+    public static void displayAuteur(Auteur auteur) {
+        System.out.println(auteur.toString());
+    }
 }
