@@ -1,21 +1,19 @@
 package Exercices.bol;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class Auteur {
-    private int id;
+    private Integer id;
     private String nom;
     private String prenom;
-    private Date date_naissance;
+    private LocalDate date_naissance;
 
     private String nationalite;
 
     public Auteur() {
     }
 
-    public Auteur(int id, String nom, String prenom, Date date_naissance, String nationalite) {
+    public Auteur(Integer id, String nom, String prenom, LocalDate date_naissance, String nationalite) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -23,11 +21,11 @@ public class Auteur {
         this.nationalite = nationalite;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,7 +45,7 @@ public class Auteur {
         this.prenom = prenom;
     }
 
-    public Date getDate_naissance() {
+    public LocalDate getDate_naissance() {
         return date_naissance;
     }
 
@@ -59,7 +57,7 @@ public class Auteur {
         this.nationalite = pays;
     }
 
-    public void setDate_naissance(Date date_naissance) {
+    public void setDate_naissance(LocalDate date_naissance) {
         this.date_naissance = date_naissance;
     }
 
@@ -67,29 +65,32 @@ public class Auteur {
         System.out.println(this.toString());
     }
 
+
     @Override
-    public String toString() {
-        return "Auteur {" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", date_naissance='" + date_naissance + '\'' +
-                ", pays='" + nationalite + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Auteur auteur = (Auteur) o;
+
+        if (id != null ? !id.equals(auteur.id) : auteur.id != null) return false;
+        if (nom != null ? !nom.equals(auteur.nom) : auteur.nom != null) return false;
+        if (prenom != null ? !prenom.equals(auteur.prenom) : auteur.prenom != null) return false;
+        if (date_naissance != null ? !date_naissance.equals(auteur.date_naissance) : auteur.date_naissance != null)
+            return false;
+        return nationalite != null ? nationalite.equals(auteur.nationalite) : auteur.nationalite == null;
     }
 
-    public static Auteur fillAuteur(ResultSet rs){
-        Auteur auteur = new Auteur();
-        try {
-            auteur.setId(rs.getInt("id"));
-            auteur.setNom(rs.getString("nom"));
-            auteur.setPrenom(rs.getString("prenom"));
-            auteur.setDate_naissance(rs.getDate("date_naissance"));
-            auteur.setNationalite(rs.getString("nationalite"));
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-        return auteur;
+    @Override
+    public String toString() {
+
+        String  output= "id\t\tnom\t\tprenom\t\tdate_naissance\t\tnationalite\n";
+output += this.getId() + "\t\t" + this.getNom() + "\t\t" + this.getPrenom() + "\t\t"
++ this.getDate_naissance() + "\t\t" + this.getNationalite();
+        return output;
+    }
+
+    public static void displayAuteur(Auteur auteur) {
+        System.out.println(auteur.toString());
     }
 }

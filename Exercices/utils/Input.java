@@ -1,4 +1,4 @@
-package Exemples.user;
+package Exercices.utils;
 
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -58,10 +58,10 @@ public class Input {
         while (true) {
             System.out.print(message);
             if (scanner.hasNextInt()) {
-                return scanner.nextInt();
-                //return Integer.parseInt(scanner.nextLine());
+                //return scanner.nextInt();
+                return Integer.parseInt(scanner.nextLine());
             } else {
-                System.out.println("Votre saisie n'est pas un valide, veuillez réessayer.");
+                System.out.println("Votre saisie n'est pas un nombre, veuillez réessayer.");
                 scanner.next();
             }
         }

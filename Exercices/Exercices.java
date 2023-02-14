@@ -2,14 +2,19 @@ package Exercices;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Exemples.user.Input;
+import Exercices.bol.Auteur;
 import Exercices.dal.DB;
+import Exercices.dal.AuteurDAO;
 
 public class Exercices {
 
     public static void main(String[] args) {
+
         Exercices exercices = new Exercices();
 
         /*
@@ -68,14 +73,21 @@ public class Exercices {
          * Exercice11 exercice11 = exercices.new Exercice11();
          * exercice11.Run();
          * System.console().readLine("< Appuyez sur ENTER pour continuer >");
-         */
+         
 
         System.out.println("Exercice 12");
         System.out.println("==========");
         Exercice12 exercice12 = exercices.new Exercice12();
         exercice12.Run();
-        System.console().readLine("< Appuyez sur ENTER pour continuer >");
+        System.console().readLine("< Appuyez sur ENTER pour continuer >");*/
 
+
+
+        System.out.println("Exercice 12");
+        System.out.println("==========");
+        Exercice12bis exercice12bis = exercices.new Exercice12bis();
+        exercice12bis.Run();
+        System.console().readLine("< Appuyez sur ENTER pour continuer >");
     }
 
     public class Exercice3 {
@@ -403,14 +415,46 @@ public class Exercices {
             Scanner sc = new Scanner(System.in);
             System.out.println("AUTEUR A MODIFIER");
             System.out.println("=================");
-            //System.out.print("Nom de l'auteur à modifier:");
-            Auteur auteur = new Auteur(1, "Piette", "Jean", LocalDate.parse("1974-03-07"), "France");
-            displayAuteur(auteur);
-            //String nom = sc.next();
-            //displayAuteurs(nom);
+            System.out.print("Nom de l'auteur à modifier:");
+            String nom = sc.next();
+            displayAuteursByName(nom);
+            System.out.print("Id de l'auteur à modifier:");
+            int id = sc.nextInt();
+            displayAuteur(id);
+            System.out.print("Nouveau nom:");
+            String newNom = sc.next();
+            System.out.print("Nouveau prénom:");
+            String newPrenom = sc.next();
+            LocalDate newDateNaissance = Input.getValidLocalDate("Nouvelle date de naissance:", sc);
+            System.out.print("Nouvelle nationalité:");
+            String newPays = sc.next();
+            updateAuteur(id, newNom, newPrenom, newDateNaissance, newPays);
+            displayAuteur(id);
         }
 
-        private void displayAuteurs(String nom) {
+        private void updateAuteur(int id, String newNom, String newPrenom, LocalDate newDate_naissance,
+                String newNationalite) {
+            Auteur auteur = new Auteur(id, newNom, newPrenom, newDate_naissance, newNationalite);
+            updateAuteur(auteur);
+        }
+
+        private void updateAuteur(Auteur auteur) {
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement(
+                        "UPDATE auteur SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ? WHERE id = ?");
+                preparedStatement.setString(1, auteur.getNom());
+                preparedStatement.setString(2, auteur.getPrenom());
+                preparedStatement.setDate(3, Date.valueOf(auteur.getDate_naissance()));
+                preparedStatement.setString(4, auteur.getNationalite());
+                preparedStatement.setInt(5, auteur.getId());
+
+                preparedStatement.executeUpdate();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        private void displayAuteursByName(String nom) {
             try (Connection con = new DB().getConnection()) {
                 PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE nom LIKE ?");
                 preparedStatement.setString(1, nom + "%");
@@ -422,8 +466,7 @@ public class Exercices {
         }
 
         private void displayAuteur(int id) {
-            try (Connection con = new DB().getConnection()
-            ) {
+            try (Connection con = new DB().getConnection()) {
                 PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
                 preparedStatement.setInt(1, id);
 
@@ -443,13 +486,9 @@ public class Exercices {
          * }
          */
 
-        // On va plutôt afficher les propriétés de l'auteur ça nous évite de faire une
-        // requête en plus
+        // On va plutôt afficher auteur.toString()
         private void displayAuteur(Auteur auteur) {
-            auteur.setId(null);
-            System.out.println("id\t\tnom\t\tprenom\t\tdate_naissance\t\tnationalite");
-            System.out.println(auteur.getId() + "\t\t" + auteur.getNom() + "\t\t" + auteur.getPrenom() + "\t\t"
-                    + auteur.getDate_naissance() + "\t\t" + auteur.getNationalite());
+            System.out.println(auteur.toString());
         }
 
         private void displayAuteurCommon(PreparedStatement preparedStatement) throws SQLException {
@@ -466,4 +505,246 @@ public class Exercices {
             }
         }
     }
+
+    public class Exercice12bis {
+        public void Run() {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("AUTEUR A MODIFIER");
+            System.out.println("=================");
+            System.out.print("Nom de l'auteur à modifier:");
+            String nom = sc.next();
+            List<Auteur> auteurs = getAuteursByName(nom);
+            if (auteurs.size() > 0) {
+                displayAuteurs(auteurs);
+                int id = Input.getValidInt("Id de l'auteur à modifier:", sc);
+                Auteur auteur = getAuteur(id);
+                if (auteur != null) {
+                    displayAuteur(auteur);
+                    System.out.print("Nouveau nom:");
+                    String newNom = sc.next();
+                    System.out.print("Nouveau prénom:");
+                    String newPrenom = sc.next();
+                    LocalDate newDateNaissance = Input.getValidLocalDate("Nouvelle date de naissance:", sc);
+                    System.out.print("Nouvelle nationalité:");
+                    String newPays = sc.next();
+                    updateAuteur(id, newNom, newPrenom, newDateNaissance, newPays);
+                    displayAuteur(id);
+                }
+                else {
+                    System.out.println("Auteur non trouvé");
+                }
+            }
+            else {
+                System.out.println("Auteur non trouvé");
+            }
+        }
+
+        private Auteur getAuteur(int id) {
+            Auteur auteur = null;
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
+                preparedStatement.setInt(1, id);
+
+                ResultSet rs = preparedStatement.executeQuery();
+                // Parcours du résultat
+                if (rs.next()) {
+                    auteur = new Auteur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
+                            rs.getDate("date_naissance").toLocalDate(), rs.getString("nationalite"));
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return auteur;
+        }
+
+        private void updateAuteur(int id, String newNom, String newPrenom, LocalDate newDate_naissance,
+                String newNationalite) {
+            Auteur auteur = new Auteur(id, newNom, newPrenom, newDate_naissance, newNationalite);
+            updateAuteur(auteur);
+        }
+
+        private void updateAuteur(Auteur auteur) {
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement(
+                        "UPDATE auteur SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ? WHERE id = ?");
+                preparedStatement.setString(1, auteur.getNom());
+                preparedStatement.setString(2, auteur.getPrenom());
+                preparedStatement.setDate(3, Date.valueOf(auteur.getDate_naissance()));
+                preparedStatement.setString(4, auteur.getNationalite());
+                preparedStatement.setInt(5, auteur.getId());
+
+                preparedStatement.executeUpdate();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        private List<Auteur> getAuteursByName(String nom) {
+            List<Auteur> auteurs = new ArrayList<>();
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE nom LIKE ?");
+                preparedStatement.setString(1, nom + "%");
+
+                ResultSet rs = preparedStatement.executeQuery();
+                // Parcours du résultat
+                while (rs.next()) {
+                    auteurs.add(new Auteur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
+                            rs.getDate("date_naissance").toLocalDate(), rs.getString("nationalite")));
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return auteurs;
+        }
+
+        private void displayAuteurs(List<Auteur> auteurs) {
+            System.out.println("id\t\tnom\t\tprenom\\t\tdate_naissance\t\tnationalite");
+            // Parcours du résultat
+            for (Auteur auteur : auteurs) {
+                System.out.println(auteur.toString());
+            }
+        }
+
+        private void displayAuteur(int id) {
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
+                preparedStatement.setInt(1, id);
+
+                displayAuteurCommon(preparedStatement);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        private void displayAuteur(Auteur auteur) {
+            System.out.println(auteur.toString());
+        }
+
+        private void displayAuteurCommon(PreparedStatement preparedStatement) throws SQLException {
+            try (ResultSet rs = preparedStatement.executeQuery();) {
+                System.out.println("id\t\tnom\t\tprenom\\t\tdate_naissance\t\tnationalite");
+                // Parcours du résultat
+                while (rs.next()) {
+                    System.out
+                            .println(rs.getString("id") + "\t\t" + rs.getString("nom") + "\t\t" + rs.getString("prenom")
+                                    + "\t\t" + rs.getString("date_naissance") + "\t\t" + rs.getString("nationalite"));
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    public class Exercice12bis2 {
+        public void Run() {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("AUTEUR A MODIFIER");
+            System.out.println("=================");
+            System.out.print("Nom de l'auteur à modifier:");
+            String nom = sc.next();
+            List<Auteur> auteurs = AuteurDAO.getAuteursByName(nom);
+            if (auteurs.size() > 0) {
+                displayAuteurs(auteurs);
+                int id = Input.getValidInt("Id de l'auteur à modifier:", sc);
+                Auteur auteur = getAuteur(id);
+                if (auteur != null) {
+                    displayAuteur(auteur);
+                    System.out.print("Nouveau nom:");
+                    String newNom = sc.next();
+                    System.out.print("Nouveau prénom:");
+                    String newPrenom = sc.next();
+                    LocalDate newDateNaissance = Input.getValidLocalDate("Nouvelle date de naissance:", sc);
+                    System.out.print("Nouvelle nationalité:");
+                    String newPays = sc.next();
+                    updateAuteur(id, newNom, newPrenom, newDateNaissance, newPays);
+                    displayAuteur(id);
+                }
+                else {
+                    System.out.println("Auteur non trouvé");
+                }
+            }
+            else {
+                System.out.println("Auteur non trouvé");
+            }
+        }
+
+        private Auteur getAuteur(int id) {
+            Auteur auteur = null;
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
+                preparedStatement.setInt(1, id);
+
+                ResultSet rs = preparedStatement.executeQuery();
+                // Parcours du résultat
+                if (rs.next()) {
+                    auteur = new Auteur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
+                            rs.getDate("date_naissance").toLocalDate(), rs.getString("nationalite"));
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return auteur;
+        }
+
+        private void updateAuteur(int id, String newNom, String newPrenom, LocalDate newDate_naissance,
+                String newNationalite) {
+            Auteur auteur = new Auteur(id, newNom, newPrenom, newDate_naissance, newNationalite);
+            updateAuteur(auteur);
+        }
+
+        private void updateAuteur(Auteur auteur) {
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement(
+                        "UPDATE auteur SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ? WHERE id = ?");
+                preparedStatement.setString(1, auteur.getNom());
+                preparedStatement.setString(2, auteur.getPrenom());
+                preparedStatement.setDate(3, Date.valueOf(auteur.getDate_naissance()));
+                preparedStatement.setString(4, auteur.getNationalite());
+                preparedStatement.setInt(5, auteur.getId());
+
+                preparedStatement.executeUpdate();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        private void displayAuteurs(List<Auteur> auteurs) {
+            System.out.println("id\t\tnom\t\tprenom\\t\tdate_naissance\t\tnationalite");
+            // Parcours du résultat
+            for (Auteur auteur : auteurs) {
+                System.out.println(auteur.toString());
+            }
+        }
+
+        private void displayAuteur(int id) {
+            try (Connection con = new DB().getConnection()) {
+                PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
+                preparedStatement.setInt(1, id);
+
+                displayAuteurCommon(preparedStatement);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        private void displayAuteur(Auteur auteur) {
+            System.out.println(auteur.toString());
+        }
+
+        private void displayAuteurCommon(PreparedStatement preparedStatement) throws SQLException {
+            try (ResultSet rs = preparedStatement.executeQuery();) {
+                System.out.println("id\t\tnom\t\tprenom\\t\tdate_naissance\t\tnationalite");
+                // Parcours du résultat
+                while (rs.next()) {
+                    System.out
+                            .println(rs.getString("id") + "\t\t" + rs.getString("nom") + "\t\t" + rs.getString("prenom")
+                                    + "\t\t" + rs.getString("date_naissance") + "\t\t" + rs.getString("nationalite"));
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+
 }
