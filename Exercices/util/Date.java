@@ -1,4 +1,4 @@
-package Exercices.utils;
+package Exercices.util;
 
 import java.time.Instant;
 import java.time.LocalDate;

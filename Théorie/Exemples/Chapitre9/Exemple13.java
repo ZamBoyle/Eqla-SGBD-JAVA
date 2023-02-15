@@ -121,6 +121,7 @@ public class Exemple13 {
         int compteSource = Input.getValidInt("Compte source:", sc);
         int compteDestination = Input.getValidInt("Compte destination:",sc);
         double montant = Input.getValidNumber("Montant:", sc, Double.class);
+        sc.nextLine();
         String question = "Voulez-vous confirmer le transfert de " + montant + " euros du compte " + compteSource
                 + " vers le compte " + compteDestination + "? (O/N)";
         String confirmation = Input.getValidString(question, sc, "O", "N");

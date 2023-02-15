@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 import Exercices.bol.Auteur;
 import Exercices.dal.DB;
-import Exercices.utils.Input;
+import Exercices.util.Input;
 
 public class Exercice12v2 {
     public static void main(String[] args) {

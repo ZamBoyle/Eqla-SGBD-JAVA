@@ -24,7 +24,7 @@ public class Input {
             System.out.print(message);
             if (scanner.hasNext()) {
                 try {
-                    String input = scanner.nextLine();
+                    String input = scanner.next();
                     Method method = clazz.getMethod("parse" + clazz.getSimpleName(), String.class);
                     return clazz.cast(method.invoke(null, input));
                 } catch (Exception e) {

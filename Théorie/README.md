@@ -1545,8 +1545,302 @@ private static void transferMoney(int compteSource, int compteDestination, doubl
 }
 ```
 Il manque dans ces opérations la notion de traçabilité. En effet, il n'y a aucune trace de nos opérations sur nos comptes.
+
 Ce qui n'est pas autorisé dans une banque. Mais c'est juste pour l'exemple. ;-)
 Un code plus abouti peut être trouvé à cette adresse [Exemple13.java](Exemples/Chapitre9/Exemple13.java).
+
+### 10. Architecture n-tiers
+
+#### 10.1 Introduction
+L'architecture n-tiers est une architecture logicielle qui sépare les différentes couches d'une application en plusieurs couches. Nous parlerons ici de la BLL, la BOL et la DAL.
+
+#### 10.2 BOL
+La BOL (Business Object Layer) est la couche qui contient les objets métier de l'application.
+
+Par exemple, si vous développez une application de gestion de bibliothèque, la couche BOL contiendra les objets Auteur, Livre, Emprunt, etc.
+
+#### 10.3 DAL
+La DAL (Data Access Layer) est la couche qui contient les objets d'accès aux données de l'application. C'est la couche qui contient les objets d'accès aux données de l'application. C'est la couche qui contient les objets d'accès aux données de l'application.
+
+Par exemple, si vous développez une application de gestion de bibliothèque, la couche DAL contiendra les objets AuteurDAO, LivreDAO, EmpruntDAO, etc.
+
+Elle contiendra pour la classe AuteurDAO les méthodes suivantes:
+- public Auteur getAuteurById(int id)
+- public List<Auteur> getAuteurs()
+- public void addAuteur(Auteur auteur)
+- public void updateAuteur(Auteur auteur)
+- public void deleteAuteur(Auteur auteur)
+- etc...
+
+L'utilisation de singleton est fortement conseillée pour la DAL.
+ 
+#### 10.4 BLL
+La BLL (Business Logic Layer) est la couche métier de l'application. C'est la couche qui contient la logique métier de l'application. On y trouvera les règles métier de l'application: vérification des données, vérification des droits, etc.
+
+Elle contient les classes qui vont faire le lien entre la BOL et la DAL. Elle appelle les méthodes de la DAL pour récupérer les données et les transforme en objets métier (BOL) pour les renvoyer à l'interface utilisateur.
+
+Par exemple, si vous développez une application de gestion de bibliothèque, la couche BLL contiendra les objets AuteurBLL, LivreBLL, EmpruntBLL, etc.
+
+Elle contiendra pour la classe AuteurBLL les méthodes suivantes:
+- public Auteur getAuteurById(int id)
+- public List<Auteur> getAuteurs()
+- public void addAuteur(Auteur auteur)
+- public void updateAuteur(Auteur auteur)
+- public void deleteAuteur(Auteur auteur)
+- etc...
+
+On pourrait se dire qu'on pourrait ne pas avoir de couche BLL et que la couche DAL pourrait faire le lien entre la BOL et la DAL. Mais il y a un problème: la BLL est la couche métier de l'application. C'est la couche qui contient la logique métier de l'application. On y trouvera les règles métier de l'application: vérification des données, vérification des droits, etc.
+
+De plus, cette communication BLL et DAL permet de faire abstraction de la couche DAL. Si on change de base de données, on ne doit pas changer la BLL. On doit juste changer la DAL.
+
+#### 10.5 Exemple la bibliothèque - Auteur
+Nous allons mettre notre classe Auteur dans le répertoire **BOL**. Toutes les autres classes métier seront dans ce répertoire: Lecteur, Livre, Emprunt, etc.
+
+Nous allons créer une classe AuteurDAO dans le répertoire **DAL**. Toutes les autres classes d'accès aux données seront dans ce répertoire: LecteurDAO, LivreDAO, EmpruntDAO, etc.
+
+Nous allons créer une classe AuteurBLL dans le répertoire **BLL**. Toutes les autres classes de logique métier seront dans ce répertoire: **LecteurBLL**, **LivreBLL**, **EmpruntBLL**, etc. on peut aussi les appeler **GestionLecteur**, **GestionLivre**, **GestionEmprunt**, etc. ou encore **LecteurManager**, **LivreManager**, **EmpruntManager**, etc. C'est une question de goût.
+
+**bol.Auteur.java**:
+```java
+package bol;
+import java.time.LocalDate;
+
+public class Auteur {
+    private Integer id;
+    private String nom;
+    private String prenom;
+    private LocalDate date_naissance;
+
+    private String nationalite;
+
+    public Auteur() {
+    }
+
+    public Auteur(Integer id, String nom, String prenom, LocalDate date_naissance, String nationalite) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date_naissance = date_naissance;
+        this.nationalite = nationalite;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public LocalDate getDate_naissance() {
+        return date_naissance;
+    }
+
+    public String getNationalite() {
+        return nationalite;
+    }
+
+    public void setNationalite(String pays) {
+        this.nationalite = pays;
+    }
+
+    public void setDate_naissance(LocalDate date_naissance) {
+        this.date_naissance = date_naissance;
+    }
+
+    public void displayAuteur() {
+        System.out.println(this.toString());
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Auteur auteur = (Auteur) o;
+
+        if (id != null ? !id.equals(auteur.id) : auteur.id != null) return false;
+        if (nom != null ? !nom.equals(auteur.nom) : auteur.nom != null) return false;
+        if (prenom != null ? !prenom.equals(auteur.prenom) : auteur.prenom != null) return false;
+        if (date_naissance != null ? !date_naissance.equals(auteur.date_naissance) : auteur.date_naissance != null)
+            return false;
+        return nationalite != null ? nationalite.equals(auteur.nationalite) : auteur.nationalite == null;
+    }
+
+    @Override
+    public String toString() {
+
+        String  output= "id\t\tnom\t\tprenom\t\tdate_naissance\t\tnationalite\n";
+output += this.getId() + "\t\t" + this.getNom() + "\t\t" + this.getPrenom() + "\t\t"
++ this.getDate_naissance() + "\t\t" + this.getNationalite();
+        return output;
+    }
+
+    public static void displayAuteur(Auteur auteur) {
+        System.out.println(auteur.toString());
+    }
+}
+```
+
+**dal.AuteurDAO.java**:
+```java
+package dal;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import Biblio.bol.Auteur;
+
+public class AuteurDAO {
+        // Constructeur privé pour empêcher l'instanciation directe
+    private AuteurDAO() {}
+    
+    // Méthode statique pour récupérer l'instance unique
+    public static AuteurDAO getInstance() {
+        if (instance == null) {
+            instance = new AuteurDAO();
+        }
+        return instance;
+    }
+
+    public Auteur getAuteurById(int id) {
+        Auteur auteur = null;
+        try (Connection con = new DB().getConnection()) {
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
+            preparedStatement.setInt(1, id);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            // Parcours du résultat
+            if (rs.next()) {
+                auteur = getAuteurFromRS(rs);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return auteur;
+    }
+
+    public Auteur getAuteurFromRS(ResultSet rs) throws Exception {
+        Auteur auteur = null;
+        if (rs != null) {
+            new Auteur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
+                    rs.getDate("date_naissance").toLocalDate(), rs.getString("nationalite"));
+        }
+        return auteur;
+    }
+
+    public List<Auteur> getAuteurs() throws Exception {
+        List<Auteur> auteurs = new ArrayList<>();
+        try (Connection con = new DB().getConnection()) {
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur");
+            ResultSet rs = preparedStatement.executeQuery();
+            // Parcours du résultat
+            while (rs.next()) {
+                auteurs.add(getAuteurFromRS(rs));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return auteurs;
+    }
+
+    public List<Auteur> getAuteursByName(String name) {
+        List<Auteur> auteurs = new ArrayList<>();
+        try (Connection con = new DB().getConnection()) {
+            PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE nom LIKE ?");
+            preparedStatement.setString(1, name + "%");
+
+            ResultSet rs = preparedStatement.executeQuery();
+            // Parcours du résultat
+            while (rs.next()) {
+                auteurs.add(new Auteur(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"),
+                        rs.getDate("date_naissance").toLocalDate(), rs.getString("nationalite")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return auteurs;
+    }
+
+    public List<Auteur> getAuteursByFirstName(String firstName) throws Exception {
+        throw new Exception("Not implemented yet");
+    }
+
+    public List<Auteur> getAuteursByNationality(String nationality) throws Exception {
+        throw new Exception("Not implemented yet");
+    }
+
+    public List<Auteur> getAuteursByBirthDate(String birthDate) throws Exception {
+        throw new Exception("Not implemented yet");
+    }
+
+    public void updateAuteur(Auteur auteur) {
+        try (Connection con = new DB().getConnection()) {
+            PreparedStatement preparedStatement = con.prepareStatement(
+                    "UPDATE auteur SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ? WHERE id = ?");
+            preparedStatement.setString(1, auteur.getNom());
+            preparedStatement.setString(2, auteur.getPrenom());
+            preparedStatement.setDate(3, Date.valueOf(auteur.getDate_naissance()));
+            preparedStatement.setString(4, auteur.getNationalite());
+            preparedStatement.setInt(5, auteur.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+```
+**bll.AuteurManager.java**:
+```java
+package bll;
+
+import java.util.List;
+
+import bol.Auteur;
+
+public class AuteurManager {
+    public static Auteur getAuteurById(int id) {
+        return dal.AuteurDAO.getAuteurById(id);
+    }
+
+    public static List<Auteur> getAuteurs() {
+        return dal.AuteurDAO.getAuteurs();
+    }
+
+    public static List<Auteur> getAuteursByName(String name) {
+        return dal.AuteurDAO.getAuteursByName(name);
+    }
+
+    public static List<Auteur> getAuteursByFirstName(String firstName) {
+        return dal.AuteurDAO.getAuteursByFirstName(firstName);
+    }
+
+
+
+
+}
 
 
 

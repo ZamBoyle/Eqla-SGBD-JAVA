@@ -207,6 +207,12 @@ La méthode main devra faire ce qui suit:
 - Vous afficherez ensuite la liste des auteurs (méthode displayAuteurs).
 - Vous afficherez ensuite le nombre d'auteurs retournés.
 
+### Exercice16.java - Transaction
+
+Créez un nouveau lecteur dans la table lecteur ET un nouvel emprunt dans la table emprunt. 
+- Si tout se passe bien, vous commiterez les deux requêtes.
+- Si une erreur survient, vous rollbackerez les deux requêtes.
+
 
 
 
