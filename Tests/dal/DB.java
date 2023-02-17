@@ -1,4 +1,4 @@
-package Exercices.dal;
+package Tests.dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

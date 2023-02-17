@@ -20,8 +20,7 @@ public class Exercice11 {
 
     public static void displayExemplaires(String rayon, String etat) {
         rayon = rayon.startsWith("rayon-") ? rayon.substring(6) : "rayon-" + rayon;
-        try (DB db = new DB()) {
-            Connection con = db.getConnection();
+        try (Connection con = DB.getInstance().getConnection();) {
             String query = "SELECT livre.titre, exemplaire.id, rayon, etat, auteur.nom, auteur.prenom " +
                     "FROM exemplaire " +
                     "INNER JOIN livre ON exemplaire.livre_id = livre.id " +

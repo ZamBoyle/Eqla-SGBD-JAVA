@@ -49,7 +49,7 @@ public class Exercice12v2 {
 
     public static Auteur getAuteur(int id) {
         Auteur auteur = null;
-        try (Connection con = new DB().getConnection()) {
+        try (Connection con = DB.getInstance().getConnection()) {
             PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
             preparedStatement.setInt(1, id);
 
@@ -72,7 +72,7 @@ public class Exercice12v2 {
     }
 
     public static void updateAuteur(Auteur auteur) {
-        try (Connection con = new DB().getConnection()) {
+        try (Connection con = DB.getInstance().getConnection()) {
             PreparedStatement preparedStatement = con.prepareStatement(
                     "UPDATE auteur SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ? WHERE id = ?");
             preparedStatement.setString(1, auteur.getNom());
@@ -89,7 +89,7 @@ public class Exercice12v2 {
 
     public static List<Auteur> getAuteursByName(String nom) {
         List<Auteur> auteurs = new ArrayList<>();
-        try (Connection con = new DB().getConnection()) {
+        try (Connection con = DB.getInstance().getConnection()) {
             PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE nom LIKE ?");
             preparedStatement.setString(1, nom + "%");
 
@@ -114,7 +114,7 @@ public class Exercice12v2 {
     }
 
     public static void displayAuteur(int id) {
-        try (Connection con = new DB().getConnection()) {
+        try (Connection con = DB.getInstance().getConnection()) {
             PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
             preparedStatement.setInt(1, id);
 

@@ -17,9 +17,7 @@ public class Exercice6 {
     }
 
     public static void displayAuteur(Integer id) {
-        try (DB db = new DB()) {
-            Connection con = db.getConnection();
-
+        try (Connection con = DB.getInstance().getConnection();) {
             // Création d'un objet Statement pour exécuter une requête de lecture
             Statement stmt = con.createStatement();
 
@@ -38,9 +36,7 @@ public class Exercice6 {
     }
 
     private void displayAuteurs() {
-        try (DB db = new DB()) {
-            Connection con = db.getConnection();
-
+        try (Connection con = DB.getInstance().getConnection();) {
             // Création d'un objet Statement pour exécuter une requête de lecture
             Statement stmt = con.createStatement();
 

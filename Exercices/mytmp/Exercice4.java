@@ -12,9 +12,7 @@ public class Exercice4 {
     }
 
     public static void displayThemes() {
-        try (DB db = new DB()) {
-            Connection con = db.getConnection();
-
+        try (Connection con = DB.getInstance().getConnection();) {
             // Création d'un objet Statement pour exécuter une requête de lecture
             Statement stmt = con.createStatement();
 

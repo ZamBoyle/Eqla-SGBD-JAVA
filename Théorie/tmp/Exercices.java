@@ -1,4 +1,4 @@
-package Exercices.mytmp;
+package tmp;
 
 import java.sql.*;
 import java.time.LocalDate;

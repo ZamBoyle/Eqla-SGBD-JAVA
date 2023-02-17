@@ -25,8 +25,8 @@ public class Exercice7 {
     }
 
     public static void displayAuteursCommon(String query) {
-        try (DB db = new DB()) {
-            Connection con = db.getConnection();
+        try (Connection con = DB.getInstance().getConnection();) {
+            
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
 

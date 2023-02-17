@@ -8,9 +8,7 @@ import Exercices.dal.DB;
 
 public class Exercice3 {
         public static void main(String[] args) {
-            try (DB db = new DB()) {
-                Connection con = db.getConnection();
-
+            try (Connection con = DB.getInstance().getConnection();) {
                 // Création d'un objet Statement pour exécuter une requête de lecture
                 Statement stmt = con.createStatement();
 

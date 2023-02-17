@@ -18,8 +18,8 @@ public class Exercice9 {
     }
 
     public static void displayExemplaires(String rayon, String etat) {
-        try (DB db = new DB()) {
-            Connection con = db.getConnection();
+        try (Connection con = DB.getInstance().getConnection();) {
+            
 
             // Création d'un objet Statement pour exécuter une requête de lecture
             Statement stmt = con.createStatement();
