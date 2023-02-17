@@ -1865,7 +1865,7 @@ public class AuteurManager {
 ```
 **ExampleConsole.java**:
 ```java
-import dal.AutauteurDAO;
+import dal.AuteurDAO;
 import bol.Auteur;
 import bll.AuteurManager;
 
