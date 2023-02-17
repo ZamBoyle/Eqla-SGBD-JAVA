@@ -11,6 +11,5 @@ public class Exercice13 {
         Auteur auteur = new Auteur(0, "Doe", "John", Input.getValidLocalDate("Date de naissance:", null), "USA");
         AuteurDAO.insert(auteur);
         Auteur.displayAuteur(auteur);
-    }
-    
+    }    
 }

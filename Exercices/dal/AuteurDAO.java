@@ -112,7 +112,7 @@ public class AuteurDAO {
 
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next()) {
-                auteur.setId(rs.getInt(1));
+                auteur.setId(rs.getInt("insert_id"));
             }
 
         } catch (Exception e) {
