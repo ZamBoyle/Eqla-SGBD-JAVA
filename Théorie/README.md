@@ -1863,6 +1863,19 @@ public class AuteurManager {
     }
 }
 ```
+**ExampleConsole.java**:
+```java
+import dal.AutauteurDAO;
+import bol.Auteur;
+import bll.AuteurManager;
+
+public class ExampleConsole {
+    public static void main(String[] args) {
+        Auteur auteur = AuteurManager.getAuteurById(1);
+        System.out.println(auteur.toString());
+    }
+}
+```
 
 
 
