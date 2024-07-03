@@ -1,5 +1,60 @@
 # Java et mySQL/MariaDB
 
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+- [Java et mySQL/MariaDB](#java-et-mysqlmariadb)
+  - [1. Utilisation de la Bibliothèque MySQL](#1-utilisation-de-la-bibliothèque-mysql)
+    - [1.1 Via le GUI de VSCode](#11-via-le-gui-de-vscode)
+    - [1.2 Via le fichier settings.json](#12-via-le-fichier-settingsjson)
+  - [2. Première connexion - simple SELECT](#2-première-connexion---simple-select)
+    - [2.1 forName](#21-forname)
+      - [2.1.1 Avant JAVA 7](#211-avant-java-7)
+      - [2.1.2 Après JAVA 7](#212-après-java-7)
+    - [2.2 getConnection / Connection](#22-getconnection--connection)
+    - [2.3 createStatement / Statement](#23-createstatement--statement)
+    - [2.4 executeQuery / ResultSet](#24-executequery--resultset)
+    - [2.5 rs.next / getString / getInt / etc...](#25-rsnext--getstring--getint--etc)
+    - [2.6 con.close()](#26-conclose)
+    - [2.7 ColumnName ou ColumnIndex ?](#27-columnname-ou-columnindex-)
+  - [3. SELECT avec paramètre(s)](#3-select-avec-paramètres)
+    - [3.1 Méthode risquée - permettant les injections SQL](#31-méthode-risquée---permettant-les-injections-sql)
+      - [3.1.1 Problème des caractères spéciaux et de l'injection SQL](#311-problème-des-caractères-spéciaux-et-de-linjection-sql)
+    - [3.2 Méthode sécurisée](#32-méthode-sécurisée)
+      - [3.2.1 Premier exemple](#321-premier-exemple)
+      - [3.2.2 Second exemple - Avec deux paramètres](#322-second-exemple---avec-deux-paramètres)
+  - [4. Informations de connexion](#4-informations-de-connexion)
+  - [5. Mises à jour](#5-mises-à-jour)
+    - [5.1 UPDATE](#51-update)
+    - [5.2 INSERT](#52-insert)
+    - [5.3 DELETE](#53-delete)
+    - [6. Types primitifs vs Classes objets](#6-types-primitifs-vs-classes-objets)
+    - [7. setNull vs setObject vs setXxx](#7-setnull-vs-setobject-vs-setxxx)
+    - [8. Les dates](#8-les-dates)
+      - [8.1 java.util.Date to java.sql.Date](#81-javautildate-to-javasqldate)
+      - [8.2 java.time.LocalDate to java.sql.Date](#82-javatimelocaldate-to-javasqldate)
+      - [8.3 java.sql.Date to java.time.LocalDate](#83-javasqldate-to-javatimelocaldate)
+      - [8.4 java.sql.Date to java.util.Date](#84-javasqldate-to-javautildate)
+      - [8.5 La date du jour et affichage](#85-la-date-du-jour-et-affichage)
+    - [9. Les transactions: Commit & Rollback](#9-les-transactions-commit--rollback)
+      - [9.1 Introduction](#91-introduction)
+      - [9.2 Auto Commit](#92-auto-commit)
+      - [9.3 Premier exemple / Ajout d'un couple de lecteurs](#93-premier-exemple--ajout-dun-couple-de-lecteurs)
+      - [9.4 Second exemple / Ajout d'un livre](#94-second-exemple--ajout-dun-livre)
+      - [9.5 Troisième exemple: transfert bancaire](#95-troisième-exemple-transfert-bancaire)
+    - [10. Architecture n-tiers](#10-architecture-n-tiers)
+      - [10.1 Introduction](#101-introduction)
+      - [10.2 BOL](#102-bol)
+      - [10.3 DAL](#103-dal)
+      - [10.4 BLL](#104-bll)
+      - [10.5 Exemple la bibliothèque - Auteur](#105-exemple-la-bibliothèque---auteur)
+
+<!-- /code_chunk_output -->
+
+
+
 ## 1. Utilisation de la Bibliothèque MySQL
 
 Pour le moment, vous n'aviez pas de problème de faire un import des librairies du JDK.
