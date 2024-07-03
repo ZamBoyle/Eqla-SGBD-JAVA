@@ -6,8 +6,8 @@ import Tests.bol.Auteur;
 import Tests.dal.AuteurDAO;
 
 public class AuteurManager {
-    public static Auteur getAuteurById(int id) {
-        return  AuteurDAO.getInstance().getAuteurById(id);
+    public static Auteur get(int id) {
+        return  AuteurDAO.getInstance().get(id);
     }
 
     public static List<Auteur> getAuteurs() throws Exception {
@@ -30,19 +30,15 @@ public class AuteurManager {
         return  AuteurDAO.getInstance().getAuteursByBirthDate(birthDate);
     }
 
-    public static void addAuteur(Auteur auteur) throws Exception {
-         AuteurDAO.getInstance().addAuteur(auteur);
+    public static void add(Auteur auteur) throws Exception {
+         AuteurDAO.getInstance().add(auteur);
     }
 
-    public static void updateAuteur(Auteur auteur) throws Exception {
-        AuteurDAO.getInstance().updateAuteur(auteur);
+    public static void update(Auteur auteur) throws Exception {
+        AuteurDAO.getInstance().update(auteur);
     }
 
-    public static void deleteAuteur(Auteur auteur) throws Exception {
-        AuteurDAO.getInstance().deleteAuteur(auteur);
-    }
-
-    public static void deleteAuteurById(int id) throws Exception {
-        AuteurDAO.getInstance().deleteAuteurById(id);
+    public static void delete(int id) throws Exception {
+        AuteurDAO.getInstance().delete(id);
     }
 }

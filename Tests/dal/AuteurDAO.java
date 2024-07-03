@@ -23,7 +23,7 @@ public class AuteurDAO {
         return instance;
     }
 
-    public Auteur getAuteurById(int id) {
+    public Auteur get(int id) {
         Auteur auteur = null;
         try (Connection con = DB.getInstance().getConnection()) {
             PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM auteur WHERE id = ?");
@@ -94,7 +94,7 @@ public class AuteurDAO {
         throw new Exception("Not implemented yet");
     }
 
-    public void updateAuteur(Auteur auteur) {
+    public void update(Auteur auteur) {
         try (Connection con = DB.getInstance().getConnection()) {
             PreparedStatement preparedStatement = con.prepareStatement(
                     "UPDATE auteur SET nom = ?, prenom = ?, date_naissance = ?, nationalite = ? WHERE id = ?");
@@ -110,12 +110,28 @@ public class AuteurDAO {
         }
     }
 
-    public void addAuteur(Auteur auteur) {
+    public Auteur add(Auteur auteur) throws CloneNotSupportedException {
+        Auteur newAuteur = auteur.clone();
+        try (Connection con = DB.getInstance().getConnection()) {
+            PreparedStatement preparedStatement = con.prepareStatement(
+                    "INSERT INTO auteur (nom, prenom, date_naissance, nationalite) VALUES (?, ?, ?, ?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, auteur.getNom());
+            preparedStatement.setString(2, auteur.getPrenom());
+            preparedStatement.setDate(3, java.sql.Date.valueOf(auteur.getDate_naissance()));
+            preparedStatement.setString(4, auteur.getNationalite());
+
+            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                newAuteur.setId(rs.getInt(1));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return newAuteur;
     }
 
-    public void deleteAuteur(Auteur auteur) {
-    }
-
-    public void deleteAuteurById(int id) {
+    public void delete(int id) {
     }
 }

@@ -1871,14 +1871,26 @@ import bll.AuteurManager;
 
 public class ExampleConsole {
     public static void main(String[] args) {
+        //On récupère l'auteur dont l'id est 1
         Auteur auteur = AuteurManager.getAuteurById(1);
+        //On affiche l'auteur
         System.out.println(auteur.toString());
+        //On récupère tous les auteurs
+        List<Auteur> auteurs = AuteurManager.getAuteurs();
+        //On affiche tous les auteurs
+        for (Auteur auteur : auteurs) {
+            System.out.println(auteur.toString());
+        }
+        //On récupère tous les auteurs dont le nom commence par "D"
+        List<Auteur> auteurs = AuteurManager.getAuteursByName("D");
+        //On affiche tous les auteurs
+        for (Auteur auteur : auteurs) {
+            System.out.println(auteur.toString());
+        }
+        //On ajoute un auteur
+        Auteur auteur = new Auteur(null, "Doe", "John", LocalDate.of(1980, 1, 1), "USA");
+        AuteurManager.addAuteur(auteur);
+        
     }
 }
 ```
-
-
-
-
-
-
