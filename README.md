@@ -10,6 +10,6 @@ Petit à petit, nous allons faire la gestion d'une bibliothèque.
 
 Il va se décomposer en plusieurs parties:
 - [Les prérequis](Pr%C3%A9requis/README.md): installation du connecteur MySQL et création d'un nouvel utilisateur.
-- [La théorie](Th%C3%A9orie/README.md): nous verrons faire en java pour intérroger des bases de données.
+- [La théorie](Th%C3%A9orie/README.md): nous verrons comment faire en java pour intérroger des bases de données.
 - [Les exercices](Exercices/README.md): mise en application de ce que nous aurons vu en théorie.
 
