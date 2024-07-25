@@ -1,5 +1,5 @@
 # Cours de Java et de MySQL
-Ce cours est la suite du cours précédemment donné: Eqla-SGBD.
+Ce cours est la suite du cours précédemment donné: [Les bases de données (SGBD)](https://github.com/ZamBoyle/Eqla-SGBD/blob/master/README.md).
 
 Il a pour objectif de vous montrer comment attaquer une base de donnée en JAVA.
 
